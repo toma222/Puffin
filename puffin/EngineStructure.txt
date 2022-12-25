@@ -1,0 +1,12 @@
+
+APPLICATION
+    - Handles window
+        - exiting
+        - resize
+
+    - Handles EXE things
+        - global paths
+
+GLFW ABSTRACTION
+    - Lets us handle window in an easy way
+

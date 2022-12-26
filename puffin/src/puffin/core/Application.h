@@ -6,11 +6,15 @@
 #include "base.h"
 #include "Logging.h"
 
+#include "puffin/graphics/Graphics.h"
+
 #include <cstdio>
 #include <string>
 
 namespace PN
 {
+    // Make logging for the entire engine
+    
     class PUFFIN_API Application
     {
     public:
@@ -20,8 +24,9 @@ namespace PN
         void StartApplication();
         // Starts current application
         // only returns on exit or error
+        Graphics::GLFWContext context;
+        
     private:
-        Logging m_log;
         bool m_Open;
     };
 } // namespace Puffin

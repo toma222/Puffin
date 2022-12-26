@@ -1,3 +1,4 @@
+#pragma once
 
 #include "Base.h"
 #include <string>
@@ -15,11 +16,12 @@ namespace PN
 
     class PUFFIN_API Window
     {
+    private:
+        WindowProporties m_proporties;
+     
     public:
-        Window();
-        ~Window();
-
         virtual void UpdateWindow();
+        virtual void InitWindow();
         virtual void ClearWindow();
 
         virtual void GetIO();

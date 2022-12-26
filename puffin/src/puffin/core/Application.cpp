@@ -10,7 +10,7 @@ namespace PN
     Application::Application()
     {
         // Setting up the application
-        m_Open = true;
+        m_Open = false;
     }
     
     Application::~Application()
@@ -20,14 +20,15 @@ namespace PN
 
     void Application::StartApplication()
     {
-        m_log.LogProccess("Application loop started");
+        //m_log->LogTrace("Application loop started");
+        PN_CORE_TRACE("Application loop started");
 
         while (m_Open == true)
         {
             // Open
         }
 
-        m_log.LogClean("Application closing");
+        //pLog->LogTrace("Closing Application");
     }
 } // namespace Puffin
 

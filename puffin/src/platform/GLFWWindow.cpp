@@ -1,11 +1,15 @@
 
 #include "GLFWWindow.h"
-#include "Base.h"
+#include "puffin/core/Base.h"
 
 namespace PN
 {
     void GLFWWindow::UpdateWindow(){
 
+    }
+
+    void GLFWWindow::InitWindow(){
+        
     }
 
     void GLFWWindow::ClearWindow(){
@@ -19,6 +23,7 @@ namespace PN
     void GLFWWindow::GetWidth(){
 
     }
+
     void GLFWWindow::GetHeight(){
 
     }
@@ -26,10 +31,9 @@ namespace PN
     void GLFWWindow::CleanWindow(){
 
     }
+
     void GLFWWindow::SetVSync(bool onOff){
 
     }
-    
-    
 } // namespace PN
 

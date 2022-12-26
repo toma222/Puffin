@@ -15,12 +15,22 @@ INCLUDE = -Iinclude
 # -------------------------------- #
 
 PUFFIN_SRC = puffin/src
-PUFFIN_COMPILE_FLAGS = -g -c -fPIC
+PUFFIN_COMPILE_FLAGS = -c -fPIC
 
-PUFFIN_FILES = $(PUFFIN_SRC)/puffin/core/Application.cpp $(PUFFIN_SRC)/puffin/core/Window.cpp $(PUFFIN_SRC)/puffin/core/GLFWWindow.cpp $(PUFFIN_SRC)/puffin/cores/Logging.cpp
+# PUFFIN 3D PARTY LIB FILES
+PUFFIN_FILES = puffin\vendor\glad\gl.cpp
+
+# PUFFIN CORE FILES
+PUFFIN_FILES += $(PUFFIN_SRC)/puffin/core/Application.cpp $(PUFFIN_SRC)/puffin/core/Window.cpp $(PUFFIN_SRC)/puffin/cores/Logging.cpp
+
+# PUFFIN GLDF PLATFORM FILES
+PUFFIN_FILES += $(PUFFIN_SRC)\platform\GLFWWindow.cpp $(PUFFIN_SRC)\platform\GLFWContext.cpp
+
+# PUFFIN RENDER FILES
+PUFFIN_FILES += $(PUFFIN_SRC)\puffin\graphics\Graphics.cpp $(PUFFIN_SRC)\puffin\graphics\Context.cpp
 
 INCLUDE += -I$(PUFFIN_SRC)
-PUFFIN_INCLUDE = puffin/vendor
+PUFFIN_INCLUDE = -Ipuffin/vendor -I$(PUFFIN_SRC)
 
 POBJOUT = $(ODIR)\puffin
 PUFFINOBJ = $(addprefix $(POBJOUT)/,$(addsuffix .o, $(basename $(notdir $(PUFFIN_FILES)))))
@@ -39,7 +49,7 @@ GAMEDIR = game/src
 CXX = g++
 
 LIB = dist
-LIBS = -L$(LIB) -lglu32 -lopengl32
+LIBS = -Ldist
 
 all: build
 
@@ -53,28 +63,52 @@ $(ODIR)/%.o : $(GAMEDIR)/%.cpp
 # ----------------------------------------- #
 #            PUFFIN BUILD RULES             #
 # ----------------------------------------- #
-$(POBJOUT)/%.o: $(PUFFIN_SRC)/puffin/core/%.cpp $(PUFFIN_SRC)/puffin/core/%.h
-	@echo Compiling puffin file $<
-	$(CXX) -I$(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+$(POBJOUT)/gl.o: puffin\vendor\glad\gl.cpp
+	@echo ------- COMPILING GLAD $< -------
+	$(CXX) $(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+	@echo DONE
 
-$(POBJOUT)/%.o: $(PUFFIN_SRC)/puffin/renderer/%.cpp $(PUFFIN_SRC)/renderer/core/%.h
-	@echo Compiling puffin file $<
-	$(CXX) -I$(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+# Core directory
+$(POBJOUT)/%.o: $(PUFFIN_SRC)/puffin/core/%.cpp $(PUFFIN_SRC)/puffin/core/%.h
+	@echo ------- COMPILING PUFFIN CORE $< -------
+	$(CXX) $(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+	@echo DONE
+
+# Graphics directory
+$(POBJOUT)/%.o: $(PUFFIN_SRC)/puffin/graphics/%.cpp $(PUFFIN_SRC)/puffin/graphics/%.h
+	@echo ------- COMPILING PUFFIN GRAPHICS $< -------
+	$(CXX) $(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+	@echo DONE
+
+# Platform Directory
+$(POBJOUT)/%.o: $(PUFFIN_SRC)/platform/%.cpp $(PUFFIN_SRC)/platform/%.h
+	@echo ------- COMPILING PUFFIN PLATFORM $< -------
+	$(CXX) $(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+	@echo DONE
+
+$(POBJOUT)/%.o: $(PUFFIN_SRC)/puffin/renderer/%.cpp $(PUFFIN_SRC)/puffin/renderer/%.cpp
+	@echo ------- COMPILING PUFFIN PLATFORM $< -------
+	$(CXX) $(PUFFIN_INCLUDE) $(PUFFIN_COMPILE_FLAGS) -DBUILD_DLL -o $@ $<
+	@echo DONE
 
 
 buildlib: $(PUFFINOBJ)
-	@echo # --------- BUILDING PUFFIN LIBRARY --------- #
-	@echo Compiling the puffin library
-	$(CXX) -shared -o $(EXEPATH)/puffin.dll -Wl,--out-implib,$(EXEPATH)/puffin.a $(PUFFINOBJ)
+	@echo -------------------------------------------
+	@echo           BUILDING PUFFIN LIBRARY          
+	@echo -------------------------------------------
+	$(CXX) -shared -o $(EXEPATH)/puffin.so $(PUFFINOBJ) -Llib -l:libglfw3dll.a -lglu32 -lopengl32
 
 build : $(OBJ)
 	make buildlib
 
-	@echo # --------- LINKING PUFFIN TO GAME --------- #
-	@echo $(OBJ)
-	$(CXX) $(LIBS) -l:puffin.dll -o $(EXEPATH)/app $(ODIR)/game.o
+	@echo -------------------------------------------
+	@echo     COMPILING GAME WITH PUFFIN LIBRARY          
+	@echo -------------------------------------------
+	$(CXX) $(LIBS) -l:puffin.so -o $(EXEPATH)/app $(ODIR)/game.o
 
-	@echo # --------- RUNNING --------- #
+	@echo -------------------------------------------
+	@echo             RUNNING THE GAME
+	@echo -------------------------------------------
 	./$(EXEPATH)/app.exe
 	
 

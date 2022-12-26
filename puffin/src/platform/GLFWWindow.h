@@ -1,19 +1,16 @@
 
-#include "Base.h"
-#include "Window.h"
+#include "puffin/core/Base.h"
+#include "puffin/core/Window.h"
 
 namespace PN
-{
+{   
+    
     class PUFFIN_API GLFWWindow : Window
     {
-    private:
-        /* data */
     public:
-        GLFWWindow(/* args */);
-        ~GLFWWindow();
-
         void UpdateWindow() override;
         void ClearWindow() override;
+        void InitWindow() override;
 
         void GetIO() override;
 

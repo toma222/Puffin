@@ -2,13 +2,15 @@
 #include "Base.h"
 #include "Window.h"
 
+#include <string>
+
 namespace PN
 {
     void Window::UpdateWindow(){
         return;
     }
 
-    void Window::InitWindow(){
+    void Window::InitWindow(std::string name){
         return;
     }
 
@@ -20,12 +22,12 @@ namespace PN
         return;
     }
 
-    void Window::GetWidth(){
-        return;
+    int Window::GetWidth(){
+        return 0;
     }
 
-    void Window::GetHeight(){
-        return;
+    int Window::GetHeight(){
+        return 0;
     }
 
     void Window::CleanWindow(){
@@ -34,6 +36,10 @@ namespace PN
 
     void Window::SetVSync(bool onOff){
         return;
+    }
+
+    int Window::ShouldClose(){
+        return 1;
     }
 } // namespace PN
 

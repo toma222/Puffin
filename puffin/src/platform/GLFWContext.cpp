@@ -5,16 +5,21 @@
 
 #include "GLFWContext.h"
 
+#define GLAD_GL_IMPLEMENTATION
+#include <glad/gl.h>
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 namespace PN
 {
-namespace Graphics
+namespace graphics
 {
     void GLFWContext::InitGraphics(){
         // tell glfw to wake up
 
         PN_CORE_INFO("Initilizing GLFW");
+
+        glfwSetErrorCallback(AssertErrorGLFW);
                 
         if(glfwInit() != 1)
             PN_CORE_FATAL("GLFW not initilized");
@@ -23,9 +28,6 @@ namespace Graphics
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        // default vsync on
-        glfwSwapInterval(1);
     }
 
     void GLFWContext::SetBackfaceCulling(bool front){

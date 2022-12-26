@@ -8,7 +8,15 @@ int main(){
     // Ask for application
     Puffin::Application *app = CreateApplication();
 
-    // Make the context for GLFW
+    /*
+    // Tell the context to make GLFW things
+    PN_CORE_TRACE("Calling app->m_graphics->m_renderContext->InitGraphics to initlize open GLFW");
+    app->m_graphics->m_renderContext->InitGraphics();
+
+    // Tell the window to make itself 
+    PN_CORE_TRACE("app->m_window->InitWindow to make the window");
+    app->m_window->InitWindow("Game");
+    */
 
     // Get this show on the road
     app->StartApplication();

@@ -8,6 +8,8 @@ namespace PN{
 
     enum LOGGING_LEVEL {INFO, PROCCESS, SUCCESS, TRACE, CLEAN};
 
+    void PUFFIN_API AssertErrorGLFW(int error, const char *description);
+
     class PUFFIN_API Logging
     {
     private:

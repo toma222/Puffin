@@ -4,6 +4,8 @@
 #include <string>
 #include <GLFW/glfw3.h>
 
+#include <string>
+
 namespace PN
 {
     typedef struct PUFFIN_API
@@ -21,13 +23,14 @@ namespace PN
      
     public:
         virtual void UpdateWindow();
-        virtual void InitWindow();
+        virtual void InitWindow(std::string name);
         virtual void ClearWindow();
+        virtual int ShouldClose();
 
         virtual void GetIO();
 
-        virtual void GetWidth();
-        virtual void GetHeight();
+        virtual int GetWidth();
+        virtual int GetHeight();
 
         virtual void CleanWindow();
         virtual void SetVSync(bool onOff);

@@ -10,7 +10,7 @@
 
 namespace PN
 {
-namespace Graphics
+namespace graphics
 {
     void Context::InitGraphics(){
         return;
@@ -24,5 +24,4 @@ namespace Graphics
         return;
     }
 } // namespace for glfw things
-    
 } // namespace NP

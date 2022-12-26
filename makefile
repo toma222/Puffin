@@ -57,7 +57,7 @@ all: build
 #             GAME BUILD RULES              #
 # ----------------------------------------- #
 
-$(ODIR)/%.o : $(GAMEDIR)/%.cpp
+$(ODIR)/%.o : $(GAMEDIR)/%.cpp puffin\src\puffin\core\EntryPoint.h
 	$(CXX) -c $(INCLUDE) -o $@ $<
 
 # ----------------------------------------- #

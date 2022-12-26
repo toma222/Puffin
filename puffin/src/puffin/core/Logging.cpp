@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include <GLFW/glfw3.h>
+
 #ifdef PUFFIN_PLATFORM_WINDOWS
     #include <stdlib.h>
 #endif
@@ -38,5 +40,10 @@ namespace PN
     void Logging::LogInfo(std::string message){
         printf("\x1b[0;34m%s  %s  INFO\x1b[0;0m  %s\n", __TIME__, m_name.c_str(), message.c_str());
     }
+
+    void AssertErrorGLFW(int error, const char *description){
+        printf("ASSERT FATAL ERROR -> CODE %i -> %s\n", error, description);
+    }
+
 } // namespace PN
 

@@ -5,7 +5,7 @@
 // NOT USING MACRO BECAUSE IT WAS NOT BEING NICE
 namespace Puffin
 {
-    namespace Graphics
+    namespace graphics
     {
         // This handles the state of GLFW and all it's fun
         // non rendering things

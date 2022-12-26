@@ -1,19 +1,32 @@
 
+#pragma once
+
 #include "puffin/core/Base.h"
+#include "Context.h"
+
+#include "platform/GLFWContext.h"
+#include "platform/GLFWWindow.h"
 
 namespace PN
 {
-    namespace Render
+namespace graphics
+{
+    class GraphicsAPI
     {
-        class Render
-        {
-        public:
-            Render(/* args */);
-            ~Render();
+    public:
+        Context *m_renderContext;
 
-            void RenderLoop();
-        };        
-    } // namespace Render
-    
+    public:
+        void RenderGraphics();
+
+        ~GraphicsAPI();
+
+        // @param contextType the class of the context we want the graphics to use currently only support for GLFW
+        template<typename T>
+        void InitGraphicsAPI(){
+            m_renderContext = new T;
+        }
+    };        
+} // namespace Render    
 } // namespace NP
 

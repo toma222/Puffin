@@ -11,24 +11,34 @@ namespace PN
     {
         // Setting up the application
         m_Open = false;
+        m_graphics = new graphics::GraphicsAPI;
     }
-    
-    Application::~Application()
-    {
-        // Shuts down the application
+
+    Application::~Application(){
+        PN_CORE_CLEAN("Cleaning Application");
+
+        m_window->CleanWindow();
+        delete m_window;
+        delete m_graphics;
+    }
+
+    void Application::InitExternal(){
+        PN_CORE_TRACE("Calling app->m_graphics->m_renderContext->InitGraphics to initlize open GLFW");
+        m_graphics->m_renderContext->InitGraphics();
+
+        // Tell the window to make itself 
+        PN_CORE_TRACE("app->m_window->InitWindow to make the window");
+        m_window->InitWindow("Game");
     }
 
     void Application::StartApplication()
     {
-        //m_log->LogTrace("Application loop started");
         PN_CORE_TRACE("Application loop started");
 
         while (m_Open == true)
         {
             // Open
         }
-
-        //pLog->LogTrace("Closing Application");
     }
 } // namespace Puffin
 

@@ -12,8 +12,8 @@
 
 #include <cstdio>
 #include <string>
-#include<iostream>
-#include<memory>
+#include <iostream>
+#include <memory>
 
 namespace PN
 {

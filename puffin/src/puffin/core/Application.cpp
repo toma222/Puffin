@@ -27,7 +27,7 @@ namespace PN
         m_graphics->m_renderContext->InitGraphics();
 
         // Tell the window to make itself 
-        PN_CORE_TRACE("Calling the window to make the window");
+        PN_CORE_TRACE("InitWindow being called in m_window");
         m_window->InitWindow("Game");
     }
 

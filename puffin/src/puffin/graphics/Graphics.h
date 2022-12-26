@@ -11,6 +11,7 @@ namespace PN
 {
 namespace graphics
 {
+    // This is the main container for all graphical functions and interfaces
     class GraphicsAPI
     {
     public:

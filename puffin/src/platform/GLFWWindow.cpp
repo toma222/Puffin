@@ -62,10 +62,10 @@ namespace PN
 
     void GLFWWindow::CleanWindow(){
         // Delete the window and all it's pointers and such
-        PN_CORE_CLEAN("Cleaning GLFWWindow::m_window and GLFWWindow::m_monitor");
+        PN_CORE_CLEAN("GLFWWindow::CleanWindow Cleaning m_window and m_monitor");
 
+        // cleans m_window in the proccess
         glfwDestroyWindow(m_window);
-        free(m_window);
         // VIDEO MODE NOT BEING FREED BECAUSE OF FREE THINGS AND SUCH
         free(m_monitor);
         // memory leaks be gone!

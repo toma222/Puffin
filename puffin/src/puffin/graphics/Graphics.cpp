@@ -10,7 +10,7 @@ namespace graphics
     GraphicsAPI::~GraphicsAPI(){
         PN_CORE_CLEAN("Cleaning GraphicsAPI::m_renderContext");
         delete m_renderContext;
-    }
+    } 
 
     void GraphicsAPI::RenderGraphics(){
         return;

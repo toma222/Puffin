@@ -12,32 +12,47 @@
 
 namespace PN
 {
-namespace graphics
-{
-    void GLFWContext::InitGraphics(){
-        // tell glfw to wake up
+    namespace graphics
+    {
+        void GLFWContext::InitGraphics()
+        {
 
-        PN_CORE_INFO("Initilizing GLFW");
+            // tell glfw to wake up
 
-        glfwSetErrorCallback(AssertErrorGLFW);
-                
-        if(glfwInit() != 1)
-            PN_CORE_FATAL("GLFW not initilized");
+            PN_CORE_INFO("Initilizing GLFW");
 
-        // Hint to opengl all our versions
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    }
+            glfwSetErrorCallback(AssertErrorGLFW);
 
-    void GLFWContext::SetBackfaceCulling(bool front){
-        return;
-    }
+            if (glfwInit() != 1)
+                PN_CORE_FATAL("GLFW not initilized");
 
-    void GLFWContext::SetDepthBufferOn(){
-        return;
-    }
+            // Hint to opengl all our versions
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        }
 
-} // namespace Graphics
+        void GLFWContext::SetBackfaceCulling(bool front)
+        {
+            return;
+        }
+
+        void GLFWContext::SetWireFrame(bool on)
+        {
+            if (on)
+            {
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            }
+            else
+            {
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            }
+        }
+
+        void GLFWContext::SetDepthBufferOn()
+        {
+            return;
+        }
+
+    } // namespace Graphics
 } // namespace PN
-

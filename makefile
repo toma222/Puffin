@@ -4,7 +4,7 @@ IMGUI_DIR = include/imgui
 ODIR = obj
 EXEPATH = dist
 
-SOURCES = game/src/game.cpp
+SOURCES = antarctica\src\game.cpp
 
 OBJ = $(addprefix $(ODIR)/,$(addsuffix .o, $(basename $(notdir $(SOURCES)))))
 
@@ -27,22 +27,23 @@ PUFFIN_FILES += $(PUFFIN_SRC)/puffin/core/Application.cpp $(PUFFIN_SRC)/puffin/c
 PUFFIN_FILES += $(PUFFIN_SRC)\platform\GLFWWindow.cpp $(PUFFIN_SRC)\platform\GLFWContext.cpp
 
 # PUFFIN RENDER FILES
-PUFFIN_FILES += $(PUFFIN_SRC)\puffin\graphics\Graphics.cpp $(PUFFIN_SRC)\puffin\graphics\Context.cpp
+PUFFIN_FILES += $(PUFFIN_SRC)\puffin\graphics\Graphics.cpp $(PUFFIN_SRC)\puffin\graphics\Context.cpp $(PUFFIN_SRC)\puffin\graphics\Vertices.cpp $(PUFFIN_SRC)\puffin\graphics\Shader.cpp
 
 INCLUDE += -I$(PUFFIN_SRC)
 PUFFIN_INCLUDE = -Ipuffin/vendor -I$(PUFFIN_SRC)
 
 POBJOUT = $(ODIR)\puffin
 PUFFINOBJ = $(addprefix $(POBJOUT)/,$(addsuffix .o, $(basename $(notdir $(PUFFIN_FILES)))))
-PUFFINCLEANFILES += $(addprefix $(POBJOUT)\,$(addsuffix .o, $(basename $(notdir $(PUFFIN_FILES)))))
 
 OBJ += $(PUFFINOBJ)
+
+PUFFINCLEANFILES += $(addprefix $(POBJOUT)\,$(addsuffix .o, $(basename $(notdir $(OBJ)))))
 
 # -------------------------------- #
 #          GAME SETTINGS           #
 # -------------------------------- #
 
-GAMEDIR = game/src
+GAMEDIR = antarctica/src/
 
 # -------------------------------- #
 
@@ -57,7 +58,7 @@ all: build
 #             GAME BUILD RULES              #
 # ----------------------------------------- #
 
-$(ODIR)/%.o : $(GAMEDIR)/%.cpp puffin\src\puffin\core\EntryPoint.h
+$(ODIR)/%.o : $(GAMEDIR)/%.cpp antarctica\src\GameLayer.h
 	$(CXX) -c $(INCLUDE) -o $@ $<
 
 # ----------------------------------------- #
@@ -118,4 +119,6 @@ run:
 clean:
 	@echo begining clean
 	@echo cleaning puffin library object files
-	del $(PUFFINCLEANFILES)
+	del $(OBJ)
+	del obj\game.o
+	

@@ -9,25 +9,25 @@
 
 namespace PN
 {
-namespace graphics
-{
-    // This is the main container for all graphical functions and interfaces
-    class GraphicsAPI
+    namespace graphics
     {
-    public:
-        Context *m_renderContext;
+        // This is the main container for all graphical functions and interfaces
+        class PUFFIN_API GraphicsAPI
+        {
+        public:
+            Context *m_renderContext;
 
-    public:
-        void RenderGraphics();
+        public:
+            void RenderGraphics();
 
-        ~GraphicsAPI();
+            ~GraphicsAPI();
 
-        // @param contextType the class of the context we want the graphics to use currently only support for GLFW
-        template<typename T>
-        void InitGraphicsAPI(){
-            m_renderContext = new T;
-        }
-    };        
-} // namespace Render    
+            // @param contextType the class of the context we want the graphics to use currently only support for GLFW
+            template <typename T>
+            void InitGraphicsAPI()
+            {
+                m_renderContext = new T;
+            }
+        };
+    } // namespace Render
 } // namespace NP
-

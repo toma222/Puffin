@@ -20,7 +20,9 @@ namespace Puffin
 
             virtual void SetBackfaceCulling(bool Back);
             // Turns on Backface Culling
+
+            virtual void SetWireFrame(bool on);
         };
     } // namespace for glfw things
-    
+
 } // namespace NP

@@ -9,6 +9,8 @@
 
 #include "puffin/graphics/Graphics.h"
 #include "puffin/graphics/Context.h"
+// #include "Layer.h"
+#include "LayerStack.h"
 
 #include <cstdio>
 #include <string>
@@ -18,12 +20,13 @@
 namespace PN
 {
     // Make logging for the entire engine
-    
+
     class PUFFIN_API Application
     {
     public:
         Window *m_window;
         graphics::GraphicsAPI *m_graphics;
+        LayerStack m_layers;
 
     private:
         bool m_Open;
@@ -41,11 +44,11 @@ namespace PN
 
         // Sets the window
         // This just makes sure that we have the correct window for the job
-        template<typename T>
-        void SetWindow(){
+        template <typename T>
+        void SetWindow()
+        {
             // Runtime polymorphism is very cool
             m_window = new T;
         };
     };
 } // namespace Puffin
-

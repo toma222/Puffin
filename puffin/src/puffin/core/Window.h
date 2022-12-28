@@ -2,6 +2,8 @@
 
 #include "Base.h"
 #include <string>
+
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 #include <string>
@@ -21,7 +23,7 @@ namespace PN
     {
     private:
         WindowProporties m_proporties;
-     
+
     public:
         // Updates the window, usualy entails polling for events
         virtual void UpdateWindow();
@@ -35,17 +37,14 @@ namespace PN
         // Checks if it needs to close
         virtual int ShouldClose();
 
-
         // Gets the current IO inputs like keyboard and mouse
         virtual void GetIO();
-
 
         // Returns width
         virtual int GetWidth();
 
         // Returns height
         virtual int GetHeight();
-        
 
         // Frees all pointers and destoys the window
         virtual void CleanWindow();

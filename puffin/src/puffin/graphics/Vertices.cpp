@@ -2,6 +2,7 @@
 #include "puffin/core/Base.h"
 #include "Graphics.h"
 #include "puffin/core/Logging.h"
+#include "Shader.h"
 
 #include <vector>
 
@@ -36,7 +37,7 @@ static const char *vertex_shader_text =
     "    color = vCol;\n"
     "}\n";
 
-static const char *fragment_shader_text =
+const char *fragment_shader_text =
     "#version 330\n"
     "in vec3 color;\n"
     "out vec4 fragment;\n"
@@ -51,6 +52,15 @@ namespace PN
     {
         void RenderVertices(Vertex vertices[], int size)
         {
+            // Shader shader(
+            //     "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicFragmentShader.glsl",
+            //    "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicVertexShader.glsl");
+
+            // shader.CompileShader();
+
+            // const char *VertexShader = shader.ReadVertexShader();
+            // const char *FragmentShader = shader.ReadFragmentShader();
+
             GLuint vertex_buffer;
             glGenBuffers(1, &vertex_buffer);
             glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
@@ -83,10 +93,9 @@ namespace PN
             glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
                                   sizeof(Vertex), (void *)offsetof(Vertex, col));
 
-            glm::mat4 proj = glm::ortho(0.f, 9.f, 0.f, 16.f, -1.f, 100.f); // glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 100.0f);
+            glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 100.0f); // glm::ortho(0.f, 9.f, 0.f, 16.f, -1.f, 100.f); // glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 100.0f);
 
             glUseProgram(program);
-            // glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)&proj);
             glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(proj));
             glBindVertexArray(vertex_array);
         }

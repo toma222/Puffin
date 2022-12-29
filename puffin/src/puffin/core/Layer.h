@@ -19,7 +19,7 @@ namespace PN
         virtual void OnDetach() { return; };
 
         virtual void Update() { return; };
-        virtual void OnEvent(Event *e) { return; };
+        virtual void OnEvent(Event *event) { return; };
 
         Application *m_attached;
     };

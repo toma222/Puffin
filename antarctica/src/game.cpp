@@ -13,15 +13,12 @@ Puffin::Application *CreateApplication()
     GM_CORE_INFO("Making application");
     Puffin::Application *app = new Puffin::Application;
 
-    GM_CORE_INFO("Making GLFW context");
-    app->m_graphics->InitGraphicsAPI<Puffin::graphics::GLFWContext>();
-
     GM_CORE_INFO("Making GLFW window");
     app->SetWindow<Puffin::GLFWWindow>();
 
-    app->InitExternal();
-
     app->m_layers.AddLayer<GameLayer>(app);
+
+    app->InitExternal();
 
     return app;
 }

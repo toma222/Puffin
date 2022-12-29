@@ -15,13 +15,15 @@ namespace PN
     class PUFFIN_API Event
     {
     private:
-        const static EventType m_type;
+        EventType m_type;
 
     public:
         ~Event()
         {
             return;
         }
+
+        virtual EventType GetEventType() const = 0;
 
         EventType GetType() { return m_type; };
 
@@ -34,9 +36,8 @@ namespace PN
         Event *m_event;
 
     public:
-        EventDispatcher(Event *e)
+        EventDispatcher(Event *event) : m_event(event)
         {
-            e = m_event;
         }
 
         // T is event class, F is the function to call
@@ -45,10 +46,10 @@ namespace PN
         bool Dispatch(const F &func)
         {
             // Check if the classes are the same
-            if (m_event->GetType() = T::GetStaticType(static_cast<T *>(m_event)))
+            if (m_event->GetEventType() == T::GetStaticType())
             {
-                // Call the function
-                m_event->Handled |= func(m_event);
+                // pass the event
+                m_event->Handled == func((T *)(m_event));
                 return true;
             }
 

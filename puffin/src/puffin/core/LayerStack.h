@@ -21,11 +21,16 @@ namespace PN
 
         void RenderStack();
 
+        void AttachLayer(int index, Application *app) { stack[index]->OnAttach(app); };
+        void AttachLayer(Layer *layer, Application *app) { layer->OnAttach(app); };
+
+        void AttachLayers(Application *app);
+
         template <typename T>
         void AddLayer(Application *toAttach)
         {
             stack[m_layerInsertPosition] = new T;
-            stack[m_layerInsertPosition]->OnAttach(toAttach);
+            // stack[m_layerInsertPosition]->OnAttach(toAttach);
 
             m_layerInsertPosition++;
         }
@@ -50,6 +55,14 @@ namespace PN
             stack[i]->OnDetach();
 
             delete stack[i];
+        }
+    }
+
+    void LayerStack::AttachLayers(Application *app)
+    {
+        for (size_t layers = 0; layers < m_layerInsertPosition; layers++)
+        {
+            AttachLayer(layers, app);
         }
     }
 

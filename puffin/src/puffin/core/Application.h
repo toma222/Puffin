@@ -25,7 +25,6 @@ namespace PN
     {
     public:
         Window *m_window;
-        graphics::GraphicsAPI *m_graphics;
         LayerStack m_layers;
 
     private:

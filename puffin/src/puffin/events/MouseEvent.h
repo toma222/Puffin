@@ -14,7 +14,9 @@ namespace PN
         int m_mouseY;
 
     public:
-        const EventType GetStaticType() { return m_type; }
+        static EventType GetStaticType() { return m_type; }
+
+        EventType GetEventType() const override { return m_type; };
 
         MouseEvent(int X, int Y) : m_mouseX(X), m_mouseY(Y){};
 

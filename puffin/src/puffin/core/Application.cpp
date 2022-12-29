@@ -16,7 +16,6 @@ namespace PN
     {
         // Setting up the application
         m_Open = true;
-        m_graphics = new graphics::GraphicsAPI;
     }
 
     Application::~Application()
@@ -25,14 +24,10 @@ namespace PN
 
         m_window->CleanWindow();
         delete m_window;
-        delete m_graphics;
     }
 
     void Application::InitExternal()
     {
-        PN_CORE_TRACE("Calling the render context to configure the current graphics");
-        m_graphics->m_renderContext->InitGraphics();
-
         // Tell the window to make itself
         PN_CORE_TRACE("InitWindow being called in m_window");
         m_window->InitWindow("Game");
@@ -41,6 +36,8 @@ namespace PN
     void Application::StartApplication()
     {
         PN_CORE_TRACE("Application loop started");
+
+        m_layers.AttachLayers(this);
 
         while (m_Open == true)
         {
@@ -51,7 +48,7 @@ namespace PN
             m_layers.RenderStack();
 
             // Render our things
-            m_graphics->RenderGraphics();
+            // m_graphics->RenderGraphics();
 
             // Update the window and draw whatever we put in the draw buffer or something
             m_window->UpdateWindow();

@@ -22,7 +22,7 @@ namespace PN
 
         void GraphicsAPI::RenderGraphics()
         {
-            glDrawArrays(GL_TRIANGLES, 0, 6);
+            glDrawArrays(GL_TRIANGLES, 0, 12);
         }
     } // namespace Render
 } // namespace NP

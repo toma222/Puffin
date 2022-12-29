@@ -6,26 +6,55 @@
 
 namespace PN
 {
-    enum EventType
+    enum PUFFIN_API EventType
     {
-        KEYBOARD,
-        MOUSE
+        KEYDOWN,
+        MOUSEMOVE
     };
 
-    class Event
+    class PUFFIN_API Event
     {
     private:
-        EventType m_type;
+        const static EventType m_type;
 
     public:
-        Event(EventType type);
-        ~Event();
+        ~Event()
+        {
+            return;
+        }
 
-        void Dispach();
+        EventType GetType() { return m_type; };
+
+        bool Handled;
     };
 
-    Event::Event(EventType type)
+    class PUFFIN_API EventDispatcher
     {
-        m_type = type;
-    }
+    private:
+        Event *m_event;
+
+    public:
+        EventDispatcher(Event *e)
+        {
+            e = m_event;
+        }
+
+        // T is event class, F is the function to call
+        // @param func must be a funtion that takes in event and return bool
+        template <typename T, typename F>
+        bool Dispatch(const F &func)
+        {
+            // Check if the classes are the same
+            if (m_event->GetType() = T::GetStaticType(static_cast<T *>(m_event)))
+            {
+                // Call the function
+                m_event->Handled |= func(m_event);
+                return true;
+            }
+
+            return false;
+        }
+
+        ~EventDispatcher();
+    };
 } // namespace PN

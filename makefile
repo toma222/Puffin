@@ -119,6 +119,6 @@ run:
 clean:
 	@echo begining clean
 	@echo cleaning puffin library object files
-	del $(OBJ)
+	del $(PUFFINCLEANFILES)
 	del obj\game.o
 	

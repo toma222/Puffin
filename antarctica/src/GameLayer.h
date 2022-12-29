@@ -15,6 +15,11 @@ public:
     Puffin::Application *m_attached;
 };
 
+bool someFunction()
+{
+    return true;
+}
+
 void GameLayer::OnAttach(Puffin::Application *attachTo)
 {
     ATTACH_APPLICATION;
@@ -31,6 +36,13 @@ void GameLayer::OnAttach(Puffin::Application *attachTo)
             {{0, 5, -1}, {1.f, 0.f, 0.f}}};
 
     Puffin::graphics::RenderVertices(vertices, 6);
+
+    Puffin::MouseEvent mouse(10, 10);
+
+    Puffin::EventDispatcher *dis = new Puffin::EventDispatcher((Puffin::Event *)(&mouse));
+
+    // dis.Dispatch<Puffin::MouseEvent, someFunction>();
+    dis->Dispatch<Puffin::MouseEvent>(someFunction);
 }
 
 void GameLayer::OnDetach()

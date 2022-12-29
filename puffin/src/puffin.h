@@ -14,10 +14,13 @@
 // ---------- ENTRY POINT ---------- //
 #include "puffin/core/EntryPoint.h"
 
-// ---------- GRAPHICS ----------//
+// ---------- GRAPHICS ---------- //
 #include "puffin/graphics/Context.h"
 #include "puffin/graphics/Graphics.h"
 #include "puffin/graphics/Shader.h"
 #include "puffin/graphics/Vertices.h"
 
+// ---------- EVENTS ---------- //
 #include "puffin/events/Event.h"
+#include "puffin/events/KeyboardEvents.h"
+#include "puffin/events/MouseEvent.h"

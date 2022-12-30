@@ -7,6 +7,8 @@ extern Puffin::Application *CreateApplication();
 
 int main()
 {
+    PN_CORE_TRACE("Calling Application extern from entry point");
+
     // Ask for application
     Puffin::Application *app = CreateApplication();
 

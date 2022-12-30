@@ -10,6 +10,7 @@
 // ---------- PLATFORM THINGS ---------- //
 #include "platform/GLFWContext.h"
 #include "platform/GLFWWindow.h"
+#include "platform/GLFWUtils.h"
 
 // ---------- ENTRY POINT ---------- //
 #include "puffin/core/EntryPoint.h"
@@ -19,6 +20,7 @@
 #include "puffin/graphics/Graphics.h"
 #include "puffin/graphics/Shader.h"
 #include "puffin/graphics/Vertices.h"
+#include "puffin/graphics/PerspectiveCamera.h"
 
 // ---------- EVENTS ---------- //
 #include "puffin/events/Event.h"

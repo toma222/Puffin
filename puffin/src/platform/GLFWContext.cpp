@@ -16,11 +16,6 @@ namespace PN
     {
         void GLFWContext::InitGraphics()
         {
-
-            // tell glfw to wake up
-
-            PN_CORE_INFO("Initilizing GLFW");
-
             glfwSetErrorCallback(AssertErrorGLFW);
 
             if (glfwInit() != 1)

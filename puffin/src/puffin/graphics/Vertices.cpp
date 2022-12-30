@@ -16,14 +16,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Vertices.h"
-
-/*
-static const Vertex vertices[3] =
-    {
-        {{-0.6f, -0.4f}, {1.f, 0.f, 0.f}},
-        {{0.6f, -0.4f}, {0.f, 1.f, 0.f}},
-        {{0.f, 0.6f}, {0.f, 0.f, 1.f}}};
-*/
+#include "Mesh.h"
 
 static const char *vertex_shader_text =
     "#version 330\n"
@@ -50,16 +43,15 @@ namespace PN
 {
     namespace graphics
     {
-        void RenderVertices(Vertex vertices[], int size)
+        void RenderVertices(Shader *shader, Vertex vertices[], int size)
         {
+            PN_CORE_INFO("Creating Shader");
             // Shader shader(
             //     "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicFragmentShader.glsl",
             //    "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicVertexShader.glsl");
 
-            // shader.CompileShader();
-
-            // const char *VertexShader = shader.ReadVertexShader();
-            // const char *FragmentShader = shader.ReadFragmentShader();
+            const char *VertexShader = shader->ReadVertexShader();
+            const char *FragmentShader = shader->ReadFragmentShader();
 
             GLuint vertex_buffer;
             glGenBuffers(1, &vertex_buffer);
@@ -67,14 +59,17 @@ namespace PN
             glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * size, vertices, GL_STATIC_DRAW);
 
             const GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+            glShaderSource(vertex_shader, 1, &VertexShader, NULL);
             glCompileShader(vertex_shader);
 
             const GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+            glShaderSource(fragment_shader, 1, &FragmentShader, NULL);
             glCompileShader(fragment_shader);
 
             const GLuint program = glCreateProgram();
+
+            shader->SetShaderID(program);
+
             glAttachShader(program, vertex_shader);
             glAttachShader(program, fragment_shader);
             glLinkProgram(program);
@@ -93,10 +88,8 @@ namespace PN
             glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
                                   sizeof(Vertex), (void *)offsetof(Vertex, col));
 
-            glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 100.0f); // glm::ortho(0.f, 9.f, 0.f, 16.f, -1.f, 100.f); // glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 100.0f);
+            shader->UseShader();
 
-            glUseProgram(program);
-            glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(proj));
             glBindVertexArray(vertex_array);
         }
     } // namespace graphics

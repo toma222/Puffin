@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Mesh.h"
+
 namespace PN
 {
     namespace graphics
@@ -15,7 +17,7 @@ namespace PN
             glm::vec3 col;
         } Vertex;
 
-        void PUFFIN_API RenderVertices(Vertex vertices[], int size);
+        void PUFFIN_API RenderVertices(Shader *shader, Vertex vertices[], int size);
     } // namespace graphics
 
 } // namespace PN

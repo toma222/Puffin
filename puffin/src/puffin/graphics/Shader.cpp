@@ -8,6 +8,15 @@
 #include <iostream>
 #include <string>
 
+#define GLAD_GL_IMPLEMENTATION
+#include <glad/gl.h>
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 namespace PN
 {
     namespace graphics
@@ -20,8 +29,8 @@ namespace PN
             std::ifstream fShaderFile;
 
             // ensure ifstream objects can throw exceptions:
-            vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-            fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+            vShaderFile.exceptions(std::ifstream::failbit);
+            fShaderFile.exceptions(std::ifstream::failbit);
 
             try
             {
@@ -63,6 +72,27 @@ namespace PN
         {
             return m_textVertexShader.c_str();
         }
+
+        void Shader::SetBool(const std::string &name, bool val)
+        {
+            glUniform1i(glGetUniformLocation(m_shaderID, name.c_str()), val);
+        }
+
+        void Shader::SetFloat(const std::string &name, float val)
+        {
+            glUniform1f(glGetUniformLocation(m_shaderID, name.c_str()), val);
+        }
+
+        void Shader::SetMat4(const std::string &name, glm::mat4 val)
+        {
+            glUniformMatrix4fv(glGetUniformLocation(m_shaderID, name.c_str()), 1, GL_FALSE, glm::value_ptr(val));
+        }
+
+        void Shader::SetVec3(const std::string &name, glm::vec3 val)
+        {
+            glUniformMatrix3fv(glGetUniformLocation(m_shaderID, name.c_str()), 1, GL_FALSE, glm::value_ptr(val));
+        }
+
     } // namespace graphics
 
 } // namespace PN

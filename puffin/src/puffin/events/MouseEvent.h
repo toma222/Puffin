@@ -1,3 +1,4 @@
+#pragma once
 
 #include "puffin/core/Base.h"
 #include "puffin/core/Logging.h"

@@ -7,6 +7,10 @@
 #include "platform/GLFWContext.h"
 #include "platform/GLFWWindow.h"
 
+#include <string>
+#include <iostream>
+#include <memory>
+
 namespace PN
 {
     namespace graphics

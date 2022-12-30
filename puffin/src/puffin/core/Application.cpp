@@ -14,29 +14,24 @@ namespace PN
 {
     Application::Application()
     {
-        // Setting up the application
         m_Open = true;
     }
 
     Application::~Application()
     {
-        PN_CORE_CLEAN("Application::~Application Cleaning Application");
-
         m_window->CleanWindow();
         delete m_window;
     }
 
     void Application::InitExternal()
     {
-        // Tell the window to make itself
-        PN_CORE_TRACE("InitWindow being called in m_window");
+        PN_CORE_TRACE("Application initializing external things");
         m_window->InitWindow("Game");
     }
 
     void Application::StartApplication()
     {
-        PN_CORE_TRACE("Application loop started");
-
+        PN_CORE_TRACE("Attaching all layers to the application");
         m_layers.AttachLayers(this);
 
         while (m_Open == true)

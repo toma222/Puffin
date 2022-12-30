@@ -10,10 +10,9 @@
 // Creates the CONTEXT, WINDOW, and the APPLICATION
 Puffin::Application *CreateApplication()
 {
-    GM_CORE_INFO("Making application");
+    GM_CORE_TRACE("Creating Application for from extern");
     Puffin::Application *app = new Puffin::Application;
 
-    GM_CORE_INFO("Making GLFW window");
     app->SetWindow<Puffin::GLFWWindow>();
 
     app->m_layers.AddLayer<GameLayer>(app);

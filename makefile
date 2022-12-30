@@ -27,7 +27,7 @@ PUFFIN_FILES += $(PUFFIN_SRC)/puffin/core/Application.cpp $(PUFFIN_SRC)/puffin/c
 PUFFIN_FILES += $(PUFFIN_SRC)\platform\GLFWWindow.cpp $(PUFFIN_SRC)\platform\GLFWContext.cpp
 
 # PUFFIN RENDER FILES
-PUFFIN_FILES += $(PUFFIN_SRC)\puffin\graphics\Graphics.cpp $(PUFFIN_SRC)\puffin\graphics\Context.cpp $(PUFFIN_SRC)\puffin\graphics\Vertices.cpp $(PUFFIN_SRC)\puffin\graphics\Shader.cpp
+PUFFIN_FILES += $(PUFFIN_SRC)\puffin\graphics\Graphics.cpp $(PUFFIN_SRC)\puffin\graphics\Context.cpp $(PUFFIN_SRC)\puffin\graphics\Vertices.cpp $(PUFFIN_SRC)\puffin\graphics\Shader.cpp $(PUFFIN_SRC)\puffin\graphics\PerspectiveCamera.h
 
 INCLUDE += -I$(PUFFIN_SRC)
 PUFFIN_INCLUDE = -Ipuffin/vendor -I$(PUFFIN_SRC)

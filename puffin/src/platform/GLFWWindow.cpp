@@ -40,6 +40,9 @@ namespace PN
         glfwMakeContextCurrent(m_window);
 
         gladLoadGL(glfwGetProcAddress);
+
+        // Enable depth
+        glEnable(GL_DEPTH_TEST);
     }
 
     void GLFWWindow::ClearWindow()

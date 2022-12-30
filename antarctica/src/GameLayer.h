@@ -33,19 +33,15 @@ GameLayer::GameLayer() : m_shader("C:/Users/Aidan/Documents/OtherUsslessProjects
                                   "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicVertexShader.glsl")
 {
     m_graphics = Puffin::MakeContextForGLFW();
-
-    // m_shader("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicFragmentShader.glsl",
-    //                                         "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/test/shader/BasicVertexShader.glsl");
-
     m_graphics->m_renderContext->SetBackfaceCulling(false);
-
-    m_camera = new Puffin::graphics::PerspectiveCamera(glm::vec2(500, 500), glm::vec3(0.0f, 0.0f, 8.0f));
-
     m_shader.CompileShader();
 }
 
 void GameLayer::OnAttach(Puffin::Application *attachTo)
 {
+
+    m_camera = new Puffin::graphics::PerspectiveCamera(glm::vec2(attachTo->m_window->GetWidth(), attachTo->m_window->GetHeight()), glm::vec3(0.0f, 0.0f, 8.0f));
+
     ATTACH_APPLICATION;
     GM_CORE_TRACE("Game Layer Attached and running on attach code");
 
@@ -102,7 +98,7 @@ void GameLayer::OnDetach()
 
 void GameLayer::Update()
 {
-    m_camera->Translate(glm::vec3(0, 0.01f, 0));
+    m_camera->Translate(glm::vec3(0.01f, 0, 0));
     glm::mat4 proj = m_camera->GetCameraProjectionMatrix(); // glm::perspective(glm::radians(45.0f), (float)500 / (float)500, 0.1f, 100.0f);
     m_shader.SetMat4("MVP", proj);
     m_graphics->RenderGraphics();

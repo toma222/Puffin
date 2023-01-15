@@ -1,0 +1,5 @@
+
+namespace editor
+{
+
+} // namespace editor

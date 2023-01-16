@@ -14,7 +14,6 @@
 
 puffin::Application *CreateApplication()
 {
-    GM_CORE_INFO("Inside the create application function");
     editor::EditorApplication *editor = new editor::EditorApplication();
 
     editor->SetEditorGUI();

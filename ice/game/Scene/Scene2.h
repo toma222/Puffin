@@ -13,6 +13,7 @@ namespace game
     {
     private:
         static std::string s_sceneName;
+        puffin::Container *m_container;
 
     public:
         void ClearScene() override;
@@ -22,6 +23,15 @@ namespace game
         void StartScene() override;
 
         std::string GetName() override { return Scene2::s_sceneName; };
-    };
 
+        Scene2()
+        {
+        }
+
+        ~Scene2()
+        {
+            GM_CORE_CLEAN("Destroying Scene 2");
+            // delete m_sceneContainer;
+        };
+    };
 } // namespace game

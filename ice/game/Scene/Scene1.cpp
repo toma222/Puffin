@@ -1,5 +1,9 @@
 
 #include <puffin.h>
+#include <string>
+
+#include "Layer/GameLayer.h"
+
 #include "Scene1.h"
 
 namespace game
@@ -7,14 +11,8 @@ namespace game
 
     void Scene1::StartScene()
     {
-        puffin::render::SDLTexture *texture = new puffin::render::SDLTexture(puffin::Application::Get().GetGraphics()->GetRenderer(),
-                                                                             "C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/download.bmp",
-                                                                             192, 108);
-
-        puffin::Application::Get().GetGraphics()->AddTextureToQue(texture, 0);
-
-        puffin::Entity *entity = m_sceneContainer->AddEntity();
-        puffin::components::Transform *trans = entity->GetComponent<puffin::components::Transform>();
+        puffin::Entity *entity = GameLayer::m_currentContainer->AddEntity();
+        entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/download.bmp", 0);
     }
 
     void Scene1::UpdateScene()
@@ -23,14 +21,13 @@ namespace game
 
     void Scene1::ClearScene()
     {
-        // Clear the render que
         GM_CORE_TRACE("Clearing scene");
+        GameLayer::m_currentContainer->ClearScene();
         puffin::Application::Get().GetGraphics()->ClearTextureRenderQue();
     }
 
     void Scene1::DestroyScene()
     {
-        delete m_sceneContainer;
     }
 
     std::string Scene1::s_sceneName = "Scene 1";

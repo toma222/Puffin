@@ -1,33 +1,31 @@
-
 #include "Core/Container.h"
 
 #include "Component.h"
 
-#include <SDL2/SDL.h>
+#include "Rendering/PTexture.h"
 
 namespace puffin
 {
     namespace components
     {
-        class Transform : public Component
+        class Image : public Component
         {
-        public:
-            int layer;
-            SDL_Rect transformRect;
-
-            const static int32_t BIT_MASK_INDEX = 0;
+        private:
+            render::SDLTexture *m_texture;
 
         public:
+            const static int32_t BIT_MASK_INDEX = 1;
+
+        public:
+            // Looks at the transform for it's scale and position
             void UpdateComponent() override;
             void StartComponent() override;
             void UpdateComponentImGui() override;
 
-            void Translate(int x, int y);
-
             Entity *m_entity;
 
-            Transform(Entity *entity, int x, int y, int w, int h);
-            ~Transform() override;
+            Image(Entity *entity, std::string path, int layer);
+            ~Image() override;
         };
     } // namespace components
 

@@ -8,7 +8,7 @@ namespace puffin
     class Scene
     {
     protected:
-        Container *m_sceneContainer;
+        // Container *m_sceneContainer;
 
     public:
         virtual void ClearScene();
@@ -18,11 +18,11 @@ namespace puffin
         virtual void StartScene();
 
         virtual std::string GetName();
-        Container *GetContainer() { return m_sceneContainer; };
+        // Container *GetContainer() { return m_sceneContainer; };
 
-        void CreateContainer()
-        {
-            m_sceneContainer = new Container(100);
-        }
+        // void CreateContainer()
+        // {
+        //     m_sceneContainer = new Container(100);
+        // }
     };
 } // namespace puffin

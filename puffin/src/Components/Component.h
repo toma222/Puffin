@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Core.h"
+#include "Core/Logging.h"
 
 namespace puffin
 {
@@ -16,6 +17,12 @@ namespace puffin
             virtual void UpdateComponentImGui();
             virtual void StartComponent();
             // virtual ~Component() = default;
+
+            virtual ~Component() = default;
+
+            //{
+            //    PN_CORE_CLEAN("Destroying Component");
+            //}
         };
     } // namespace components
 

@@ -2,7 +2,9 @@
 #pragma once
 
 #include "Core.h"
+#include "Logging.h"
 #include "Components/Component.h"
+
 #include <memory>
 #include <vector>
 
@@ -19,13 +21,27 @@ namespace puffin
         short int m_componentCount;
 
         // only 32 components allowed
-        std::array<components::Component *, 32> m_components;
+        std::vector<components::Component *> m_components;
 
     public:
         Entity(unsigned int ID)
         {
             m_ID = ID;
             m_componentCount = 0;
+            m_components.resize(32);
+        }
+
+        ~Entity()
+        {
+            PN_CORE_CLEAN("Entity destructor called");
+
+            for (auto *component : m_components)
+            {
+                if (component != nullptr)
+                {
+                    delete component;
+                }
+            }
         }
 
         template <typename T, typename... Args>
@@ -49,6 +65,7 @@ namespace puffin
 
         void UpdateComponents();
         void UpdateComponentsImGui();
+        void CleanComponentVector();
     };
 
     class Container
@@ -61,11 +78,12 @@ namespace puffin
         unsigned int m_IDCounter;
 
         Container(int initialSize);
+        ~Container();
+
         Entity *AddEntity();
 
         void UpdateComponents();
         void RenderImGuiComponents();
-
-        // @warning This is a tomorrow problem...
+        void ClearScene();
     };
 } // namespace pn

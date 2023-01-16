@@ -4,6 +4,8 @@
 #include "PWindow.h"
 #include "PTexture.h"
 
+#include "Core/Logging.h"
+
 #include "SDL2/SDL.h"
 
 namespace puffin
@@ -12,12 +14,12 @@ namespace puffin
     {
         SDLRenderer::SDLRenderer(SDLWindow *window, int index, Uint32 flags)
         {
-            // m_renderer = SDL_CreateRender(window.g)
-            m_render = SDL_CreateRenderer(window->get(), index, flags);
+            m_render = SDL_CreateRenderer(window->GetWindow(), index, flags);
         }
 
         SDLRenderer::~SDLRenderer()
         {
+            PN_CORE_CLEAN("SDLRenderer destructor");
         }
 
         void SDLRenderer::Clear()

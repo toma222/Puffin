@@ -22,6 +22,18 @@ namespace game
         void StartScene() override;
 
         std::string GetName() override { return Scene1::s_sceneName; };
+
+        Scene1()
+        {
+            // if (m_sceneContainer == nullptr)
+            //     CreateContainer();
+        }
+
+        ~Scene1()
+        {
+            GM_CORE_CLEAN("Destroying Scene 1");
+            // delete m_sceneContainer;
+        };
     };
 
 } // namespace game

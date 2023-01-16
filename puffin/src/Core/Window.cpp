@@ -24,7 +24,6 @@ namespace puffin
 
         m_window = new render::SDLWindow("puffin engine", 0, 0, w, h, SDL_WINDOW_FULLSCREEN_DESKTOP);
         m_window->SetWindowSurface();
-        PN_CORE_TRACE("Window constructor called");
 
         m_props.m_height = h;
         m_props.m_width = w;
@@ -32,8 +31,7 @@ namespace puffin
 
     Window::~Window()
     {
-        PN_CORE_CLEAN("destructor for Window called");
-
+        PN_CORE_CLEAN("Window Context destroyed");
         delete m_window;
     }
 

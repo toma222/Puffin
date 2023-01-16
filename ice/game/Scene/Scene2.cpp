@@ -1,15 +1,17 @@
 
 #include "Scene2.h"
 
+#include "Layer/GameLayer.h"
+
 namespace game
 {
     void Scene2::StartScene()
     {
-        puffin::render::SDLTexture *texture = new puffin::render::SDLTexture(puffin::Application::Get().GetGraphics()->GetRenderer(),
-                                                                             "C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp",
-                                                                             192, 108);
+        if (GameLayer::m_currentContainer == nullptr)
+            printf("been deleted :(\n");
 
-        puffin::Application::Get().GetGraphics()->AddTextureToQue(texture, 0);
+        puffin::Entity *entity = GameLayer::m_currentContainer->AddEntity();
+        entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp", 0);
     }
 
     void Scene2::UpdateScene()
@@ -20,12 +22,12 @@ namespace game
     {
         GM_CORE_TRACE("Clearing scene");
 
+        GameLayer::m_currentContainer->ClearScene();
         puffin::Application::Get().GetGraphics()->ClearTextureRenderQue();
     }
 
     void Scene2::DestroyScene()
     {
-        delete m_sceneContainer;
     }
 
     std::string Scene2::s_sceneName = "Scene 2";

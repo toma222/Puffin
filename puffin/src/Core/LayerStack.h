@@ -13,6 +13,14 @@ namespace puffin
         int m_layerStackLocation;
 
     public:
+        ~LayerStack()
+        {
+            PN_CORE_CLEAN("LayerStack destructor Called");
+
+            for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
+                free(stack[lIndex]);
+        }
+
         void InitLayerStack() { m_layerStackLocation = 0; };
 
         Layer *stack[5];

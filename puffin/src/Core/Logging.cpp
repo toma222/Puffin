@@ -10,7 +10,6 @@ namespace puffin
     {
         m_logginLevel = INFO;
         m_name = name;
-        // PN_CORE_TRACE("Constructor for a logging context has been called");
     }
 
     void Logging::SetLoggingLevel(LOGGING_LEVEL level)

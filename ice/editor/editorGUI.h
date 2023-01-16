@@ -54,7 +54,7 @@ namespace editor
             ImGui::Text("Scene Data");
             ImGui::Text("   name : %s", game::GameLayer::s_currentScene->GetName().c_str());
             ImGui::Text("Container");
-            ImGui::Text("   entities : %i", game::GameLayer::s_currentScene->GetContainer()->m_IDCounter);
+            ImGui::Text("   entities : %i", game::GameLayer::m_currentContainer->m_IDCounter);
 
             ImGui::EndChild();
 
@@ -62,7 +62,7 @@ namespace editor
 
             ImGui::Begin("Entities");
 
-            game::GameLayer::s_currentScene->GetContainer()->RenderImGuiComponents();
+            game::GameLayer::m_currentContainer->RenderImGuiComponents();
 
             ImGui::End();
 
@@ -110,7 +110,7 @@ namespace editor
             ImGui::GetStyle().PopupRounding = 8;
             ImGui::GetStyle().ScrollbarRounding = 16;
 
-            ImGui_ImplSDL2_InitForSDLRenderer(window->get(), renderer->get());
+            ImGui_ImplSDL2_InitForSDLRenderer(window->GetWindow(), renderer->get());
             ImGui_ImplSDLRenderer_Init(renderer->get());
         };
     };

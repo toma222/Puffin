@@ -15,6 +15,7 @@ namespace game
         void Start() override;
 
         static puffin::Scene *s_currentScene;
+        static puffin::Container *m_currentContainer;
 
         template <typename T>
         void SetCurrentScene()
@@ -22,7 +23,6 @@ namespace game
             if (s_currentScene == nullptr)
             {
                 s_currentScene = new T();
-                s_currentScene->CreateContainer();
             }
             else
             {
@@ -33,7 +33,6 @@ namespace game
 
                 s_currentScene = new T();
                 s_currentScene->StartScene();
-                s_currentScene->CreateContainer();
             }
         }
     };

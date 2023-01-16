@@ -30,7 +30,7 @@ namespace editor
         {
             bool open = true;
 
-            m_gui->StartGUI(m_window->GetWindow(), m_graphics->GetRenderer());
+            m_gui->StartGUI(m_window->GetWindow(), m_graphics->GetRenderer().get());
             m_layerStack->AttachLayers();
 
             while (open == true)
@@ -54,7 +54,7 @@ namespace editor
                 m_layerStack->UpdateLayers();
                 m_graphics->RenderTextures();
 
-                m_gui->UpdateGUI(m_graphics->GetRenderTexture());
+                m_gui->UpdateGUI(m_graphics->GetRenderTexture().get());
                 m_graphics->RenderPresent();
                 m_window->UpdateWindow();
             }

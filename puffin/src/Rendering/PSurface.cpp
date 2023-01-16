@@ -57,7 +57,7 @@ namespace puffin
 
         SDLSurface::~SDLSurface()
         {
-            PN_CORE_CLEAN("Cleaning surface");
+            PN_CORE_CLEAN("SDLSurface destructor has been called");
 
             // free(m_surface);
             // free(m_surfaceRect);

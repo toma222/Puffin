@@ -25,7 +25,10 @@ namespace puffin
             SDL_Surface *surface = IMG_Load(imagePath.c_str());
 
             if (surface == NULL)
-                std::cout << "could not load surface\n";
+            {
+                PN_CORE_FATAL("Could not load image : PATH ->");
+                std::cout << imagePath.c_str() << "\n";
+            }
 
             m_texture = SDL_CreateTextureFromSurface(renderer->get(), surface);
 
@@ -41,7 +44,7 @@ namespace puffin
 
         SDLTexture::~SDLTexture()
         {
-            PN_CORE_CLEAN("Cleaning the SDL texture");
+            PN_CORE_CLEAN("SDL Texture destructor called");
 
             SDL_DestroyTexture(m_texture);
         }

@@ -22,18 +22,20 @@ namespace puffin
             Uint32 flags;
         };
 
-        typedef struct
-        {
-            int layer;
-            render::SDLTexture *texture;
-        } QueTextureItem;
+        // typedef struct
+        // {
+        //     int layer;
+        //     render::SDLTexture *texture;
+        // } QueTextureItem;
 
         struct GraphicsProperties *m_graphicsProps;
-        render::SDLRenderer *m_renderer;
+
+        Ref<render::SDLRenderer> m_renderer;
+        Ref<render::SDLTexture> m_renderTexture;
+
         std::vector<render::SDLTexture *> m_textureQue;
 
         // All things rendered are stored in the render texture
-        render::SDLTexture *m_renderTexture;
 
     public:
         // Creates the SDL context
@@ -53,11 +55,7 @@ namespace puffin
         void AddTextureToQue(render::SDLTexture *texture, int layer);
         void ClearTextureRenderQue();
 
-        render::SDLRenderer *GetRenderer()
-        {
-            return m_renderer;
-        };
-
-        render::SDLTexture *GetRenderTexture() { return m_renderTexture; };
+        Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };
+        Ref<render::SDLTexture> GetRenderTexture() { return m_renderTexture; };
     };
 } // namespace puffin

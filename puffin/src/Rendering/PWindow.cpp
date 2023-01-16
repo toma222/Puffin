@@ -13,7 +13,6 @@ namespace puffin
         SDLWindow::SDLWindow(std::string title, int x, int y, int width, int height, Uint32 flags)
         {
             m_window = SDL_CreateWindow(title.c_str(), x, y, width, height, flags);
-            // m_windowSurface = new SDLSurface(SDL_GetWindowSurface(m_window));
             m_RendererCreated = false;
         }
 
@@ -21,7 +20,6 @@ namespace puffin
         SDLWindow::SDLWindow(int x, int y, int width, int height)
         {
             m_window = SDL_CreateWindow("puffin engine", x, y, width, height, 0);
-            // m_windowSurface = new SDLSurface(SDL_GetWindowSurface(m_window));
             m_RendererCreated = false;
         }
 
@@ -29,7 +27,6 @@ namespace puffin
         {
             PN_CORE_CLEAN("SDLWindow destructor called");
             SDL_DestroyWindow(m_window);
-            // delete m_windowSurface;
         }
 
         void SDLWindow::UpdateSurface()

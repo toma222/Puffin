@@ -8,6 +8,7 @@
 #include "SDL2/SDL.h"
 
 #include <string>
+#include <memory>
 
 namespace puffin
 {
@@ -17,8 +18,8 @@ namespace puffin
         {
         private:
             SDL_Window *m_window;
-            // SDLSurface *m_windowSurface;
-            // Ref<SDLSurface> *m_windowSurface;
+            //  SDLSurface *m_windowSurface;
+            //
 
             bool m_RendererCreated;
 
@@ -30,7 +31,7 @@ namespace puffin
 
             void UpdateSurface();
 
-            SDL_Window *get() { return m_window; };
+            SDL_Window *GetWindow() { return m_window; };
             SDL_Surface *GetWindowSurface() { return SDL_GetWindowSurface(m_window); };
             SDLSurface *SetWindowSurface();
         };

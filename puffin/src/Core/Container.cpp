@@ -15,22 +15,15 @@
 
 namespace puffin
 {
-    Container::Container(int initialSize)
-    {
-        PN_CORE_INFO("Container Constructor called");
-        m_entities.resize(10);
-
-        m_IDCounter = 0;
-    }
 
     Entity *Container::AddEntity()
     {
-
         m_IDCounter++;
 
         Entity *entity = new Entity(m_IDCounter);
 
-        entity->AddComponent<components::Transform>((float)0, (float)0, (float)0);
+        // Every entity needs a transform!!!!
+        entity->AddComponent<components::Transform>(0, 0, 100, 100);
 
         m_entities.push_back(entity);
 
@@ -44,8 +37,6 @@ namespace puffin
             if (entities != nullptr)
                 entities->UpdateComponentsImGui();
         }
-
-        // m_entities[0]->UpdateComponentsImGui();
     }
 
     void Container::UpdateComponents()
@@ -60,18 +51,49 @@ namespace puffin
         // }
     }
 
+    void Entity::CleanComponentVector()
+    {
+        m_components.clear();
+    }
+
+    Container::Container(int initialSize)
+    {
+        m_entities.resize(10);
+
+        m_IDCounter = 0;
+    }
+
+    Container::~Container()
+    {
+        PN_CORE_CLEAN("Container destructor called");
+
+        for (auto &&entities : m_entities)
+        {
+            delete entities;
+        }
+    }
+
+    void Container::ClearScene()
+    {
+        for (auto *entity : m_entities)
+        {
+            delete entity;
+        }
+
+        m_entities.clear();
+        m_IDCounter = 0;
+    }
+
     void Entity::UpdateComponentsImGui()
     {
-        ImGui::BeginChild(m_ID, ImVec2(320, m_componentCount * 160), true);
+        ImGui::BeginChild(m_ID, ImVec2(320, m_componentCount * 200), true);
         ImGui::Text("Entity ID %i", m_ID);
 
-        // for (auto &&comp : m_components)
-        // {
-        //     if (comp != nullptr)
-        //         comp->UpdateComponentImGui();
-        // }
-
-        m_components[0]->UpdateComponentImGui();
+        for (auto *comp : m_components)
+        {
+            if (comp != nullptr)
+                comp->UpdateComponentImGui();
+        }
 
         ImGui::EndChild();
     }

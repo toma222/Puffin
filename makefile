@@ -13,7 +13,7 @@ IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o o
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src
 LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image
 
-ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Transform.o obj/Sprite.o
+ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Transform.o obj/Image.o obj/Instrumentor.o
 EDITOR_OBJ = obj/EditorApplication.o
 GAMEOBJ = obj/GameLayer.o obj/Scene1.o obj/Scene2.o
 
@@ -26,6 +26,10 @@ obj/%.o : include/windows/imgui/backends/%.cpp
 	$(COMPILER) -Wall -O2 -c -o $@ $<  $(INCLUDE_PATH)
 
 obj/%.o : puffin/src/Core/%.cpp puffin/src/Core/%.h
+	@echo ------ COMPILING  FILE $< -------
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+
+obj/%.o : puffin/src/Debug/%.cpp puffin/src/Debug/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
@@ -43,15 +47,15 @@ obj/%.o : ice/%.cpp ice/%.h
 
 obj/%.o : ice/editor/%.cpp ice/editor/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : ice/game/Layer/%.cpp ice/game/Layer/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : ice/game/Scene/%.cpp ice/game/Scene/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 
 make: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)

@@ -19,20 +19,15 @@ namespace puffin
         s_Instance = this;
 
         // Init the systems for the application
-        m_graphics = new Graphics(0); // std::make_unique<Graphics>(0);
-
-        m_window = std::make_unique<Window>();
-
-        m_layerStack = new LayerStack();
+        m_graphics = std::make_shared<Graphics>(0);
+        m_window = std::make_shared<Window>();
+        m_layerStack = std::make_shared<LayerStack>();
 
         m_graphics->CreateRenderer(m_window->GetWindow());
-        PN_CORE_TRACE("Created Application");
     }
 
     Application::~Application()
     {
-        // Just want to check that we get NO memory links
-        PN_CORE_CLEAN("Application deconstructor called");
         s_Instance = nullptr;
     }
 

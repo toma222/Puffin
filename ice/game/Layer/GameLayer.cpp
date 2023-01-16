@@ -9,12 +9,14 @@
 namespace game
 {
     puffin::Scene *GameLayer::s_currentScene = nullptr;
+    puffin::Container *GameLayer::m_currentContainer = nullptr;
 
     void GameLayer::OnAttach()
     {
         GM_CORE_INFO("Attach called for game layer");
 
-        // Starting scene is Scene1
+        m_currentContainer = new puffin::Container(10);
+
         SetCurrentScene<Scene1>();
         s_currentScene->StartScene();
     }

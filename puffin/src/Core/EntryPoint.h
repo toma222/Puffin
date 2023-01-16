@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     delete app;
 
-    PN_CORE_CLEAN("Clean up complete, we did well!");
+    PN_CORE_INFO("Clean up complete, we did well!");
 
     return 0;
 }

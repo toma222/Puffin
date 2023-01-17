@@ -33,6 +33,7 @@ namespace game
 
     int tick = 0;
     bool swap = false;
+    bool scene1 = true;
 
     void GameLayer::Update()
     {
@@ -44,11 +45,19 @@ namespace game
         }
         else
         {
-            if (swap == false)
+            tick = 0;
+
+            if (scene1)
             {
-                swap = true;
                 GM_CORE_INFO("Swapping scenes");
                 SetCurrentScene<Scene2>();
+                scene1 = false;
+            }
+            else
+            {
+                GM_CORE_INFO("Swapping scenes");
+                SetCurrentScene<Scene1>();
+                scene1 = true;
             }
         }
     }

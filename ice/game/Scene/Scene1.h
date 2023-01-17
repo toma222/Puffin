@@ -12,6 +12,9 @@ namespace game
     class Scene1 : public puffin::Scene
     {
     private:
+        int m_ticks = 0;
+
+    private:
         static std::string s_sceneName;
 
     public:

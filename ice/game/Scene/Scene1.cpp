@@ -5,6 +5,7 @@
 #include "Layer/GameLayer.h"
 
 #include "Scene1.h"
+#include "Scene2.h"
 
 namespace game
 {

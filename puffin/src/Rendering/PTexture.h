@@ -20,6 +20,7 @@ namespace puffin
         {
         private:
             std::shared_ptr<SDL_Rect> m_surfaceRect;
+            SDL_Texture *m_texture;
 
         public:
             // Make texture from a surface
@@ -28,8 +29,6 @@ namespace puffin
             SDLTexture(SDLRenderer *renderer, int width, int height);
 
             SDLTexture(std::shared_ptr<SDL_Rect> attachToRect, SDLRenderer *render, std::string imagePath, int width, int height);
-
-            SDL_Texture *m_texture;
 
             ~SDLTexture();
 

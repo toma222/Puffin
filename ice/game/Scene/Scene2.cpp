@@ -11,8 +11,6 @@ namespace game
 
         entity->GetComponent<puffin::components::Transform>()->transformRect->w = 500;
         entity->GetComponent<puffin::components::Transform>()->transformRect->h = 500;
-
-        entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp", 0);
     }
 
     void Scene2::UpdateScene()

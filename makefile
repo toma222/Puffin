@@ -1,5 +1,5 @@
 
-COMPILER = g++
+COMPILER = C:/Users/100044352/Desktop/engine/clo/portable/gcc/bin/c++.exe
 TARGET = x64
 SYSTEM = windows
 RELEASE_MODE = BUILD_TYPE=debug
@@ -13,9 +13,11 @@ IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o o
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src
 LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image
 
-ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Transform.o obj/Image.o obj/Instrumentor.o
+ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Transform.o obj/Image.o obj/Instrumentor.o obj/Script.o
 EDITOR_OBJ = obj/EditorApplication.o
 GAMEOBJ = obj/GameLayer.o obj/Scene1.o obj/Scene2.o
+
+SCRIPTOBJ = MoveSprite.o
 
 obj/%.o : include/windows/imgui/%.cpp
 	@echo ------ COMPILING IMGUI FILE $< -------

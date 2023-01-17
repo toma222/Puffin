@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Core.h"
+#include "Core/Core.h"
 #include "Core/Logging.h"
 
 namespace puffin

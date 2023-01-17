@@ -13,9 +13,9 @@ namespace puffin
             const static int32_t BIT_MASK_INDEX = -1;
 
         public:
-            virtual void UpdateComponent();
-            virtual void UpdateComponentImGui();
-            virtual void StartComponent();
+            virtual void UpdateComponent(){ return; };
+            virtual void UpdateComponentImGui(){ return; };
+            virtual void StartComponent(){ return; };
             // virtual ~Component() = default;
 
             virtual ~Component() = default;

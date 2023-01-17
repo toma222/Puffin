@@ -7,13 +7,29 @@ using namespace puffin::components;
 
 namespace game
 {
-    class MoveSprite : public Script
+    class MoveSprite : public Component
     {
-    private:
-        /* data */
     public:
-        MoveSprite(/* args */);
-        ~MoveSprite();
+        const static int32_t BIT_MASK_INDEX = 2;
+        Entity *m_entity;
+
+    public:
+        MoveSprite(Entity *entity)
+        {
+            m_entity = entity;
+        }
+
+        void UpdateComponent() override{
+
+        }
+
+        void StartComponent() override{
+
+        }
+
+        void UpdateComponentImGui() override{
+
+        }
     };
 }
 

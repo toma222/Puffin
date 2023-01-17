@@ -1,4 +1,5 @@
 
+#include "Core/Container.h"
 #include "Component.h"
 
 namespace puffin
@@ -8,14 +9,15 @@ namespace puffin
         class Script : public Component
         {
         public:
-            const static int32_t BIT_MASK_INDEX = 1;
-            /* data */
+            const static int32_t BIT_MASK_INDEX = 2;
+            Entity *m_entity;
+            
         public:
-            void UpdateComponent() override;
-            void StartComponent() override;
-            void UpdateComponentImGui() override;
+            virtual void UpdateComponent();
+            virtual void StartComponent();
+            virtual void UpdateComponentImGui();
 
-            Script(/* args */);
+            Script(Entity *entity);
             ~Script();
         };
     }

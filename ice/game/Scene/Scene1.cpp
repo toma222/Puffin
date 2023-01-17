@@ -12,6 +12,10 @@ namespace game
     void Scene1::StartScene()
     {
         puffin::Entity *entity = GameLayer::m_currentContainer->AddEntity();
+
+        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 600;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 600;
+
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/download.bmp", 0);
     }
 

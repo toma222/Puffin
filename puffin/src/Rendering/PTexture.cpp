@@ -19,8 +19,8 @@ namespace puffin
             // SDL_CreateTextureFromSurface(surface.GetSDLSurface());
             m_surfaceRect = std::make_shared<SDL_Rect>();
 
-            m_surfaceRect->h = 1920;
-            m_surfaceRect->w = 1080;
+            m_surfaceRect->h = width;
+            m_surfaceRect->w = height;
             m_surfaceRect->x = 0;
             m_surfaceRect->y = 0;
 

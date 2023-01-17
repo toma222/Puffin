@@ -64,7 +64,7 @@ namespace puffin
         }
 
         SDL_SetRenderTarget(m_renderer->get(), NULL);
-        m_renderer->Copy(m_renderTexture.get());
+        m_renderer->CopyFull(m_renderTexture.get());
     }
 
     void Graphics::RenderPresent()

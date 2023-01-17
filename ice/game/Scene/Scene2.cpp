@@ -7,10 +7,11 @@ namespace game
 {
     void Scene2::StartScene()
     {
-        if (GameLayer::m_currentContainer == nullptr)
-            printf("been deleted :(\n");
-
         puffin::Entity *entity = GameLayer::m_currentContainer->AddEntity();
+
+        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 500;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 500;
+
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp", 0);
     }
 

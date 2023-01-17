@@ -40,10 +40,6 @@ namespace puffin
         while (open == true)
         {
             // poll for events
-            m_graphics->ClearRenderer();
-            m_graphics->RenderTextures();
-
-            m_layerStack->UpdateLayers();
 
             SDL_Event e;
             while (SDL_PollEvent(&e) > 0)
@@ -55,6 +51,9 @@ namespace puffin
                     break;
                 }
             }
+            m_graphics->ClearRenderer();
+            m_graphics->RenderTextures();
+            m_layerStack->UpdateLayers();
 
             m_graphics->RenderPresent();
             m_window->UpdateWindow();

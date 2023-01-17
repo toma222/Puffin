@@ -38,7 +38,7 @@ namespace game
     {
         s_currentScene->UpdateScene();
 
-        if (tick < 100)
+        if (tick < 300)
         {
             tick++;
         }

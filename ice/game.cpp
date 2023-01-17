@@ -14,11 +14,11 @@
 
 puffin::Application *CreateApplication()
 {
-    editor::EditorApplication *editor = new editor::EditorApplication();
+    editor::EditorApplication *editorApp = new editor::EditorApplication();
 
-    editor->SetEditorGUI();
+    editorApp->SetEditorGUI();
 
-    puffin::Application *app = editor;
+    puffin::Application *app = editorApp; // new puffin::Application(); //
     app->GetLayerStack()->AddLayer<game::GameLayer>();
 
     return app;

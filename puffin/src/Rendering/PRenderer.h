@@ -27,6 +27,7 @@ namespace puffin
 
             void Clear();
             void Copy(SDLTexture *texture);
+            void CopyFull(SDLTexture *texture);
             // void Copy(SDLTexture *texture, SDL_Rect *rect);
             void Present();
         };

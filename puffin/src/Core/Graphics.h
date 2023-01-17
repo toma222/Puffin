@@ -33,7 +33,7 @@ namespace puffin
         Ref<render::SDLRenderer> m_renderer;
         Ref<render::SDLTexture> m_renderTexture;
 
-        std::vector<render::SDLTexture *> m_textureQue;
+        std::vector<std::shared_ptr<render::SDLTexture>> m_textureQue;
 
         // All things rendered are stored in the render texture
 
@@ -52,7 +52,7 @@ namespace puffin
         // Presents the changes to the window
         void RenderPresent();
 
-        void AddTextureToQue(render::SDLTexture *texture, int layer);
+        void AddTextureToQue(std::shared_ptr<render::SDLTexture>, int layer);
         void ClearTextureRenderQue();
 
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };

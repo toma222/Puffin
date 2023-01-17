@@ -13,10 +13,12 @@ namespace puffin
     {
         Transform::Transform(Entity *entity, int x, int y, int w, int h)
         {
-            transformRect.x = x;
-            transformRect.y = y;
-            transformRect.w = w;
-            transformRect.h = h;
+            transformRect = std::make_shared<SDL_Rect>();
+
+            transformRect->x = x;
+            transformRect->y = y;
+            transformRect->w = w;
+            transformRect->h = h;
 
             m_entity = entity;
         }
@@ -41,8 +43,8 @@ namespace puffin
 
         void Transform::Translate(int x, int y)
         {
-            transformRect.x += x;
-            transformRect.y += y;
+            transformRect->x += x;
+            transformRect->y += y;
         }
 
         void Transform::UpdateComponentImGui()
@@ -50,10 +52,10 @@ namespace puffin
             ImGui::BeginChild("transform", ImVec2(300, 150), true);
 
             ImGui::Text("Transform Component - COMP ID %i", m_entity->GetEntityID());
-            ImGui::InputInt("X position", &transformRect.x, 0.5f, 2.0f);
-            ImGui::InputInt("Y position", &transformRect.y, 0.5f, 2.0f);
-            ImGui::InputInt("Width", &transformRect.w, 0.5f, 2.0f);
-            ImGui::InputInt("Height", &transformRect.h, 0.5f, 2.0f);
+            ImGui::InputInt("X position", &transformRect->x, 0.5f, 2.0f);
+            ImGui::InputInt("Y position", &transformRect->y, 0.5f, 2.0f);
+            ImGui::InputInt("Width", &transformRect->w, 0.5f, 2.0f);
+            ImGui::InputInt("Height", &transformRect->h, 0.5f, 2.0f);
 
             ImGui::EndChild();
             return;

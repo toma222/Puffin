@@ -29,7 +29,7 @@ namespace puffin
 
         void SDLRenderer::Copy(SDLTexture *texture)
         {
-            SDL_RenderCopy(m_render, texture->get(), NULL, NULL);
+            SDL_RenderCopy(m_render, texture->get(), NULL, texture->GetSDLRect().get());
         }
 
         void SDLRenderer::Present()

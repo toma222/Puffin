@@ -13,7 +13,7 @@ namespace puffin
         {
         public:
             int layer;
-            SDL_Rect transformRect;
+            std::shared_ptr<SDL_Rect> transformRect;
 
             const static int32_t BIT_MASK_INDEX = 0;
 

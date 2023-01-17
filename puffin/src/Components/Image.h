@@ -11,7 +11,9 @@ namespace puffin
         class Image : public Component
         {
         private:
-            render::SDLTexture *m_texture;
+            std::shared_ptr<render::SDLTexture> m_texture;
+            std::string m_filePath;
+            std::string m_fileName;
 
         public:
             const static int32_t BIT_MASK_INDEX = 1;

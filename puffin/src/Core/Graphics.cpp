@@ -45,7 +45,7 @@ namespace puffin
         RenderTextures();
     }
 
-    void Graphics::AddTextureToQue(render::SDLTexture *texture, int layer)
+    void Graphics::AddTextureToQue(std::shared_ptr<render::SDLTexture> texture, int layer)
     {
         m_textureQue.push_back(texture);
     };
@@ -53,10 +53,14 @@ namespace puffin
     void Graphics::RenderTextures()
     {
         SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
+        m_renderer->Clear();
+
         for (auto &&text : m_textureQue)
         {
             if (text != nullptr)
-                m_renderer->Copy(text);
+            {
+                m_renderer->Copy(text.get());
+            }
         }
 
         SDL_SetRenderTarget(m_renderer->get(), NULL);
@@ -76,7 +80,7 @@ namespace puffin
     void Graphics::CreateRenderer(render::SDLWindow *window)
     {
         m_renderer = CreateRef<render::SDLRenderer>(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-        m_renderTexture = std::make_shared<render::SDLTexture>(m_renderer.get(), 100, 100);
+        m_renderTexture = std::make_shared<render::SDLTexture>(m_renderer.get(), 1920, 1080);
 
         if (m_renderer == NULL)
             printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());

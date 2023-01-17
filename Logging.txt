@@ -1,0 +1,17 @@
+17:09:17  PUFFIN  INFO   puffin/src/Core/EntryPoint.h  Main function called
+17:09:17  PUFFIN  INFO   puffin/src/Core/EntryPoint.h  Starting main application loop, watch out world!
+17:09:17  GAME  INFO   ice/editor/editorGUI.h  Start gui called in editorGUI
+17:09:17  GAME  INFO   ice/game/Layer/GameLayer.cpp  Attach called for game layer
+17:09:17  GAME  INFO   ice/game/Layer/GameLayer.cpp  Swapping scenes
+17:09:17  GAME  TRACE  ice/game/Scene/Scene1.cpp  Clearing scene
+17:09:17  PUFFIN  CLEAN  puffin/src/Core/Container.h  Entity destructor called
+17:09:17  PUFFIN  CLEAN  puffin/src/Components/Transform.cpp  Transform Deconstructor called
+17:09:17  PUFFIN  CLEAN  puffin/src/Components/Image.cpp  Image destructor called
+17:09:17  GAME  INFO   ice/game/Layer/GameLayer.cpp  Detach called for game layer
+17:09:17  PUFFIN  CLEAN  puffin/src/Core/LayerStack.h  LayerStack destructor Called
+17:09:17  PUFFIN  CLEAN  puffin/src/Core/Graphics.cpp  Graphics deconstructor called
+17:09:17  PUFFIN  CLEAN  puffin/src/Rendering/PTexture.cpp  SDL Texture destructor called
+17:09:17  PUFFIN  CLEAN  puffin/src/Rendering/PRenderer.cpp  SDLRenderer destructor
+17:09:17  PUFFIN  CLEAN  puffin/src/Core/Window.cpp  Window Context destroyed
+17:09:17  PUFFIN  CLEAN  puffin/src/Rendering/PWindow.cpp  SDLWindow destructor called
+17:09:17  PUFFIN  INFO   puffin/src/Core/EntryPoint.h  Clean up complete, we did well!

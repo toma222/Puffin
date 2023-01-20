@@ -1,4 +1,5 @@
 #include "Core/Container.h"
+#include "Core/ID.h"
 
 #include "Component.h"
 
@@ -15,8 +16,7 @@ namespace puffin
             std::string m_filePath;
             std::string m_fileName;
 
-        public:
-            const static int32_t BIT_MASK_INDEX = 1;
+            const PUFFIN_ID COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         public:
             // Looks at the transform for it's scale and position
@@ -27,6 +27,7 @@ namespace puffin
             Entity *m_entity;
 
             Image(Entity *entity, std::string path, int layer);
+            virtual PUFFIN_ID GetID() { return COMPONENT_ID; };
             ~Image() override;
         };
     } // namespace components

@@ -21,6 +21,8 @@ namespace puffin
             transformRect->h = h;
 
             m_entity = entity;
+
+            printf("Component id %li\n", COMPONENT_ID);
         }
 
         Transform::~Transform()
@@ -51,7 +53,7 @@ namespace puffin
         {
             ImGui::BeginChild("transform", ImVec2(300, 150), true);
 
-            ImGui::Text("Transform Component - COMP ID %i", m_entity->GetEntityID());
+            ImGui::Text("Transform - id %li", COMPONENT_ID);
             ImGui::InputInt("X position", &transformRect->x, 0.5f, 2.0f);
             ImGui::InputInt("Y position", &transformRect->y, 0.5f, 2.0f);
             ImGui::InputInt("Width", &transformRect->w, 0.5f, 2.0f);

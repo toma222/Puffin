@@ -15,6 +15,7 @@
 #include "Core/Gui.h"
 #include "Core/Container.h"
 #include "Core/Scene.h"
+#include "Core/ID.h"
 
 #include "Components/Component.h"
 #include "Components/Transform.h"

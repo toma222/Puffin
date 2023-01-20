@@ -1,5 +1,6 @@
 
 #include "Core/Container.h"
+#include "Core/ID.h"
 
 #include "Component.h"
 
@@ -15,7 +16,7 @@ namespace puffin
             int layer;
             std::shared_ptr<SDL_Rect> transformRect;
 
-            const static int32_t BIT_MASK_INDEX = 0;
+            const PUFFIN_ID COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         public:
             void UpdateComponent() override;
@@ -27,6 +28,7 @@ namespace puffin
             Entity *m_entity;
 
             Transform(Entity *entity, int x, int y, int w, int h);
+            virtual PUFFIN_ID GetID() { return COMPONENT_ID; };
             ~Transform() override;
         };
     } // namespace components

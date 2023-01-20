@@ -4,8 +4,8 @@
 
 #include <SDL2/SDL.h>
 
-#include <Core/EntryPoint.h>
 #include <puffin.h>
+#include <Core/EntryPoint.h>
 
 #include "editor/editorGUI.h"
 #include "editor/EditorApplication.h"

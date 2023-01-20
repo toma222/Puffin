@@ -3,6 +3,7 @@
 
 #include "Core.h"
 #include "Logging.h"
+#include "ID.h"
 #include "Components/Component.h"
 
 #include <memory>
@@ -49,7 +50,7 @@ namespace puffin
         {
             T *comp = new T(this, std::forward<Args>(mArgs)...);
 
-            m_components[T::BIT_MASK_INDEX] = comp;
+            m_components[0] = (components::Component *)comp;
             m_componentCount++;
 
             return comp;
@@ -58,7 +59,26 @@ namespace puffin
         template <typename T>
         T *GetComponent()
         {
-            return (T *)m_components[T::BIT_MASK_INDEX];
+            /*
+            for (auto *c : m_components)
+            {
+                // if (c != nullptr)
+                //{
+                printf("%li", c->BIT_MASK_INDEX);
+                if (c->BIT_MASK_INDEX == T::BIT_MASK_INDEX)
+                {
+                    printf("Found the component\n");
+                }
+                else
+                {
+                    printf("Doesn't exist lol\n");
+                }
+                //}
+            }*/
+            printf("hello %li\n", m_components[0]->COMPONENT_ID);
+
+            PN_CORE_FATAL("PANIC PANIC HASN'T BEEN IMPLEMENTED YET");
+            return nullptr;
         }
 
         unsigned int GetEntityID() { return m_ID; };

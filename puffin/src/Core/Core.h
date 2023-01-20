@@ -7,6 +7,7 @@
 
 namespace puffin
 {
+
     // Thanks to the Cherno for this bit of code!
     template <typename T>
     using Ref = std::shared_ptr<T>;

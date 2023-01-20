@@ -2,11 +2,12 @@
 #pragma once
 
 #include "Application.h"
+#include "ID.h"
 #include "Logging.h"
 
 extern puffin::Application *CreateApplication();
 
-// puffin::Application *puffin::Application::s_Instance = CreateApplication();
+puffin::IDGenerator puffin::IDGenerator::s_generator;
 
 int main(int argc, char *argv[])
 {

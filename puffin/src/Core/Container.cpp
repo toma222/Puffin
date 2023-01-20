@@ -6,6 +6,7 @@
 #include "Core.h"
 #include "Container.h"
 #include "Logging.h"
+#include "ID.h"
 #include "Components/Component.h"
 
 #include <memory>

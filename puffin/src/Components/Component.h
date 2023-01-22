@@ -11,7 +11,7 @@ namespace puffin
         class Component
         {
         public:
-            const PUFFIN_ID COMPONENT_ID = 0;
+            const PUFFIN_ID COMPONENT_ID = 1;
 
         public:
             virtual void UpdateComponent();

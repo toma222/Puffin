@@ -29,6 +29,8 @@ namespace puffin
 {
     namespace components
     {
+        PUFFIN_ID Image::COMPONENT_ID = 0;
+
         Image::Image(Entity *entity, std::string path, int layer)
         {
             m_entity = entity;
@@ -39,14 +41,14 @@ namespace puffin
             // new render::SDLTexture(Application::Get().GetGraphics()->GetRenderer(), path, 100, 100); //
             m_texture = std::make_shared<render::SDLTexture>(m_entity->GetComponent<Transform>()->transformRect, Application::Get().GetGraphics()->GetRenderer().get(), path, 100, 100);
 
-            // Attach the texture rect
-            // m_texture->SetSDLRect(&m_entity->GetComponent<Transform>()->transformRect
-            // Tell the engine to render the texture
             Application::Get()
                 .GetGraphics()
                 ->AddTextureToQue(m_texture, 0);
 
             m_fileName = GetLastSplitString(path, "").c_str();
+
+            if (COMPONENT_ID == 0)
+                COMPONENT_ID = IDGenerator::Get().GetRandomID();
         }
 
         Image::~Image()
@@ -66,7 +68,7 @@ namespace puffin
         {
             ImGui::BeginChild("Image", ImVec2(300, 150), true);
 
-            ImGui::Text("Image Component - COMP ID %i", m_entity->GetEntityID());
+            ImGui::Text("Image - id %lu", COMPONENT_ID);
             ImGui::Text("file path -> %s", m_filePath.c_str());
             ImGui::Text("file name -> %s", m_fileName.c_str());
 

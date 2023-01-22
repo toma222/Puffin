@@ -27,6 +27,7 @@ namespace game
     void Scene1::ClearScene()
     {
         GM_CORE_TRACE("Clearing scene");
+
         GameLayer::m_currentContainer->ClearScene();
         puffin::Application::Get().GetGraphics()->ClearTextureRenderQue();
     }

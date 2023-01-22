@@ -16,18 +16,18 @@ namespace puffin
             std::string m_filePath;
             std::string m_fileName;
 
-            const PUFFIN_ID COMPONENT_ID = IDGenerator::Get().GetRandomID();
+            static PUFFIN_ID COMPONENT_ID;
 
         public:
             // Looks at the transform for it's scale and position
             void UpdateComponent() override;
             void StartComponent() override;
             void UpdateComponentImGui() override;
+            PUFFIN_ID GetID() override { return COMPONENT_ID; };
 
             Entity *m_entity;
 
             Image(Entity *entity, std::string path, int layer);
-            virtual PUFFIN_ID GetID() { return COMPONENT_ID; };
             ~Image() override;
         };
     } // namespace components

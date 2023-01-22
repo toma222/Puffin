@@ -4,6 +4,7 @@
 #include "imgui_impl_sdlrenderer.h"
 
 #include "Component.h"
+#include "Core/ID.h"
 #include "Transform.h"
 #include <cstdio>
 
@@ -11,6 +12,8 @@ namespace puffin
 {
     namespace components
     {
+        PUFFIN_ID Transform::COMPONENT_ID = 0; // IDGenerator::Get().GetRandomID();
+
         Transform::Transform(Entity *entity, int x, int y, int w, int h)
         {
             transformRect = std::make_shared<SDL_Rect>();
@@ -22,7 +25,8 @@ namespace puffin
 
             m_entity = entity;
 
-            printf("Component id %li\n", COMPONENT_ID);
+            if (COMPONENT_ID == 0)
+                COMPONENT_ID = IDGenerator::Get().GetRandomID();
         }
 
         Transform::~Transform()
@@ -53,7 +57,7 @@ namespace puffin
         {
             ImGui::BeginChild("transform", ImVec2(300, 150), true);
 
-            ImGui::Text("Transform - id %li", COMPONENT_ID);
+            ImGui::Text("Transform - id %lu", COMPONENT_ID);
             ImGui::InputInt("X position", &transformRect->x, 0.5f, 2.0f);
             ImGui::InputInt("Y position", &transformRect->y, 0.5f, 2.0f);
             ImGui::InputInt("Width", &transformRect->w, 0.5f, 2.0f);

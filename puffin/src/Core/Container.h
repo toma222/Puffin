@@ -50,7 +50,7 @@ namespace puffin
         {
             T *comp = new T(this, std::forward<Args>(mArgs)...);
 
-            m_components[0] = (components::Component *)comp;
+            m_components[m_componentCount] = (components::Component *)comp;
             m_componentCount++;
 
             return comp;
@@ -59,25 +59,19 @@ namespace puffin
         template <typename T>
         T *GetComponent()
         {
-            /*
             for (auto *c : m_components)
             {
-                // if (c != nullptr)
-                //{
-                printf("%li", c->BIT_MASK_INDEX);
-                if (c->BIT_MASK_INDEX == T::BIT_MASK_INDEX)
+                if (c != nullptr)
                 {
-                    printf("Found the component\n");
+                    if (c->GetID() == T::COMPONENT_ID)
+                    {
+                        return (T *)c;
+                    }
                 }
-                else
-                {
-                    printf("Doesn't exist lol\n");
-                }
-                //}
-            }*/
-            printf("hello %li\n", m_components[0]->COMPONENT_ID);
+            }
+            // printf("hello %li\n", m_components[0]->GetID());
 
-            PN_CORE_FATAL("PANIC PANIC HASN'T BEEN IMPLEMENTED YET");
+            PN_CORE_FATAL("PANIC CAN'T FIND THAT COMPONENT");
             return nullptr;
         }
 

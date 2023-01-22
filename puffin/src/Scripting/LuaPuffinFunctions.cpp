@@ -1,0 +1,5 @@
+
+namespace puffin
+{
+
+} // namespace puffin

@@ -9,6 +9,7 @@
 
 namespace game
 {
+    puffin::LuaContext *context;
 
     void Scene1::StartScene()
     {
@@ -18,10 +19,13 @@ namespace game
         entity->GetComponent<puffin::components::Transform>()->transformRect->h = 600;
 
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/download.bmp", 0);
+
+        context = new puffin::LuaContext("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/script.lua");
     }
 
     void Scene1::UpdateScene()
     {
+        context->CallFunction("update");
     }
 
     void Scene1::ClearScene()

@@ -20,3 +20,7 @@
 #include "Components/Component.h"
 #include "Components/Transform.h"
 #include "Components/Image.h"
+
+#include "Debug/Instrumentor.h"
+
+#include "Scripting/LuaGlue.h"

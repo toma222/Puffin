@@ -51,6 +51,7 @@ namespace puffin
                     break;
                 }
             }
+
             m_graphics->ClearRenderer();
             m_graphics->RenderTextures();
             m_layerStack->UpdateLayers();

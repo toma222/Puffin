@@ -43,13 +43,23 @@ namespace puffin
     void Container::UpdateComponents()
     {
         // for (size_t i = 0; i < m_pool.size(); i++)
-        //{
-        //     if (m_pool[i] != NULL)
-        //     {
-        //         // Update the component
-        //         m_pool[i]->UpdateComponent();
-        //     }
-        // }
+        // {
+        //      if (m_pool[i] != NULL)
+        //      {
+        //          // Update the component
+        //          m_pool[i]->UpdateComponent();
+        //      }
+        //  }
+
+        // m_entities[0]->UpdateComponents();
+
+        for (auto *e : m_entities)
+        {
+            if (e != nullptr)
+            {
+                e->UpdateComponents();
+            }
+        }
     }
 
     void Entity::CleanComponentVector()
@@ -97,5 +107,14 @@ namespace puffin
         }
 
         ImGui::EndChild();
+    }
+
+    void Entity::UpdateComponents()
+    {
+        for (auto *comp : m_components)
+        {
+            if (comp != nullptr)
+                comp->UpdateComponent();
+        }
     }
 } // namespace pn

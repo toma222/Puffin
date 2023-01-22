@@ -19,6 +19,7 @@
 
 #include "Components/Component.h"
 #include "Components/Transform.h"
+#include "Components/Script.h"
 #include "Components/Image.h"
 
 #include "Debug/Instrumentor.h"

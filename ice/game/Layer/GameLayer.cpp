@@ -9,13 +9,13 @@
 namespace game
 {
     puffin::Scene *GameLayer::s_currentScene = nullptr;
-    puffin::Container *GameLayer::m_currentContainer = nullptr;
+    puffin::Container *GameLayer::s_currentContainer = nullptr;
 
     void GameLayer::OnAttach()
     {
         GM_CORE_INFO("Attach called for game layer");
 
-        m_currentContainer = new puffin::Container(10);
+        s_currentContainer = new puffin::Container(10);
 
         SetCurrentScene<Scene1>();
         s_currentScene->StartScene();
@@ -38,6 +38,7 @@ namespace game
     void GameLayer::Update()
     {
         s_currentScene->UpdateScene();
+        s_currentContainer->UpdateComponents();
 
         if (tick < 300)
         {

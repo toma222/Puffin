@@ -15,7 +15,7 @@ namespace game
         void Start() override;
 
         static puffin::Scene *s_currentScene;
-        static puffin::Container *m_currentContainer;
+        static puffin::Container *s_currentContainer;
 
         template <typename T>
         void SetCurrentScene()

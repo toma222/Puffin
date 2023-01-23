@@ -79,7 +79,7 @@ namespace puffin
 
     void Graphics::CreateRenderer(render::SDLWindow *window)
     {
-        m_renderer = CreateRef<render::SDLRenderer>(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+        m_renderer = CreateRef<render::SDLRenderer>(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         m_renderTexture = std::make_shared<render::SDLTexture>(m_renderer.get(), 1920, 1080);
 
         if (m_renderer == NULL)

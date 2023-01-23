@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 
 #include "Script.h"
+#include "Transform.h"
 
 namespace puffin
 {
@@ -26,11 +27,13 @@ namespace puffin
         void Script::UpdateComponent()
         {
             m_luaInstance->CallFunction("update");
+            m_entity->GetComponent<components::Transform>()->Translate(m_luaInstance->GetGlobalNumber("transformX"), 0);
         }
 
         Script::Script(Entity *entity, std::string src)
         {
             m_luaInstance = std::make_unique<LuaContext>(src.c_str());
+            m_luaInstance->AddGlobalNumber("transformX", 0);
 
             m_entity = entity;
             if (COMPONENT_ID == 0)

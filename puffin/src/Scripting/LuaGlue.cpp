@@ -7,6 +7,7 @@
 #include "lualib.h"
 
 #include "LuaGlue.h"
+#include "LuaPuffinFunctions.h"
 
 namespace puffin
 {
@@ -18,6 +19,9 @@ namespace puffin
         m_lua = luaL_newstate();
         luaL_openlibs(m_lua);
         luaL_dofile(m_lua, scriptPath.c_str());
+
+        // Load all the fun puffin functions
+        RegisterFunctions(m_lua);
 
         // Creates the global module for the lua script
         lua_setglobal(m_lua, "script");

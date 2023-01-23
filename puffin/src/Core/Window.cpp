@@ -22,7 +22,7 @@ namespace puffin
         w = dm.w;
         h = dm.h;
 
-        m_window = new render::SDLWindow("puffin engine", 0, 0, w, h, SDL_WINDOW_FULLSCREEN_DESKTOP);
+        m_window = new render::SDLWindow("puffin engine", 0, 0, w, h, SDL_WINDOW_FULLSCREEN);
         m_window->SetWindowSurface();
 
         m_props.m_height = h;

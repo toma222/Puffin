@@ -1,4 +1,6 @@
 
+#include <chrono>
+
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
@@ -39,7 +41,10 @@ namespace puffin
 
         while (open == true)
         {
-            // poll for events
+            auto start = std::chrono::high_resolution_clock::now();
+
+            m_graphics->ClearRenderer();
+            m_graphics->RenderTextures();
 
             SDL_Event e;
             while (SDL_PollEvent(&e) > 0)
@@ -52,12 +57,16 @@ namespace puffin
                 }
             }
 
-            m_graphics->ClearRenderer();
-            m_graphics->RenderTextures();
             m_layerStack->UpdateLayers();
-
             m_graphics->RenderPresent();
-            m_window->UpdateWindow();
+
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+
+            if (duration.count() < 16)
+            {
+                _sleep(16 - duration.count());
+            }
         }
 
         m_layerStack->DetachLayers();

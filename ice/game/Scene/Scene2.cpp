@@ -13,6 +13,7 @@ namespace game
         entity->GetComponent<puffin::components::Transform>()->transformRect->h = 500;
 
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp", 0);
+        entity->AddComponent<puffin::components::Script>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Scripts/lua/script.lua");
     }
 
     void Scene2::UpdateScene()

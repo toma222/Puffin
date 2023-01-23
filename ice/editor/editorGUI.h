@@ -69,7 +69,7 @@ namespace editor
             ImGui::Begin("Runtime Stats");
 
             ImGui::TextColored({255, 255, 255, 255}, "Runtime");
-            ImGui::PlotLines("Frame rate", m_frameRateSamples, 500, 0, NULL, 0, 80, {ImGui::GetWindowSize().x - 200, 100});
+            ImGui::PlotLines("Frame rate", m_frameRateSamples, 500, 0, NULL, 40, 65, {ImGui::GetWindowSize().x - 200, 100});
 
             if (m_sampleCount < 500)
             {

@@ -75,6 +75,9 @@ clean:
 	del $(addprefix obj\,$(notdir $(EDITOR_OBJ)))
 	del $(addprefix obj\,$(notdir $(GAMEOBJ)))
 
+Lclean:
+	del obj\LuaGlue.o obj\LuaPuffinFunctions.o
+
 deep-clean:
 	del $(addprefix obj\,$(notdir $(ENGINEOBJ)))
 	del $(addprefix obj\,$(notdir $(EDITOR_OBJ)))

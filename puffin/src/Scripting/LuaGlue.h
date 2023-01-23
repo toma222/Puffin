@@ -11,6 +11,8 @@
 #include "lua.h"
 #include "lualib.h"
 
+#include "LuaPuffinFunctions.h"
+
 namespace puffin
 {
     // Creates a lua context for a script
@@ -35,6 +37,21 @@ namespace puffin
         ~LuaContext();
 
         void CallFunction(std::string function);
+
+        void AddGlobalNumber(std::string name, int num)
+        {
+            lua_pushnumber(m_lua, num);
+            lua_setglobal(m_lua, name.c_str());
+        }
+
+        int GetGlobalNumber(std::string name)
+        {
+            lua_getglobal(m_lua, name.c_str());
+            int ret = lua_tonumber(m_lua, -1);
+            lua_pop(m_lua, 1);
+            return ret;
+        }
+
         void LoadModule();
 
         lua_State *GetLuaState() { return m_lua; };

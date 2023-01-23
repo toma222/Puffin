@@ -7,7 +7,9 @@ end
 
 -- runs every frame
 function script.update()
-    print('Update from lua!')
+    local obj = TransformBinding(42, 0, 0)
+
+    obj:translate(0, 0, 0)
 end
 
 return script

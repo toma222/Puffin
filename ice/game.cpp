@@ -13,7 +13,9 @@
 #include "game/Layer/GameLayer.h"
 
 #include <sol/sol.hpp>
+
 #include <cassert>
+#include <string>
 
 #include "lauxlib.h"
 #include "lua.h"
@@ -21,6 +23,7 @@
 
 puffin::Application *CreateApplication()
 {
+    // PN_PROFILE_FUNCTION("Create Application", __FILE__);
 
     editor::EditorApplication *editorApp = new editor::EditorApplication();
 

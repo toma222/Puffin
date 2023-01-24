@@ -8,6 +8,7 @@
 #include "Graphics.h"
 #include "Window.h"
 #include "Logging.h"
+#include "Debug/Instrumentor.h"
 #include "Gui.h"
 
 #include "Application.h"
@@ -20,7 +21,6 @@ namespace puffin
     {
         s_Instance = this;
 
-        // Init the systems for the application
         m_graphics = std::make_shared<Graphics>(0);
         m_window = std::make_shared<Window>();
         m_layerStack = std::make_shared<LayerStack>();

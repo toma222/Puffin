@@ -3,6 +3,7 @@
 
 #include "Window.h"
 #include "Rendering/PWindow.h"
+#include "Debug/Instrumentor.h"
 #include "Logging.h"
 
 #include <string>
@@ -11,6 +12,8 @@ namespace puffin
 {
     Window::Window()
     {
+        PN_PROFILE_FUNCTION("Window");
+
         SDL_DisplayMode dm;
 
         if (SDL_GetDesktopDisplayMode(0, &dm) != 0)

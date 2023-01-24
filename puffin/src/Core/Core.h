@@ -3,6 +3,8 @@
 
 #include <memory>
 
+// #include "Debug/Instrumentor.h"
+
 #define MAX_SPRITES_IN_SCENE 20
 
 namespace puffin

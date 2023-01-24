@@ -4,6 +4,7 @@
 #include "imgui_impl_sdlrenderer.h"
 
 #include "Core.h"
+// #include "Debug/Instrumentor.h"
 #include "Container.h"
 #include "Logging.h"
 #include "ID.h"
@@ -69,6 +70,7 @@ namespace puffin
 
     Container::Container(int initialSize)
     {
+        // PN_PROFILE_FUNCTION("Container", __FILE__);
         m_entities.resize(10);
 
         m_IDCounter = 0;

@@ -6,48 +6,106 @@
 #include <string>
 #include <iostream>
 #include <chrono>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <thread>
+#include <mutex>
+#include <sstream>
 
 namespace puffin
 {
-    // @deprecated
+    static int s_pid = 0;
     class Debug
     {
     private:
-        unsigned int m_allocatedMemory;
-        unsigned int m_objects;
+        static Debug *s_debug;
 
     public:
-        Debug();
-        ~Debug();
+        static Debug *Get() { return s_debug; };
 
-        void LogObjectCreated(int memory, std::string className, std::string fileName);
-        void LogObjectDestroyed();
+        ~Debug()
+        {
+            writeFooter();
+        }
 
-        unsigned int GetAllocatedMemory() { return m_allocatedMemory; };
+        Debug()
+        {
+            // Open a file to write to
+            // std::lock_guard lock(m_mutex);
+            s_debug = this;
+
+            m_output.open("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Debug.json");
+
+            if (m_output.is_open())
+            {
+                writeHeader();
+            }
+        }
+
+        void writeHeader()
+        {
+            m_output << "{\"otherData\": {},\"traceEvents\":[{}";
+            m_output.flush();
+        }
+
+        void writeFooter()
+        {
+            m_output << "]}";
+            m_output.flush();
+        }
+
+        void writeFunction(std::string name, std::string file, float start, float elapsed);
+
+    private:
+        std::ofstream m_output;
     };
 
-    static Debug *s_puffinDebug = new Debug();
+    class Proccess;
 
     class Profile
     {
     private:
         std::chrono::time_point<std::chrono::high_resolution_clock> m_start;
+        std::string m_fileName;
+        std::string m_functionName;
 
     public:
-        Profile()
+        Profile(std::string fileName, std::string functionName)
         {
             m_start = std::chrono::high_resolution_clock::now();
+
+            m_fileName = fileName;
+            m_functionName = functionName;
         }
 
         ~Profile()
         {
             auto endTime = std::chrono::high_resolution_clock::now();
 
-            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_start);
-            std::cout << "Time taken by function: "
-                      << duration.count() << " microseconds" << std::endl;
+            long long duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_start).count();
+
+            Debug::Get()->writeFunction(m_functionName, m_fileName, m_start.time_since_epoch().count(), duration);
         }
     };
-} // namespace puffin
 
-// #define PN_LOG_ALLOC(bytes, class, file) puffin::s_puffinDebug->LogObjectCreated(bytes, class, file)
+    class Proccess
+    {
+    private:
+        Profile *m_profile;
+
+    public:
+        Proccess(std::string fileName, std::string functionName);
+
+        static int GetProccessPid() { return s_pid; };
+
+        ~Proccess()
+        {
+            s_pid--;
+            delete m_profile;
+        }
+    };
+
+}
+
+#define PN_PROFILE_FUNCTION(functionName) puffin::Profile profile(__FILE__, functionName)

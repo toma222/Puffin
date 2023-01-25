@@ -19,6 +19,8 @@ namespace puffin
     {
     private:
         static Debug *s_debug;
+        int m_subsectionPid;
+        uint64_t m_debugStartTime;
 
     public:
         static Debug *Get() { return s_debug; };
@@ -33,8 +35,10 @@ namespace puffin
             // Open a file to write to
             // std::lock_guard lock(m_mutex);
             s_debug = this;
+            m_subsectionPid = 0;
 
-            m_output.open("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Debug.json");
+            m_output.open("C:/Users/100044352/Desktop/engine/puffin/Runtime.json");
+            m_debugStartTime = micros();
 
             if (m_output.is_open())
             {
@@ -54,7 +58,7 @@ namespace puffin
             m_output.flush();
         }
 
-        void writeFunction(std::string name, std::string file, float start, float elapsed);
+        void writeFunction(std::string name, std::string file, uint64_t start, uint64_t elapsed);
 
     private:
         std::ofstream m_output;
@@ -63,14 +67,18 @@ namespace puffin
     class Profile
     {
     private:
-        std::chrono::time_point<std::chrono::high_resolution_clock> m_start;
+        // std::chrono::time_point<std::chrono::system_clock> m_StartTime;
+        // std::chrono::time_point<std::chrono::system_clock> m_EndTime;
+        uint64_t m_start;
+        uint64_t m_end;
+
         std::string m_fileName;
         std::string m_functionName;
 
     public:
         Profile(std::string fileName, std::string functionName)
         {
-            m_start = std::chrono::high_resolution_clock::now();
+            m_start = micros();
 
             m_fileName = fileName;
             m_functionName = functionName;
@@ -80,9 +88,7 @@ namespace puffin
         {
             long long endTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
-            long long duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_start).count();
-
-            Debug::Get()->writeFunction(m_functionName, m_fileName, m_start.time_since_epoch().count(), duration);
+            Debug::Get()->writeFunction(m_functionName, m_fileName, m_start, duration);
         }
     };
 }

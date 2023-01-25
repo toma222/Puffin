@@ -12,6 +12,7 @@ namespace game
 
     void Scene1::StartScene()
     {
+        PN_PROFILE_FUNCTION("StartScene");
         puffin::Entity *entity = GameLayer::s_currentContainer->AddEntity();
 
         entity->GetComponent<puffin::components::Transform>()->transformRect->w = 600;

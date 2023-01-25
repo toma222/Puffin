@@ -15,7 +15,6 @@
 
 namespace puffin
 {
-    static int s_pid = 0;
     class Debug
     {
     private:
@@ -61,8 +60,6 @@ namespace puffin
         std::ofstream m_output;
     };
 
-    class Proccess;
-
     class Profile
     {
     private:
@@ -81,31 +78,13 @@ namespace puffin
 
         ~Profile()
         {
-            auto endTime = std::chrono::high_resolution_clock::now();
+            long long endTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
             long long duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_start).count();
 
             Debug::Get()->writeFunction(m_functionName, m_fileName, m_start.time_since_epoch().count(), duration);
         }
     };
-
-    class Proccess
-    {
-    private:
-        Profile *m_profile;
-
-    public:
-        Proccess(std::string fileName, std::string functionName);
-
-        static int GetProccessPid() { return s_pid; };
-
-        ~Proccess()
-        {
-            s_pid--;
-            delete m_profile;
-        }
-    };
-
 }
 
 #define PN_PROFILE_FUNCTION(functionName) puffin::Profile profile(__FILE__, functionName)

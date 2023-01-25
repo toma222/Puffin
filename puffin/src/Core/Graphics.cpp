@@ -14,6 +14,7 @@ namespace puffin
 
     Graphics::Graphics(Uint32 SDLFlags)
     {
+        PN_PROFILE_FUNCTION("Graphics");
         SDL_Init(SDL_INIT_EVERYTHING);
 
         m_textureQue.resize(MAX_SPRITES_IN_SCENE);

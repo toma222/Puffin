@@ -32,7 +32,9 @@ namespace puffin
 
         Script::Script(Entity *entity, std::string src)
         {
-            m_luaInstance = std::make_unique<LuaContext>(src.c_str());
+            m_luaInstance = std::make_unique<LuaContext>(src.c_str(), entity);
+
+            // Set the objects transform as a global
             m_luaInstance->AddGlobalNumber("transformX", 0);
 
             m_entity = entity;

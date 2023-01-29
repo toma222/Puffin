@@ -19,52 +19,52 @@ GAMEOBJ = obj/GameLayer.o obj/Scene1.o obj/Scene2.o
 
 obj/%.o : include/windows/imgui/%.cpp
 	@echo ------ COMPILING IMGUI FILE $< -------
-	$(COMPILER) -Wall -O2 -c -o $@ $< $(INCLUDE_PATH)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -o $@ $< $(INCLUDE_PATH)
 
 obj/%.o : include/windows/imgui/backends/%.cpp
 	@echo ------ COMPILING IMGUI BACKENDS FILE $< -------
-	$(COMPILER) -Wall -O2 -c -o $@ $<  $(INCLUDE_PATH)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -o $@ $<  $(INCLUDE_PATH)
 
 obj/%.o : puffin/src/Core/%.cpp puffin/src/Core/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : puffin/src/Debug/%.cpp puffin/src/Debug/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : puffin/src/Rendering/%.cpp puffin/src/Rendering/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : puffin/src/Components/%.cpp puffin/src/Components/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : puffin/src/Scripting/%.cpp puffin/src/Scripting/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : ice/%.cpp ice/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : ice/editor/%.cpp ice/editor/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : ice/game/Layer/%.cpp ice/game/Layer/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : ice/game/Scene/%.cpp ice/game/Scene/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 
 make: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)
 	@echo ------ COMPILING OBJECTS -------
-	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) ice/game.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -std=c++17 -D$(RELEASE_MODE) -o $(BIN_PATH) ice/game.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 	make run
 
 run:

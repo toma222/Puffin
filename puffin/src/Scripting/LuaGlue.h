@@ -15,8 +15,6 @@
 
 namespace puffin
 {
-    // Creates a lua context for a script
-    // Should load the script then keep it such that we can call it's functions
     class LuaContext
     {
     private:
@@ -29,11 +27,12 @@ namespace puffin
         struct Glue
         {
             std::string m_accessModuleName;
+            Entity *m_attachedEntity;
         };
 
         Glue m_glue;
 
-        LuaContext(std::string scriptPath);
+        LuaContext(std::string scriptPath, Entity *attached);
         ~LuaContext();
 
         void CallFunction(std::string function);

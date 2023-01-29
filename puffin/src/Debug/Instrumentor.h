@@ -15,6 +15,8 @@
 
 namespace puffin
 {
+    uint64_t micros();
+
     class Debug
     {
     private:
@@ -86,7 +88,7 @@ namespace puffin
 
         ~Profile()
         {
-            long long endTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+            long long duration = m_end - m_start;
 
             Debug::Get()->writeFunction(m_functionName, m_fileName, m_start, duration);
         }

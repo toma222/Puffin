@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     PN_CORE_INFO("Main function called");
     puffin::Application *app = CreateApplication();
 
-    // Run the app
     PN_CORE_INFO("Starting main application loop, watch out world!");
     app->StartApplication();
 

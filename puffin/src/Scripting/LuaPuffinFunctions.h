@@ -3,12 +3,15 @@
 #include <cassert>
 #include <map>
 
+#include "Core/Container.h"
+
 #include "lauxlib.h"
 #include "lua.h"
 #include "lualib.h"
 
 namespace puffin
 {
+    /*
     class TransformBinding
     {
     private:
@@ -28,6 +31,7 @@ namespace puffin
 
         double get() const { return this->x; }
     };
+    */
 
 // TransformBinding identifier for the Lua metatable
 #define LUA_TransformBinding "TransformBinding"
@@ -39,6 +43,7 @@ namespace puffin
         double y = luaL_checknumber(L, 2);
         double z = luaL_checknumber(L, 3);
 
+        // Instead of calling the
         *reinterpret_cast<TransformBinding **>(lua_newuserdata(L, sizeof(TransformBinding *))) = new TransformBinding(x, y, z);
         luaL_setmetatable(L, LUA_TransformBinding);
         return 1;
@@ -81,29 +86,8 @@ namespace puffin
         lua_pop(L, 1);
     }
 
-    /*
-    static int transform(lua_State *L)
-    {
-        int n = lua_gettop(L);
-        double sum = 0;
-        int i;
-
-        for (i = 1; i <= n; i++)
-        {
-            sum += lua_tonumber(L, i);
-        }
-
-        lua_pushnumber(L, sum / n);
-
-        lua_pushnumber(L, sum);
-
-        return 2;
-    }
-    */
-
     static void RegisterFunctions(lua_State *L)
     {
-        // lua_register(L, "transform", transform);
         register_TransformBinding(L);
     }
-} // namespace puffin
+}

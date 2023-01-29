@@ -12,7 +12,7 @@
 namespace puffin
 {
 
-    LuaContext::LuaContext(std::string scriptPath)
+    LuaContext::LuaContext(std::string scriptPath, Entity *attached)
     {
         m_lua = (lua_State *)malloc(1000);
 

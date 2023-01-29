@@ -23,6 +23,9 @@ namespace puffin
         // Load all the fun puffin functions
         RegisterFunctions(m_lua);
 
+        Transform_new(m_lua);
+        lua_setglobal(m_lua, "transform");
+
         // Creates the global module for the lua script
         lua_setglobal(m_lua, "script");
         lua_settop(m_lua, 0);

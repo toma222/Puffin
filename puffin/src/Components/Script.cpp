@@ -27,7 +27,7 @@ namespace puffin
         void Script::UpdateComponent()
         {
             m_luaInstance->CallFunction("update");
-            m_entity->GetComponent<components::Transform>()->Translate(m_luaInstance->GetGlobalNumber("transformX"), 0);
+            // m_entity->GetComponent<components::Transform>()->Translate(m_luaInstance->GetGlobalNumber("transformX"), 0);
         }
 
         Script::Script(Entity *entity, std::string src)
@@ -35,7 +35,9 @@ namespace puffin
             m_luaInstance = std::make_unique<LuaContext>(src.c_str(), entity);
 
             // Set the objects transform as a global
+            someData = new int(1);
             m_luaInstance->AddGlobalNumber("transformX", 0);
+            // m_luaInstance->PushGlobalPointer<int>(someData, "x");
 
             m_entity = entity;
             if (COMPONENT_ID == 0)
@@ -45,6 +47,5 @@ namespace puffin
         Script::~Script()
         {
         }
-    } // namespace components
-
-} // namespace puffin
+    }
+}

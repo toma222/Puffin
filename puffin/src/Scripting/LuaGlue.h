@@ -51,6 +51,15 @@ namespace puffin
             return ret;
         }
 
+        template <typename T>
+        void PushGlobalPointer(T *ref, std::string name)
+        {
+            // lua_pushlightuserdata(m_lua, ref);
+            // lua_setglobal(m_lua, name.c_str());
+            // Transform_new(m_lua);
+            // lua_setglobal(m_lua, "translate");
+        }
+
         void LoadModule();
 
         lua_State *GetLuaState() { return m_lua; };

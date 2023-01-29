@@ -1,5 +1,11 @@
+#include <cassert>
+#include <map>
 
-namespace puffin
-{
+#include "Core/Container.h"
+#include "Components/Transform.h"
 
-} // namespace puffin
+#include "lauxlib.h"
+#include "lua.h"
+#include "lualib.h"
+
+#include "LuaPuffinFunctions.h"

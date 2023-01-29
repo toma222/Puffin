@@ -1,3 +1,4 @@
+#pragma once
 
 #include "Core/Container.h"
 #include "Core/ID.h"
@@ -33,6 +34,6 @@ namespace puffin
             ~Transform() override;
         };
 
-        } // namespace components
+    } // namespace components
 
 } // namespace puffin

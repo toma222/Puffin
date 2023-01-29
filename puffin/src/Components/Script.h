@@ -5,6 +5,7 @@
 #include "Core/ID.h"
 
 #include "Component.h"
+#include "Transform.h"
 
 #include "Scripting/LuaGlue.h"
 
@@ -28,6 +29,8 @@ namespace puffin
             PUFFIN_ID GetID() override { return COMPONENT_ID; };
 
             Entity *m_entity;
+
+            int *someData;
 
             Script(Entity *entity, std::string src);
             ~Script() override;

@@ -39,28 +39,6 @@ namespace game
     {
         s_currentScene->UpdateScene();
         s_currentContainer->UpdateComponents();
-
-        if (tick < 300)
-        {
-            tick++;
-        }
-        else
-        {
-            tick = 0;
-
-            if (scene1)
-            {
-                GM_CORE_INFO("Swapping scenes");
-                SetCurrentScene<Scene2>();
-                scene1 = false;
-            }
-            else
-            {
-                GM_CORE_INFO("Swapping scenes");
-                SetCurrentScene<Scene1>();
-                scene1 = true;
-            }
-        }
     }
 
 } // namespace game

@@ -16,6 +16,7 @@
 #include "Core/Container.h"
 #include "Core/Scene.h"
 #include "Core/ID.h"
+#include "Core/Input.h"
 
 #include "Components/Component.h"
 #include "Components/Transform.h"

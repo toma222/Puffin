@@ -10,6 +10,7 @@
 #include "Logging.h"
 #include "Debug/Instrumentor.h"
 #include "Gui.h"
+#include "Input.h"
 
 #include "Application.h"
 
@@ -54,6 +55,8 @@ namespace puffin
                 case SDL_QUIT:
                     open = false;
                     break;
+                case SDL_MOUSEBUTTONUP:
+                    Input::m_mouseButton[0] = 0;
                 }
             }
 

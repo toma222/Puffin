@@ -14,6 +14,7 @@
 
 namespace puffin
 {
+
     class Entity
     {
     private:
@@ -80,6 +81,14 @@ namespace puffin
         void UpdateComponents();
         void UpdateComponentsImGui();
         void CleanComponentVector();
+    };
+
+    class System
+    {
+    public:
+        virtual void Start() { return; };
+        virtual void Update() { return; };
+        virtual void OnImGuiUpdate() { return; };
     };
 
     class Container

@@ -7,6 +7,8 @@
 #include "Scene1.h"
 #include "Scene2.h"
 
+#include "Assets/Scripts/cpp/BasicScript.hpp"
+
 namespace game
 {
 
@@ -19,7 +21,11 @@ namespace game
         entity->GetComponent<puffin::components::Transform>()->transformRect->h = 600;
 
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/download.bmp", 0);
-        entity->AddComponent<puffin::components::Script>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Scripts/lua/script.lua");
+
+        entity->AddComponent<puffin::components::NativeScript>();
+        entity->GetComponent<puffin::components::NativeScript>()->AttachScript<BasicScript>();
+
+        // entity->AddComponent<puffin::components::Script>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Scripts/lua/script.lua");
         // context = new puffin::LuaContext("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/script.lua");
     }
 

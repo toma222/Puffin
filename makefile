@@ -13,7 +13,7 @@ IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o o
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/lua -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src
 LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image -llua-5.4.4
 
-ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Transform.o obj/Image.o obj/Instrumentor.o obj/LuaGlue.o obj/LuaPuffinFunctions.o obj/Script.o 
+ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Transform.o obj/Image.o obj/Instrumentor.o obj/LuaGlue.o obj/LuaPuffinFunctions.o obj/Script.o obj/NativeScript.o 
 EDITOR_OBJ = obj/EditorApplication.o
 GAMEOBJ = obj/GameLayer.o obj/Scene1.o obj/Scene2.o
 
@@ -83,5 +83,9 @@ deep-clean:
 	del $(addprefix obj\,$(notdir $(EDITOR_OBJ)))
 	del $(addprefix obj\,$(notdir $(GAMEOBJ)))
 	del $(addprefix obj\,$(notdir $(IMGUIOBJ)))
+
+script:
+	del $(addprefix obj\,$(notdir $(GAMEOBJ)))
+	make
 	
 

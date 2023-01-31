@@ -21,6 +21,7 @@
 #include "Components/Transform.h"
 #include "Components/Script.h"
 #include "Components/Image.h"
+#include "Components/NativeScript.h"
 
 #include "Debug/Instrumentor.h"
 

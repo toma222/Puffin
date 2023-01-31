@@ -26,4 +26,3 @@ class BasicScript : public PN_SCRIPT_MONO
         }
     }
 };
-dadadadad

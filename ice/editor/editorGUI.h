@@ -66,6 +66,12 @@ namespace editor
 
             ImGui::End();
 
+            ImGui::Begin("Systems");
+
+            puffin::SystemManager::Get()->UpdateIMGUI();
+
+            ImGui::End();
+
             ImGui::Begin("Runtime Stats");
 
             ImGui::TextColored({255, 255, 255, 255}, "Runtime");

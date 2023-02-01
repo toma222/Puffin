@@ -35,6 +35,8 @@ namespace puffin
 
         std::vector<std::shared_ptr<render::SDLTexture>> m_textureQue;
 
+        // const SDL_Rect rect;
+
         // All things rendered are stored in the render texture
 
     public:

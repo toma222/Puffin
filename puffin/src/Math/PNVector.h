@@ -5,11 +5,17 @@ namespace puffin
 {
     struct Vector2
     {
-        int x;
-        int y;
+        double x;
+        double y;
 
         double direction;
         double magnitude;
+
+        Vector2(double xv, double yv)
+        {
+            x = xv;
+            y = yv;
+        }
 
         double CalculateMagnitude()
         {
@@ -21,15 +27,6 @@ namespace puffin
         {
             direction = atan(y / x);
             return direction;
-        }
-
-        Vector2 operator+(Vector2 const &obj)
-        {
-            x += obj.x;
-            y += obj.y;
-
-            CalculateMagnitude();
-            CalculateDirection();
         }
     };
 } // namespace puffin

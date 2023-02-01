@@ -9,11 +9,17 @@ namespace puffin
     class PhysicsSystem : public System
     {
     public:
-        std::vector<Entity *> m_currentEntities;
-        PUFFIN_ID m_requiredComponents[8];
+        Vector2 m_globalGravity;
+        int m_attachedEntities;
 
-        PhysicsSystem()
+    public:
+        std::vector<Entity *> m_currentEntities;
+
+        PhysicsSystem() : m_globalGravity((double)0, (double)0)
         {
+            m_globalGravity.x = (double)0;
+            m_globalGravity.y = (double)1.0;
+
             return;
         }
 
@@ -26,7 +32,11 @@ namespace puffin
         void Update() override;
         void OnImGuiUpdate() override;
 
-        void AddRequiredComponent(PUFFIN_ID id) override;
+        void Clear() override
+        {
+            m_currentEntities.clear();
+        }
+
         bool CheckComponent(PUFFIN_ID componentID, Entity *entity) override;
     };
 } // namespace puffin

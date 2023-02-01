@@ -31,18 +31,9 @@ namespace puffin
     {
         m_textureQue.reserve(MAX_SPRITES_IN_SCENE);
 
-        // for (auto &&texture : m_textureQue)
-        //{
-        //     if (texture != nullptr)
-        //         delete texture;
-        // }
-
         m_textureQue.clear();
 
-        int w, h;
-        SDL_GetRendererOutputSize(m_renderer->get(), &w, &h);
-
-        m_renderTexture->ClearTexture(m_renderer.get(), w, h);
+        m_renderTexture->ClearTexture(m_renderer.get(), 192, 108);
 
         RenderTextures();
     }
@@ -65,6 +56,17 @@ namespace puffin
             }
         }
 
+        Uint32 *pixels;
+        int pitch;
+
+        SDL_Rect *rect = new SDL_Rect;
+        rect->h = 192;
+        rect->w = 108;
+
+        SDL_RenderReadPixels(m_renderer->get(), rect, 0, pixels, pitch);
+
+        delete rect;
+
         SDL_SetRenderTarget(m_renderer->get(), NULL);
         m_renderer->CopyFull(m_renderTexture.get());
     }
@@ -84,7 +86,7 @@ namespace puffin
         PN_PROFILE_FUNCTION("CreateRenderer");
 
         m_renderer = CreateRef<render::SDLRenderer>(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        m_renderTexture = std::make_shared<render::SDLTexture>(m_renderer.get(), 1920, 1080);
+        m_renderTexture = std::make_shared<render::SDLTexture>(m_renderer.get(), 192, 108);
 
         if (m_renderer == NULL)
             printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());

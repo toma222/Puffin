@@ -57,6 +57,8 @@ namespace puffin
                 e->UpdateComponents();
             }
         }
+
+        SystemManager::Get()->Update();
     }
 
     void Entity::CleanComponentVector()
@@ -88,6 +90,8 @@ namespace puffin
         {
             delete entity;
         }
+
+        SystemManager::Get()->Clear();
 
         m_entities.clear();
         m_IDCounter = 0;

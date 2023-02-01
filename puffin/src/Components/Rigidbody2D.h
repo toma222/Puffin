@@ -16,6 +16,30 @@ namespace puffin
         class Rigidbody2D : public Component
         {
         public:
+            class Collision
+            {
+            public:
+                Entity *m_attached;
+
+                Collision(Entity *att)
+                {
+                    m_attached = att;
+                }
+
+                virtual bool CheckCollision();
+                virtual void ResolveCollision(Entity *b);
+            };
+
+            std::unique_ptr<Collision> m_collisionResolver;
+
+            template <typename T>
+            void AddCollisionResolver()
+            {
+                m_collisionResolver = std::dynamic_pointer_cast<Collision>(
+                    std::make_unique<T>(this));
+            }
+
+        public:
             static PUFFIN_ID COMPONENT_ID;
 
         public:
@@ -40,7 +64,20 @@ namespace puffin
 
         public:
             float m_mass;
+            float m_terminalVelocity;
             Vector2 m_velocity;
+        };
+
+        class AABB : public Rigidbody2D::Collision
+        {
+        public:
+            virtual bool CheckCollision()
+            {
+            }
+
+            virtual void ResolveCollision(Entity *a, Entity *b)
+            {
+            }
         };
 
     } // namespace components

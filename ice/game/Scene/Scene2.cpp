@@ -10,12 +10,12 @@ namespace game
         PN_PROFILE_FUNCTION("StartScene");
         puffin::Entity *entity = GameLayer::s_currentContainer->AddEntity();
 
-        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 500;
-        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 500;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 600;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 600;
 
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp", 0);
 
-        entity->AddComponent<puffin::components::Rigidbody2D>(1.0f);
+        // entity->AddComponent<puffin::components::Rigidbody2D>(1.0f);
     }
 
     void Scene2::UpdateScene()

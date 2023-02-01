@@ -14,7 +14,6 @@
 
 namespace puffin
 {
-
     class Entity
     {
     private:
@@ -74,7 +73,6 @@ namespace puffin
             m_components[m_componentCount] = (components::Component *)comp;
             m_componentCount++;
 
-            // SystemManager::Get()->CheckComponent(T::COMPONENT_ID, this);
             CheckForScenes(comp->GetID(), this);
 
             return comp;
@@ -110,10 +108,9 @@ namespace puffin
         virtual void Start() { return; };
         virtual void Update() { return; };
         virtual void OnImGuiUpdate() { return; };
+        virtual void Clear() { return; };
 
         virtual ~System() = default;
-
-        virtual void AddRequiredComponent(PUFFIN_ID id) { return; };
 
         virtual bool CheckComponent(PUFFIN_ID componentID, Entity *entity) { return false; };
     };
@@ -155,14 +152,34 @@ namespace puffin
 
         void CheckComponent(PUFFIN_ID compID, Entity *entity)
         {
-            PN_CORE_TRACE("Check component called");
-
             for (auto sys : m_systems)
             {
                 sys->CheckComponent(compID, entity);
             }
+        }
 
-            PN_CORE_TRACE("Check component finished");
+        void Update()
+        {
+            for (auto sys : m_systems)
+            {
+                sys->Update();
+            }
+        }
+
+        void Clear()
+        {
+            for (auto sys : m_systems)
+            {
+                sys->Clear();
+            }
+        }
+
+        void UpdateIMGUI()
+        {
+            for (auto sys : m_systems)
+            {
+                sys->OnImGuiUpdate();
+            }
         }
     };
 

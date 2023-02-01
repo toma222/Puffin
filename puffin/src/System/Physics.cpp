@@ -25,12 +25,12 @@ namespace puffin
         printf("Start\n");
     }
 
-    void Physics::AddRequiredComponent(PUFFIN_ID id) override
+    void PhysicsSystem::AddRequiredComponent(PUFFIN_ID id)
     {
         m_requiredComponents[0] = components::Rigidbody2D::COMPONENT_ID;
     }
 
-    bool Physics::CheckComponent(PUFFIN_ID componentID, Entity *entity) override
+    bool PhysicsSystem::CheckComponent(PUFFIN_ID componentID, Entity *entity)
     {
         for (size_t comp = 0; comp < 8; comp++)
         {

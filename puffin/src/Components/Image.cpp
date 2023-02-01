@@ -29,7 +29,7 @@ namespace puffin
 {
     namespace components
     {
-        PUFFIN_ID Image::COMPONENT_ID = 0;
+        PUFFIN_ID Image::COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         Image::Image(Entity *entity, std::string path, int layer)
         {

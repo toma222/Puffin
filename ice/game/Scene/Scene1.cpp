@@ -25,6 +25,8 @@ namespace game
         entity->AddComponent<puffin::components::NativeScript>();
         entity->GetComponent<puffin::components::NativeScript>()->AttachScript<BasicScript>();
 
+        entity->AddComponent<puffin::components::Rigidbody2D>(1.0f);
+
         /*
         GameLayer::s_currentContainer->AddEntity();
         GameLayer::s_currentContainer->AddEntity();

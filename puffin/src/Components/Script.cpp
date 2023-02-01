@@ -13,7 +13,7 @@ namespace puffin
 {
     namespace components
     {
-        PUFFIN_ID Script::COMPONENT_ID = 0;
+        PUFFIN_ID Script::COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         void Script::StartComponent()
         {

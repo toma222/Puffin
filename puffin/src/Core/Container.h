@@ -14,9 +14,14 @@
 
 namespace puffin
 {
+
     class Entity
     {
     private:
+        // Wrapper to avoid collisions
+        void CheckForScenes(PUFFIN_ID id, Entity *entity);
+
+    public:
         unsigned int m_CompID;
         unsigned int m_ID;
         short int m_componentCount;
@@ -69,6 +74,9 @@ namespace puffin
             m_components[m_componentCount] = (components::Component *)comp;
             m_componentCount++;
 
+            // SystemManager::Get()->CheckComponent(T::COMPONENT_ID, this);
+            CheckForScenes(comp->GetID(), this);
+
             return comp;
         }
 
@@ -96,48 +104,18 @@ namespace puffin
         void CleanComponentVector();
     };
 
-    class Component
-    {
-    public:
-        const PUFFIN_ID COMPONENT_ID = 1;
-
-    public:
-        virtual void UpdateComponent();
-        virtual void UpdateComponentImGui();
-        virtual void StartComponent();
-        virtual PUFFIN_ID GetID();
-
-        virtual ~Component() = default;
-    };
-
     class System
     {
     public:
-        std::vector<Entity *> m_currentComponents;
-        std::vector<PUFFIN_ID> m_requiredComponents;
-
         virtual void Start() { return; };
         virtual void Update() { return; };
         virtual void OnImGuiUpdate() { return; };
 
         virtual ~System() = default;
 
-        void CheckComponent(PUFFIN_ID componentID, Entity *entity)
-        {
-            int check = 0; // m_requiredComponents.size();
+        virtual void AddRequiredComponent(PUFFIN_ID id) { return; };
 
-            for (auto id : m_requiredComponents)
-            {
-                if (id == componentID)
-                {
-                    check++;
-                    return;
-                }
-            }
-
-            if (check >= (int)m_currentComponents.size())
-                m_currentComponents.push_back(entity);
-        }
+        virtual bool CheckComponent(PUFFIN_ID componentID, Entity *entity) { return false; };
     };
 
     class SystemManager
@@ -171,8 +149,20 @@ namespace puffin
         std::shared_ptr<T> AddSystem(Args &&...mArgs)
         {
             std::shared_ptr<T> sys = std::make_shared<T>(std::forward<Args>(mArgs)...);
-            // m_systems.push_back(sys);
+            m_systems.push_back(std::dynamic_pointer_cast<System>(sys));
             return sys;
+        }
+
+        void CheckComponent(PUFFIN_ID compID, Entity *entity)
+        {
+            PN_CORE_TRACE("Check component called");
+
+            for (auto sys : m_systems)
+            {
+                sys->CheckComponent(compID, entity);
+            }
+
+            PN_CORE_TRACE("Check component finished");
         }
     };
 

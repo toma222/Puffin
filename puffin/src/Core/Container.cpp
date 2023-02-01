@@ -20,6 +20,11 @@ namespace puffin
 
     SystemManager *SystemManager::s_instance = nullptr;
 
+    void Entity::CheckForScenes(PUFFIN_ID id, Entity *entity)
+    {
+        SystemManager::Get()->CheckComponent(id, this);
+    }
+
     Entity *Container::AddEntity()
     {
         m_IDCounter++;

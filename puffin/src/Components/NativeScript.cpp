@@ -16,7 +16,7 @@ namespace puffin
 {
     namespace components
     {
-        PUFFIN_ID NativeScript::COMPONENT_ID = 0;
+        PUFFIN_ID NativeScript::COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         NativeScript::NativeScript(Entity *entity)
         {

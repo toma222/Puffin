@@ -12,7 +12,7 @@ namespace puffin
 {
     namespace components
     {
-        PUFFIN_ID Transform::COMPONENT_ID = 0; // IDGenerator::Get().GetRandomID();
+        PUFFIN_ID Transform::COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         Transform::Transform(Entity *entity, int x, int y, int w, int h)
         {

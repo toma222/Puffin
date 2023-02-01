@@ -12,7 +12,7 @@ namespace puffin
 {
     namespace components
     {
-        PUFFIN_ID Rigidbody2D::COMPONENT_ID = 0; // IDGenerator::Get().GetRandomID();
+        PUFFIN_ID Rigidbody2D::COMPONENT_ID = IDGenerator::Get().GetRandomID();
 
         Rigidbody2D::Rigidbody2D(Entity *entity, float mass)
         {

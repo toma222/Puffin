@@ -18,6 +18,8 @@
 namespace puffin
 {
 
+    SystemManager *SystemManager::s_instance = nullptr;
+
     Entity *Container::AddEntity()
     {
         m_IDCounter++;
@@ -43,17 +45,6 @@ namespace puffin
 
     void Container::UpdateComponents()
     {
-        // for (size_t i = 0; i < m_pool.size(); i++)
-        // {
-        //      if (m_pool[i] != NULL)
-        //      {
-        //          // Update the component
-        //          m_pool[i]->UpdateComponent();
-        //      }
-        //  }
-
-        // m_entities[0]->UpdateComponents();
-
         for (auto *e : m_entities)
         {
             if (e != nullptr)

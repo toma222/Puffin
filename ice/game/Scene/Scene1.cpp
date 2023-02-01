@@ -25,6 +25,13 @@ namespace game
         entity->AddComponent<puffin::components::NativeScript>();
         entity->GetComponent<puffin::components::NativeScript>()->AttachScript<BasicScript>();
 
+        /*
+        GameLayer::s_currentContainer->AddEntity();
+        GameLayer::s_currentContainer->AddEntity();
+        GameLayer::s_currentContainer->AddEntity();
+        GameLayer::s_currentContainer->AddEntity();
+        */
+
         // entity->AddComponent<puffin::components::Script>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Scripts/lua/script.lua");
         // context = new puffin::LuaContext("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/script.lua");
     }

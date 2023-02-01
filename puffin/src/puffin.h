@@ -24,6 +24,10 @@
 #include "Components/Image.h"
 #include "Components/NativeScript.h"
 
+#include "System/Physics.h"
+
+#include "Math/PNVector.h"
+
 #include "Debug/Instrumentor.h"
 
 #include "Scripting/LuaGlue.h"

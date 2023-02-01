@@ -23,7 +23,16 @@ namespace puffin
             void UpdateComponent() override;
             void StartComponent() override;
             void UpdateComponentImGui() override;
-            PUFFIN_ID GetID() override { return COMPONENT_ID; };
+
+            PUFFIN_ID GetID() override
+            {
+                if (COMPONENT_ID == 0)
+                {
+                    COMPONENT_ID = IDGenerator::Get().GetRandomID();
+                }
+
+                return COMPONENT_ID;
+            };
 
             Entity *m_entity;
 

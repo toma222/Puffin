@@ -3,6 +3,8 @@
 #include "Core/Container.h"
 #include "Core/ID.h"
 
+#include "Math/PNVector.h"
+
 #include "Component.h"
 
 #include <SDL2/SDL.h>
@@ -11,12 +13,9 @@ namespace puffin
 {
     namespace components
     {
-        class Transform : public Component
+        class Rigidbody2D : public Component
         {
         public:
-            int layer;
-            std::shared_ptr<SDL_Rect> transformRect;
-
             static PUFFIN_ID COMPONENT_ID;
 
         public:
@@ -34,13 +33,14 @@ namespace puffin
                 return COMPONENT_ID;
             };
 
-            void Translate(int x, int y);
+            Rigidbody2D(Entity *entity, float mass);
+            ~Rigidbody2D() override;
 
             Entity *m_entity;
 
-            Transform(Entity *entity, int x, int y, int w, int h);
-
-            ~Transform() override;
+        public:
+            float m_mass;
+            Vector2 m_velocity;
         };
 
     } // namespace components

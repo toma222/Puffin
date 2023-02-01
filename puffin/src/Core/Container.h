@@ -14,7 +14,6 @@
 
 namespace puffin
 {
-
     class Entity
     {
     private:
@@ -46,6 +45,22 @@ namespace puffin
             }
         }
 
+        bool HasComponent(PUFFIN_ID id)
+        {
+            for (auto *comp : m_components)
+            {
+                if (comp != nullptr)
+                {
+                    if (comp->COMPONENT_ID == id)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         template <typename T, typename... Args>
         T *AddComponent(Args &&...mArgs)
         {
@@ -70,9 +85,7 @@ namespace puffin
                     }
                 }
             }
-            // printf("hello %li\n", m_components[0]->GetID());
 
-            PN_CORE_FATAL("PANIC CAN'T FIND THAT COMPONENT");
             return nullptr;
         }
 
@@ -83,18 +96,89 @@ namespace puffin
         void CleanComponentVector();
     };
 
+    class Component
+    {
+    public:
+        const PUFFIN_ID COMPONENT_ID = 1;
+
+    public:
+        virtual void UpdateComponent();
+        virtual void UpdateComponentImGui();
+        virtual void StartComponent();
+        virtual PUFFIN_ID GetID();
+
+        virtual ~Component() = default;
+    };
+
     class System
     {
     public:
+        std::vector<Entity *> m_currentComponents;
+        std::vector<PUFFIN_ID> m_requiredComponents;
+
         virtual void Start() { return; };
         virtual void Update() { return; };
         virtual void OnImGuiUpdate() { return; };
+
+        virtual ~System() = default;
+
+        void CheckComponent(PUFFIN_ID componentID, Entity *entity)
+        {
+            int check = 0; // m_requiredComponents.size();
+
+            for (auto id : m_requiredComponents)
+            {
+                if (id == componentID)
+                {
+                    check++;
+                    return;
+                }
+            }
+
+            if (check >= (int)m_currentComponents.size())
+                m_currentComponents.push_back(entity);
+        }
+    };
+
+    class SystemManager
+    {
+    private:
+        static SystemManager *s_instance;
+        std::vector<std::shared_ptr<System>> m_systems;
+
+        SystemManager()
+        {
+            PN_CORE_TRACE("System manager created");
+        }
+
+    public:
+        SystemManager(const SystemManager &obj) = delete;
+
+        static SystemManager *Get()
+        {
+            if (s_instance == nullptr)
+            {
+                s_instance = new SystemManager();
+                return s_instance;
+            }
+            else
+            {
+                return s_instance;
+            }
+        }
+
+        template <typename T, typename... Args>
+        std::shared_ptr<T> AddSystem(Args &&...mArgs)
+        {
+            std::shared_ptr<T> sys = std::make_shared<T>(std::forward<Args>(mArgs)...);
+            // m_systems.push_back(sys);
+            return sys;
+        }
     };
 
     class Container
     {
     private:
-        // All the components in one array
         std::vector<Entity *> m_entities;
 
     public:

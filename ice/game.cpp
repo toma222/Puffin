@@ -4,21 +4,25 @@
 
 #include <SDL2/SDL.h>
 
-#include <Core/EntryPoint.h>
 #include <puffin.h>
+#include <Core/EntryPoint.h>
 
 #include "editor/editorGUI.h"
 #include "editor/EditorApplication.h"
 
 #include "game/Layer/GameLayer.h"
 
+#include <cassert>
+#include <string>
+
 puffin::Application *CreateApplication()
 {
-    editor::EditorApplication *editorApp = new editor::EditorApplication();
 
-    editorApp->SetEditorGUI();
+    // editor::EditorApplication *editorApp = new editor::EditorApplication();
 
-    puffin::Application *app = editorApp; // new puffin::Application(); //
+    // editorApp->SetEditorGUI();
+
+    puffin::Application *app = new puffin::Application(); // editorApp; //
     app->GetLayerStack()->AddLayer<game::GameLayer>();
 
     return app;

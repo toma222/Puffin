@@ -5,6 +5,8 @@
 #include "Logging.h"
 #include "Layer.h"
 
+#include "Debug/Instrumentor.h"
+
 namespace puffin
 {
     class LayerStack
@@ -34,6 +36,7 @@ namespace puffin
 
         void AttachLayers()
         {
+            PN_PROFILE_FUNCTION("AttachLayers");
             for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
             {
                 stack[lIndex]->OnAttach();
@@ -42,6 +45,7 @@ namespace puffin
 
         void DetachLayers()
         {
+            PN_PROFILE_FUNCTION("DetachLayers");
             for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
                 stack[lIndex]->OnDetach();
         }

@@ -3,6 +3,7 @@
 
 #include "Core.h"
 #include "Logging.h"
+#include "ID.h"
 #include "Components/Component.h"
 
 #include <memory>
@@ -16,6 +17,10 @@ namespace puffin
     class Entity
     {
     private:
+        // Wrapper to avoid collisions
+        void CheckForScenes(PUFFIN_ID id, Entity *entity);
+
+    public:
         unsigned int m_CompID;
         unsigned int m_ID;
         short int m_componentCount;
@@ -44,13 +49,31 @@ namespace puffin
             }
         }
 
+        bool HasComponent(PUFFIN_ID id)
+        {
+            for (auto *comp : m_components)
+            {
+                if (comp != nullptr)
+                {
+                    if (comp->COMPONENT_ID == id)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         template <typename T, typename... Args>
         T *AddComponent(Args &&...mArgs)
         {
             T *comp = new T(this, std::forward<Args>(mArgs)...);
 
-            m_components[T::BIT_MASK_INDEX] = comp;
+            m_components[m_componentCount] = (components::Component *)comp;
             m_componentCount++;
+
+            CheckForScenes(comp->GetID(), this);
 
             return comp;
         }
@@ -58,7 +81,18 @@ namespace puffin
         template <typename T>
         T *GetComponent()
         {
-            return (T *)m_components[T::BIT_MASK_INDEX];
+            for (auto *c : m_components)
+            {
+                if (c != nullptr)
+                {
+                    if (c->GetID() == T::COMPONENT_ID)
+                    {
+                        return (T *)c;
+                    }
+                }
+            }
+
+            return nullptr;
         }
 
         unsigned int GetEntityID() { return m_ID; };
@@ -68,10 +102,90 @@ namespace puffin
         void CleanComponentVector();
     };
 
+    class System
+    {
+    public:
+        virtual void Start() { return; };
+        virtual void Update() { return; };
+        virtual void OnImGuiUpdate() { return; };
+        virtual void Clear() { return; };
+
+        virtual ~System() = default;
+
+        virtual bool CheckComponent(PUFFIN_ID componentID, Entity *entity) { return false; };
+    };
+
+    class SystemManager
+    {
+    private:
+        static SystemManager *s_instance;
+        std::vector<std::shared_ptr<System>> m_systems;
+
+        SystemManager()
+        {
+            PN_CORE_TRACE("System manager created");
+        }
+
+    public:
+        SystemManager(const SystemManager &obj) = delete;
+
+        static SystemManager *Get()
+        {
+            if (s_instance == nullptr)
+            {
+                s_instance = new SystemManager();
+                return s_instance;
+            }
+            else
+            {
+                return s_instance;
+            }
+        }
+
+        template <typename T, typename... Args>
+        std::shared_ptr<T> AddSystem(Args &&...mArgs)
+        {
+            std::shared_ptr<T> sys = std::make_shared<T>(std::forward<Args>(mArgs)...);
+            m_systems.push_back(std::dynamic_pointer_cast<System>(sys));
+            return sys;
+        }
+
+        void CheckComponent(PUFFIN_ID compID, Entity *entity)
+        {
+            for (auto sys : m_systems)
+            {
+                sys->CheckComponent(compID, entity);
+            }
+        }
+
+        void Update()
+        {
+            for (auto sys : m_systems)
+            {
+                sys->Update();
+            }
+        }
+
+        void Clear()
+        {
+            for (auto sys : m_systems)
+            {
+                sys->Clear();
+            }
+        }
+
+        void UpdateIMGUI()
+        {
+            for (auto sys : m_systems)
+            {
+                sys->OnImGuiUpdate();
+            }
+        }
+    };
+
     class Container
     {
     private:
-        // All the components in one array
         std::vector<Entity *> m_entities;
 
     public:

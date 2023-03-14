@@ -4,8 +4,10 @@
 #include "imgui_impl_sdlrenderer.h"
 
 #include "Core.h"
+// #include "Debug/Instrumentor.h"
 #include "Container.h"
 #include "Logging.h"
+#include "ID.h"
 #include "Components/Component.h"
 
 #include <memory>
@@ -15,6 +17,13 @@
 
 namespace puffin
 {
+
+    SystemManager *SystemManager::s_instance = nullptr;
+
+    void Entity::CheckForScenes(PUFFIN_ID id, Entity *entity)
+    {
+        SystemManager::Get()->CheckComponent(id, this);
+    }
 
     Entity *Container::AddEntity()
     {
@@ -41,14 +50,15 @@ namespace puffin
 
     void Container::UpdateComponents()
     {
-        // for (size_t i = 0; i < m_pool.size(); i++)
-        //{
-        //     if (m_pool[i] != NULL)
-        //     {
-        //         // Update the component
-        //         m_pool[i]->UpdateComponent();
-        //     }
-        // }
+        for (auto *e : m_entities)
+        {
+            if (e != nullptr)
+            {
+                e->UpdateComponents();
+            }
+        }
+
+        SystemManager::Get()->Update();
     }
 
     void Entity::CleanComponentVector()
@@ -58,6 +68,7 @@ namespace puffin
 
     Container::Container(int initialSize)
     {
+        // PN_PROFILE_FUNCTION("Container", __FILE__);
         m_entities.resize(10);
 
         m_IDCounter = 0;
@@ -80,6 +91,8 @@ namespace puffin
             delete entity;
         }
 
+        SystemManager::Get()->Clear();
+
         m_entities.clear();
         m_IDCounter = 0;
     }
@@ -96,5 +109,14 @@ namespace puffin
         }
 
         ImGui::EndChild();
+    }
+
+    void Entity::UpdateComponents()
+    {
+        for (auto *comp : m_components)
+        {
+            if (comp != nullptr)
+                comp->UpdateComponent();
+        }
     }
 } // namespace pn

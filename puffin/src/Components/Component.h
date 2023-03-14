@@ -2,6 +2,8 @@
 
 #include "core/Core.h"
 #include "Core/Logging.h"
+#include "Core/ID.h"
+// #include "Core/Container.h"
 
 namespace puffin
 {
@@ -9,20 +11,16 @@ namespace puffin
     {
         class Component
         {
-        private:
-            const static int32_t BIT_MASK_INDEX = -1;
+        public:
+            const PUFFIN_ID COMPONENT_ID = 1;
 
         public:
             virtual void UpdateComponent();
             virtual void UpdateComponentImGui();
             virtual void StartComponent();
-            // virtual ~Component() = default;
+            virtual PUFFIN_ID GetID();
 
             virtual ~Component() = default;
-
-            //{
-            //    PN_CORE_CLEAN("Destroying Component");
-            //}
         };
     } // namespace components
 

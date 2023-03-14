@@ -1,4 +1,5 @@
 #include "Core/Container.h"
+#include "Core/ID.h"
 
 #include "Component.h"
 
@@ -15,14 +16,23 @@ namespace puffin
             std::string m_filePath;
             std::string m_fileName;
 
-        public:
-            const static int32_t BIT_MASK_INDEX = 1;
+            static PUFFIN_ID COMPONENT_ID;
 
         public:
             // Looks at the transform for it's scale and position
             void UpdateComponent() override;
             void StartComponent() override;
             void UpdateComponentImGui() override;
+
+            PUFFIN_ID GetID() override
+            {
+                if (COMPONENT_ID == 0)
+                {
+                    COMPONENT_ID = IDGenerator::Get().GetRandomID();
+                }
+
+                return COMPONENT_ID;
+            };
 
             Entity *m_entity;
 

@@ -1,5 +1,7 @@
+#pragma once
 
 #include "Core/Container.h"
+#include "Core/ID.h"
 
 #include "Component.h"
 
@@ -15,20 +17,32 @@ namespace puffin
             int layer;
             std::shared_ptr<SDL_Rect> transformRect;
 
-            const static int32_t BIT_MASK_INDEX = 0;
+            static PUFFIN_ID COMPONENT_ID;
 
         public:
             void UpdateComponent() override;
             void StartComponent() override;
             void UpdateComponentImGui() override;
 
+            PUFFIN_ID GetID() override
+            {
+                if (COMPONENT_ID == 0)
+                {
+                    COMPONENT_ID = IDGenerator::Get().GetRandomID();
+                }
+
+                return COMPONENT_ID;
+            };
+
             void Translate(int x, int y);
 
             Entity *m_entity;
 
             Transform(Entity *entity, int x, int y, int w, int h);
+
             ~Transform() override;
         };
+
     } // namespace components
 
 } // namespace puffin

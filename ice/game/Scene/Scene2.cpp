@@ -7,12 +7,15 @@ namespace game
 {
     void Scene2::StartScene()
     {
-        puffin::Entity *entity = GameLayer::m_currentContainer->AddEntity();
+        PN_PROFILE_FUNCTION("StartScene");
+        puffin::Entity *entity = GameLayer::s_currentContainer->AddEntity();
 
-        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 500;
-        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 500;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 600;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 600;
 
         entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/TreeBuilding.bmp", 0);
+
+        // entity->AddComponent<puffin::components::Rigidbody2D>(1.0f);
     }
 
     void Scene2::UpdateScene()
@@ -23,7 +26,7 @@ namespace game
     {
         GM_CORE_TRACE("Clearing scene");
 
-        GameLayer::m_currentContainer->ClearScene();
+        GameLayer::s_currentContainer->ClearScene();
         puffin::Application::Get().GetGraphics()->ClearTextureRenderQue();
     }
 

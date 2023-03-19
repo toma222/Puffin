@@ -7,25 +7,17 @@
 #include "Scene1.h"
 #include "Scene2.h"
 
-#include "Assets/Scripts/cpp/BasicScript.hpp"
-
 namespace game
 {
 
     void Scene1::StartScene()
     {
-        PN_PROFILE_FUNCTION("StartScene");
-        puffin::Entity *entity = GameLayer::s_currentContainer->AddEntity();
+        puffin::Entity *entity = GameLayer::m_currentContainer->AddEntity();
 
-        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 600;
-        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 600;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->w = 100;
+        entity->GetComponent<puffin::components::Transform>()->transformRect->h = 100;
 
-        entity->AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/programming/EngineInADay - Copy/ice/game/Assets/Images/download.bmp", 0);
-
-        entity->AddComponent<puffin::components::NativeScript>();
-        entity->GetComponent<puffin::components::NativeScript>()->AttachScript<BasicScript>();
-
-        // entity->AddComponent<puffin::components::Rigidbody2D>(1.0f);
+        entity->AddComponent<puffin::components::Image>("C:/Users/aidan/Desktop/Puffin-rendering/ice/game/Assets/Images/BuildingWall.bmp", 0);
     }
 
     void Scene1::UpdateScene()
@@ -35,8 +27,7 @@ namespace game
     void Scene1::ClearScene()
     {
         GM_CORE_TRACE("Clearing scene");
-
-        GameLayer::s_currentContainer->ClearScene();
+        GameLayer::m_currentContainer->ClearScene();
         puffin::Application::Get().GetGraphics()->ClearTextureRenderQue();
     }
 

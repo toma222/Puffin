@@ -36,14 +36,11 @@ namespace puffin
             m_entity = entity;
             m_filePath = path;
 
-            // create the texture
-            // TODO get the transform's data for the scale
-            // new render::SDLTexture(Application::Get().GetGraphics()->GetRenderer(), path, 100, 100); //
-            m_texture = std::make_shared<render::SDLTexture>(m_entity->GetComponent<Transform>()->transformRect, Application::Get().GetGraphics()->GetRenderer().get(), path, 100, 100);
+            m_texture = std::make_shared<render::SDLSurface>(path.c_str(), 192, 108);
 
             Application::Get()
                 .GetGraphics()
-                ->AddTextureToQue(m_texture, 0);
+                ->AddTextureToQue(m_texture);
 
             m_fileName = GetLastSplitString(path, "").c_str();
 

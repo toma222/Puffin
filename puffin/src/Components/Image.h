@@ -12,7 +12,10 @@ namespace puffin
         class Image : public Component
         {
         private:
-            std::shared_ptr<render::SDLTexture> m_texture;
+            std::shared_ptr<render::SDLSurface> m_texture;
+            render::SDLSurface *m_backSurface;
+            render::SDLSurface *m_renderSurface;
+
             std::string m_filePath;
             std::string m_fileName;
 

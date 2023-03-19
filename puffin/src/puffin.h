@@ -15,19 +15,7 @@
 #include "Core/Gui.h"
 #include "Core/Container.h"
 #include "Core/Scene.h"
-#include "Core/ID.h"
-#include "Core/Input.h"
 
 #include "Components/Component.h"
 #include "Components/Transform.h"
-#include "Components/Script.h"
 #include "Components/Image.h"
-#include "Components/NativeScript.h"
-
-#include "System/Physics.h"
-
-#include "Math/PNVector.h"
-
-#include "Debug/Instrumentor.h"
-
-#include "Scripting/LuaGlue.h"

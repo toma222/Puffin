@@ -1,28 +1,40 @@
-
 #pragma once
 
-#include "Core/Container.h"
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_sdlrenderer.h"
+
 #include "Core/ID.h"
+#include "Component.h"
+
+#include "Core/Container.h"
+#include "Core/Application.h"
+#include "Core/Core.h"
 
 #include "Component.h"
-#include "Transform.h"
+#include "memory.h"
 
-#include "Scripting/LuaGlue.h"
-
-#include <SDL2/SDL.h>
+// #define DEFAULT_SCRIPT_BEHAVIOR(name) void name(Entity *m_)
 
 namespace puffin
 {
     namespace components
     {
-        class Script : public Component
+        class NativeScript : public Component
         {
-        private:
-            std::unique_ptr<LuaContext> m_luaInstance;
-
+        public:
             static PUFFIN_ID COMPONENT_ID;
 
         public:
+            class Script
+            {
+            public:
+                Entity *entity;
+                virtual void Update() { return; };
+                virtual void Start() { return; };
+            };
+
+            // Looks at the transform for it's scale and position
             void UpdateComponent() override;
             void StartComponent() override;
             void UpdateComponentImGui() override;
@@ -39,11 +51,21 @@ namespace puffin
 
             Entity *m_entity;
 
-            int *someData;
+            NativeScript(Entity *entity);
+            ~NativeScript() override;
 
-            Script(Entity *entity, std::string src);
-            ~Script() override;
+            template <typename T>
+            void AttachScript()
+            {
+                m_script = std::make_unique<T>();
+                m_script->entity = m_entity;
+                m_script->Start();
+            }
+
+        private:
+            std::unique_ptr<Script> m_script;
         };
     } // namespace components
-
 } // namespace puffin
+
+#define PN_SCRIPT_MONO puffin::components::NativeScript::Script

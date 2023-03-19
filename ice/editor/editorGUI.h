@@ -54,7 +54,7 @@ namespace editor
             ImGui::Text("Scene Data");
             ImGui::Text("   name : %s", game::GameLayer::s_currentScene->GetName().c_str());
             ImGui::Text("Container");
-            ImGui::Text("   entities : %i", game::GameLayer::s_currentContainer->m_IDCounter);
+            ImGui::Text("   entities : %i", game::GameLayer::m_currentContainer->m_IDCounter);
 
             ImGui::EndChild();
 
@@ -62,20 +62,14 @@ namespace editor
 
             ImGui::Begin("Entities");
 
-            game::GameLayer::s_currentContainer->RenderImGuiComponents();
-
-            ImGui::End();
-
-            ImGui::Begin("Systems");
-
-            puffin::SystemManager::Get()->UpdateIMGUI();
+            game::GameLayer::m_currentContainer->RenderImGuiComponents();
 
             ImGui::End();
 
             ImGui::Begin("Runtime Stats");
 
             ImGui::TextColored({255, 255, 255, 255}, "Runtime");
-            ImGui::PlotLines("Frame rate", m_frameRateSamples, 500, 0, NULL, 40, 65, {ImGui::GetWindowSize().x - 200, 100});
+            ImGui::PlotLines("Frame rate", m_frameRateSamples, 500, 0, NULL, 0, 80, {ImGui::GetWindowSize().x - 200, 100});
 
             if (m_sampleCount < 500)
             {

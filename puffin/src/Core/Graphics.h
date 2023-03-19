@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Core/Core.h"
+#include <array>
 
 #include "Rendering/PRenderer.h"
 #include "Rendering/PWindow.h"
@@ -11,6 +12,24 @@
 
 namespace puffin
 {
+    class RenderPallet
+    {
+        public:
+            std::vector<int> colors;
+            int length;
+
+            RenderPallet(int numberOfColors)
+            {
+                length = numberOfColors;
+            };
+
+            void SetPallet(std::vector<int> array)
+            {
+                colors = array;
+                return;
+            }
+    };
+
     // Contains the renderer and is in charge of rendering images
     class Graphics
     {
@@ -22,22 +41,33 @@ namespace puffin
             Uint32 flags;
         };
 
-        // typedef struct
-        // {
-        //     int layer;
-        //     render::SDLTexture *texture;
-        // } QueTextureItem;
+        struct RenderItem
+        {
+            int layer; // z cordnate
+            Ref<render::SDLSurface> surface;
+        };
+
+        typedef struct
+        {
+            double power;
+            double distance;
+
+            int x;
+            int y;
+        } Light;
 
         struct GraphicsProperties *m_graphicsProps;
 
         Ref<render::SDLRenderer> m_renderer;
         Ref<render::SDLTexture> m_renderTexture;
+        Ref<render::SDLSurface> m_renderSurface;
 
-        std::vector<std::shared_ptr<render::SDLTexture>> m_textureQue;
+        std::vector<std::shared_ptr<render::SDLSurface>> m_renderQue;
+        std::vector<Light> m_lights;
 
-        // const SDL_Rect rect;
+        RenderPallet *m_pallet;
 
-        // All things rendered are stored in the render texture
+        // std::array<int, 40> m_pallet;
 
     public:
         // Creates the SDL context
@@ -54,7 +84,7 @@ namespace puffin
         // Presents the changes to the window
         void RenderPresent();
 
-        void AddTextureToQue(std::shared_ptr<render::SDLTexture>, int layer);
+        void AddTextureToQue(std::shared_ptr<render::SDLSurface> item);
         void ClearTextureRenderQue();
 
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };

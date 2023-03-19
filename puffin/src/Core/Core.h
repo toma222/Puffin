@@ -3,13 +3,10 @@
 
 #include <memory>
 
-// #include "Debug/Instrumentor.h"
-
 #define MAX_SPRITES_IN_SCENE 20
 
 namespace puffin
 {
-
     // Thanks to the Cherno for this bit of code!
     template <typename T>
     using Ref = std::shared_ptr<T>;

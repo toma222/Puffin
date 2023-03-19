@@ -11,10 +11,10 @@ IMGUI_SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl.cpp $(IMGUI_DIR)/backends/
 IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o obj/imgui_demo.o obj/imgui_impl_sdlrenderer.o obj/imgui_impl_sdl.o
 
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src
-LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image
+LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image -llua-5.4.4
 
-ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Instrumentor.o obj/Entity.o obj/Scene.o
-EDITOR_OBJ = obj/EditorApplication.o
+ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Instrumentor.o obj/Entity.o obj/Scene.o obj/SceneLoading.o
+EDITOR_OBJ = obj/EditorApplication.o obj/EditorLayer.o
 GAMEOBJ = obj/GameLayer.o
 
 obj/%.o : include/windows/imgui/%.cpp

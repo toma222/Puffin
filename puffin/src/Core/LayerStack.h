@@ -54,6 +54,14 @@ namespace puffin
             }
         }
 
+        void ImGuiUpdate()
+        {
+            for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
+            {
+                stack[lIndex]->ImGuiUpdate();
+            }
+        }
+
         void ClearLayers()
         {
             for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)

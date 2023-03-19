@@ -43,6 +43,8 @@ namespace puffin
             SDL_Event e;
             while (SDL_PollEvent(&e) > 0)
             {
+                ImGui_ImplSDL2_ProcessEvent(&e);
+
                 switch (e.type)
                 {
                 case SDL_QUIT:
@@ -51,8 +53,10 @@ namespace puffin
                 }
             }
 
-            m_layerStack->UpdateLayers();
             puffin::Graphics::Get().StartRenderCycle();
+
+            m_layerStack->UpdateLayers();
+
             puffin::Graphics::Get().PresentAndEndRenderCycle();
             m_window->UpdateWindow();
         }

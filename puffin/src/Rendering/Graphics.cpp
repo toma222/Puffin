@@ -1,10 +1,16 @@
 
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_sdlrenderer.h"
+
 #include <math.h>
 
 #include "Rendering/PRenderer.h"
 
 #include "Core/Logging.h"
+#include "Core/Application.h"
 #include "Core/Core.h"
+
 #include "Graphics.h"
 
 #include <SDL2/SDL.h>
@@ -42,36 +48,9 @@ namespace puffin
     {
     }
 
-    /*
-
-    void Graphics::RenderTextures()
-    {
-        SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
-        m_renderer->Clear();
-
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer.get()->get(), m_renderSurface.get()->get());
-        SDL_RenderCopy(m_renderer.get()->get(), texture, NULL, NULL);
-        SDL_DestroyTexture(texture);
-
-        SDL_SetRenderTarget(m_renderer->get(), NULL);
-        m_renderer->CopyFull(m_renderTexture.get());
-    }
-
-    void Graphics::RenderPresent()
-    {
-        m_renderer->Present();
-    }
-
-    void Graphics::ClearRenderer()
-    {
-        m_renderer->Clear();
-    }
-
-    */
-
     void Graphics::StartRenderCycle()
     {
-        // PREPARE THY SELF
+        Flush();
     }
 
     void Graphics::PresentAndEndRenderCycle()
@@ -86,8 +65,10 @@ namespace puffin
         SDL_SetRenderTarget(m_renderer->get(), NULL);
         m_renderer->CopyFull(m_renderTexture.get());
 
+        Application::Get().GetLayerStack()->ImGuiUpdate();
+
         m_renderer->Present();
-        Flush();
+        // Flush();
     }
 
     void Graphics::Flush()

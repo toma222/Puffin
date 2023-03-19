@@ -52,7 +52,7 @@ namespace editor
             ImGui::BeginChild("Scene Data", ImVec2(250, 100), true);
 
             ImGui::Text("Scene Data");
-            ImGui::Text("   name : %s", game::GameLayer::s_currentScene->GetName().c_str());
+            // ImGui::Text("   name : %s", game::GameLayer::s_currentScene->GetName().c_str());
             ImGui::Text("Container");
             // ImGui::Text("   entities : %i", game::GameLayer::m_currentContainer->m_IDCounter);
 

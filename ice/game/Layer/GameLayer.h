@@ -5,6 +5,7 @@
 
 namespace game
 {
+
     class GameLayer : public puffin::Layer
     {
     public:
@@ -15,7 +16,6 @@ namespace game
 
         static puffin::Scene *s_currentScene;
 
-        template <typename T>
         void SetCurrentScene()
         {
         }

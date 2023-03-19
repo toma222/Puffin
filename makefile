@@ -13,7 +13,7 @@ IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o o
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src
 LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image
 
-ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Container.o obj/Instrumentor.o
+ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/PWindow.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Instrumentor.o obj/Entity.o obj/Scene.o
 EDITOR_OBJ = obj/EditorApplication.o
 GAMEOBJ = obj/GameLayer.o
 
@@ -37,7 +37,7 @@ obj/%.o : puffin/src/Rendering/%.cpp puffin/src/Rendering/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
-obj/%.o : puffin/src/Components/%.cpp puffin/src/Components/%.h
+obj/%.o : puffin/src/Scene/%.cpp puffin/src/Scene/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 

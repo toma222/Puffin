@@ -87,7 +87,7 @@ namespace puffin
                 {
                     double distance = std::sqrt(((x - light.x) * (x - light.x)) + ((y - light.y) * (y - light.y)));
 
-                    double calc = 1 - std::min(distance / light.distance, 1.2);
+                    double calc = 1 - std::min(distance / light.distance, 1.0);
 
                     distnaces += calc;
                     distnaces += calc;

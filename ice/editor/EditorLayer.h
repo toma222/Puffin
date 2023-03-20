@@ -1,4 +1,5 @@
 
+
 #pragma once
 
 #include <puffin.h>
@@ -28,6 +29,10 @@ public:
 
         ImGui_ImplSDL2_InitForSDLRenderer(puffin::Application::Get().GetWindow()->GetWindow()->GetWindow(), puffin::Graphics::Get().GetRenderer()->get());
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
+
+        // Load the icons
+        m_GameObjectIcon = new puffin::render::SDLTexture (puffin::Graphics::Get().GetRenderer().get(),
+         "C:/Users/100044352/Desktop/Puffin-scripting/ice/editor/Assets/GameObjectSprite.bmp", 50, 50);
     };
 
     void OnDetach() override{
@@ -68,25 +73,26 @@ public:
 
         ImGui::Begin("Hierarchy");
 
-        // if (ImGui::TreeNode("Some GameObject"))
-        // {
-        //     ImGui::TreePop();
-        // }
-        // for (auto entity : game::GameLayer::GetCurrentScene().m_entities)
-        //{
-        // entity.GetUUID();
+        for (auto entity : game::GameLayer::GetCurrentScene().m_entities)
+        {
+            if(ImGui::InvisibleButton("some id", {300,20}))
+            {
+                // Set selected entity
+            }
 
-        //    if (ImGui::TreeNode("hello"))
-        //    {
-        //        ImGui::TreePop();
-        //    }
-        //}
+            //ImGui::SameLine(x);
+            ImGui::Image((ImTextureID)m_GameObjectIcon->get(), ImVec2(20,20));
+            ImGui::SameLine();
+            ImGui::Text("some thing");
+        }
 
         // game::GameLayer::GetCurrentScene().registry;
 
         ImGui::End();
 
         ImGui::Begin("Viewport");
+
+        ImGui::Image((ImTextureID)puffin::Graphics::Get().GetRenderTexture().get()->get(), ImVec2(192 * 5,108 * 5));
 
         ImGui::End();
 
@@ -95,6 +101,9 @@ public:
     }
 
     static puffin::Scene *s_currentScene;
+
+    puffin::render::SDLTexture *m_GameObjectIcon;
+    puffin::Entity *selectedEntity;
 
     void SetCurrentScene()
     {

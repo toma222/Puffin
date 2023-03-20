@@ -53,6 +53,19 @@ namespace puffin
         operator entt::entity() const { return m_entity; }
         operator uint32_t() const { return (uint32_t)m_entity; }
 
+        PUFFIN_ID GetUUID() { return GetComponent<components::IDComponent>().m_ID; }
+        const std::string &GetName() { return GetComponent<components::Tag>().m_Tag; }
+
+        bool operator==(const Entity &other) const
+        {
+            return m_entity == other.m_entity && m_sceneRef == other.m_sceneRef;
+        }
+
+        bool operator!=(const Entity &other) const
+        {
+            return !(*this == other);
+        }
+
     private:
         Scene *m_sceneRef = nullptr;
         entt::entity m_entity{entt::null};

@@ -27,6 +27,8 @@ namespace puffin
         entity.AddComponent<components::Transform>(10, 0, 10, 10);
         entity.AddComponent<components::Tag>(name.empty() ? "Entity" : name);
 
+        m_entities.push_back(entity);
+
         return entity;
     }
 

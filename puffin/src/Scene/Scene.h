@@ -2,7 +2,6 @@
 #pragma once
 
 #include "Core/ID.h"
-#include "Core/ID.h"
 
 #include <entt/entt.hpp>
 
@@ -27,5 +26,8 @@ namespace puffin
 
     public:
         entt::registry registry;
+
+        // std::unordered_map<std::string, int> m_entityMap;
+        std::vector<Entity> m_entities;
     };
 } // namespace puffin

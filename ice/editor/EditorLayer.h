@@ -3,6 +3,8 @@
 
 #include <puffin.h>
 
+#include "Layer/GameLayer.h"
+
 class GameLayer : public puffin::Layer
 {
 public:
@@ -57,6 +59,36 @@ public:
         ImGui::End();
 
         ImGui::ShowDemoWindow();
+
+        ImGui::Begin("Logging");
+
+        ImGui::Text("TODO : this lol");
+
+        ImGui::End();
+
+        ImGui::Begin("Hierarchy");
+
+        // if (ImGui::TreeNode("Some GameObject"))
+        // {
+        //     ImGui::TreePop();
+        // }
+        // for (auto entity : game::GameLayer::GetCurrentScene().m_entities)
+        //{
+        // entity.GetUUID();
+
+        //    if (ImGui::TreeNode("hello"))
+        //    {
+        //        ImGui::TreePop();
+        //    }
+        //}
+
+        // game::GameLayer::GetCurrentScene().registry;
+
+        ImGui::End();
+
+        ImGui::Begin("Viewport");
+
+        ImGui::End();
 
         ImGui::Render();
         ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());

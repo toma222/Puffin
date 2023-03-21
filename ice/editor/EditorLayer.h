@@ -1,5 +1,4 @@
 
-
 #pragma once
 
 #include <puffin.h>
@@ -33,17 +32,22 @@ public:
         // Load the icons
         m_GameObjectIcon = new puffin::render::SDLTexture (puffin::Graphics::Get().GetRenderer().get(),
          "C:/Users/100044352/Desktop/Puffin-scripting/ice/editor/Assets/GameObjectSprite.bmp", 50, 50);
+
+        m_selectedEntity = nullptr;
     };
 
-    void OnDetach() override{
+    void OnDetach() override
+    {
 
     };
 
-    void Update() override{
+    void Update() override
+    {
 
     };
 
-    void Start() override{
+    void Start() override
+    {
 
     };
 
@@ -73,26 +77,59 @@ public:
 
         ImGui::Begin("Hierarchy");
 
-        for (auto entity : game::GameLayer::GetCurrentScene().m_entities)
+        float x = ImGui::GetCursorPosX();
+
+        for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
         {
+            // TODO fix the id's on this
             if(ImGui::InvisibleButton("some id", {300,20}))
             {
-                // Set selected entity
+                printf("Adding some entity");
+                m_selectedEntity = &entity;
             }
 
-            //ImGui::SameLine(x);
+            puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
+
+            ImGui::SameLine(x);
             ImGui::Image((ImTextureID)m_GameObjectIcon->get(), ImVec2(20,20));
             ImGui::SameLine();
-            ImGui::Text("some thing");
+            ImGui::Text("%s", tag.m_Tag.c_str());
         }
-
-        // game::GameLayer::GetCurrentScene().registry;
 
         ImGui::End();
 
         ImGui::Begin("Viewport");
 
         ImGui::Image((ImTextureID)puffin::Graphics::Get().GetRenderTexture().get()->get(), ImVec2(192 * 5,108 * 5));
+
+        ImGui::End();
+
+        ImGui::Begin("Inspector");
+
+        if(m_selectedEntity != nullptr)
+        {
+            ImGui::Text("Entity selected");
+            // Gui for Transform
+            ImGui::Text("Transform Component");
+            puffin::components::Transform &transform = m_selectedEntity->GetComponent<puffin::components::Transform>();
+
+            ImGui::InputInt("Position x", &transform.m_rect->x);
+            ImGui::InputInt("Position y", &transform.m_rect->y);
+            ImGui::InputInt("Width", &transform.m_rect->w);
+            ImGui::InputInt("Height", &transform.m_rect->h);
+
+            // Gui for ID
+            ImGui::Text("ID Component");
+            puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
+
+            ImGui::Text("%lu", ID.m_ID);
+
+            // Gui for tag component
+            ImGui::Text("Tag Component");
+            puffin::components::Tag &tag = m_selectedEntity->GetComponent<puffin::components::Tag>();
+
+            ImGui::Text("%s", tag.m_Tag.c_str());
+        }
 
         ImGui::End();
 
@@ -103,7 +140,7 @@ public:
     static puffin::Scene *s_currentScene;
 
     puffin::render::SDLTexture *m_GameObjectIcon;
-    puffin::Entity *selectedEntity;
+    puffin::Entity *m_selectedEntity;
 
     void SetCurrentScene()
     {

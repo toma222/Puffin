@@ -7,10 +7,6 @@
 
 extern puffin::Application *CreateApplication();
 
-puffin::IDGenerator puffin::IDGenerator::s_generator;
-
-// puffin::Application *puffin::Application::s_Instance = CreateApplication();
-
 int main(int argc, char *argv[])
 {
     // Asks the engine to make an app with all it's thing

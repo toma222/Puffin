@@ -59,11 +59,11 @@ namespace puffin
 
         struct IDComponent
         {
-            PUFFIN_ID m_ID;
+            UUID m_ID;
 
             IDComponent() = default;
             IDComponent(const IDComponent &idComponent) = default;
-            IDComponent(PUFFIN_ID id)
+            IDComponent(UUID id)
                 : m_ID(id){};
         };
     }

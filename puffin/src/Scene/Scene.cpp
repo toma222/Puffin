@@ -16,12 +16,12 @@ namespace puffin
 
     Entity Scene::AddEntity(const std::string &name)
     {
-        return MakeEntityWithUUID(IDGenerator::Get().GetRandomID(), name);
+        return MakeEntityWithUUID(UUID(), name);
     }
 
-    Entity Scene::MakeEntityWithUUID(PUFFIN_ID uuid, const std::string &name)
+    Entity Scene::MakeEntityWithUUID(UUID uuid, const std::string &name)
     {
-        Entity entity = Entity(this, registry.create());
+        Entity entity = {this, registry.create()};
 
         entity.AddComponent<components::IDComponent>().m_ID = uuid;
         entity.AddComponent<components::Transform>(10, 0, 10, 10);

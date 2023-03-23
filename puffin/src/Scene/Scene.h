@@ -17,7 +17,7 @@ namespace puffin
         Scene();
 
         Entity AddEntity(const std::string &name);
-        Entity MakeEntityWithUUID(PUFFIN_ID uuid, const std::string &name);
+        Entity MakeEntityWithUUID(UUID uuid, const std::string &name);
 
         template <typename T>
         void OnComponentAdded(Entity entity, T &component);

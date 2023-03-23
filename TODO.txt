@@ -1,2 +1,0 @@
-
-TODO : Abstract the SDL struct's to classes so that I can be the c++

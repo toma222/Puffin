@@ -1,5 +1,5 @@
 
-COMPILER = g++
+COMPILER = portable\gcc\bin\g++.exe
 TARGET = x64
 SYSTEM = windows
 RELEASE_MODE = BUILD_TYPE=debug

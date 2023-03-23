@@ -23,7 +23,7 @@ namespace puffin
     {
         Entity entity = Entity(this, registry.create());
 
-        entity.AddComponent<components::IDComponent>();
+        entity.AddComponent<components::IDComponent>().m_ID = uuid;
         entity.AddComponent<components::Transform>(10, 0, 10, 10);
         entity.AddComponent<components::Tag>(name.empty() ? "Entity" : name);
 

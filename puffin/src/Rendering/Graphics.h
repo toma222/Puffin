@@ -17,7 +17,7 @@ namespace puffin
     class Graphics
     {
     private:
-        const SDL_Rect *c_fullSpriteMap = new SDL_Rect({0, 0, 0, 0});
+        
 
         // Simple properties of the renderer
         struct GraphicsProperties

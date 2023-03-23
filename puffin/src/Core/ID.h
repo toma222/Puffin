@@ -6,7 +6,7 @@
 #include <limits>
 #include <memory>
 
-#define PUFFIN_ID unsigned long
+#define PUFFIN_ID unsigned long long
 
 namespace puffin
 {

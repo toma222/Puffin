@@ -122,7 +122,7 @@ public:
             ImGui::Text("ID Component");
             puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
 
-            ImGui::Text("%lu", ID.m_ID);
+            ImGui::Text("%llu", ID.m_ID);
 
             // Gui for tag component
             ImGui::Text("Tag Component");

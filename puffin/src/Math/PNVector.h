@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <SDL2/SDL.h>
 
 namespace puffin
 {
@@ -29,4 +30,17 @@ namespace puffin
             return direction;
         }
     };
+
+    struct PNColor
+    {
+        float m_r;
+        float m_g;
+        float m_b;
+
+        PNColor() = default;
+        PNColor(const PNColor &color) = default;
+        PNColor(float r, float g, float b)
+            : m_r(r), m_g(g), m_b(b);
+    };
+
 } // namespace puffin

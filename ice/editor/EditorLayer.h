@@ -30,24 +30,21 @@ public:
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
 
         // Load the icons
-        m_GameObjectIcon = new puffin::render::SDLTexture (puffin::Graphics::Get().GetRenderer().get(),
-         "C:/Users/100044352/Desktop/Puffin-scripting/ice/editor/Assets/GameObjectSprite.bmp", 50, 50);
+        m_GameObjectIcon = new puffin::render::SDLTexture(puffin::Graphics::Get().GetRenderer().get(),
+                                                          "C:/Users/100044352/Desktop/Puffin-scripting/ice/editor/Assets/GameObjectSprite.bmp", 50, 50);
 
         m_selectedEntity = nullptr;
     };
 
-    void OnDetach() override
-    {
+    void OnDetach() override{
 
     };
 
-    void Update() override
-    {
+    void Update() override{
 
     };
 
-    void Start() override
-    {
+    void Start() override{
 
     };
 
@@ -82,7 +79,7 @@ public:
         for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
         {
             // TODO fix the id's on this
-            if(ImGui::InvisibleButton("some id", {300,20}))
+            if (ImGui::InvisibleButton("some id", {300, 20}))
             {
                 printf("Adding some entity");
                 m_selectedEntity = &entity;
@@ -91,7 +88,7 @@ public:
             puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
 
             ImGui::SameLine(x);
-            ImGui::Image((ImTextureID)m_GameObjectIcon->get(), ImVec2(20,20));
+            ImGui::Image((ImTextureID)m_GameObjectIcon->get(), ImVec2(20, 20));
             ImGui::SameLine();
             ImGui::Text("%s", tag.m_Tag.c_str());
         }
@@ -100,13 +97,13 @@ public:
 
         ImGui::Begin("Viewport");
 
-        ImGui::Image((ImTextureID)puffin::Graphics::Get().GetRenderTexture().get()->get(), ImVec2(192 * 5,108 * 5));
+        ImGui::Image((ImTextureID)puffin::Graphics::Get().GetRenderTexture().get()->get(), ImVec2(192 * 5, 108 * 5));
 
         ImGui::End();
 
         ImGui::Begin("Inspector");
 
-        if(m_selectedEntity != nullptr)
+        if (m_selectedEntity != nullptr)
         {
             ImGui::Text("Entity selected");
             // Gui for Transform
@@ -122,7 +119,7 @@ public:
             ImGui::Text("ID Component");
             puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
 
-            ImGui::Text("%llu", ID.m_ID);
+            ImGui::Text("%llu", (uint64_t)ID.m_ID);
 
             // Gui for tag component
             ImGui::Text("Tag Component");

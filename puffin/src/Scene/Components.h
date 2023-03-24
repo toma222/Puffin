@@ -66,5 +66,12 @@ namespace puffin
             IDComponent(UUID id)
                 : m_ID(id){};
         };
+
+        struct Light
+        {
+            Light() = default;
+            Light(const Light &light) = default;
+            // Light();
+        };
     }
 }

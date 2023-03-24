@@ -78,14 +78,14 @@ public:
 
         for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
         {
+            puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
+
             // TODO fix the id's on this
-            if (ImGui::InvisibleButton("some id", {300, 20}))
+            if (ImGui::Button(tag.m_Tag.c_str(), {300, 50}))
             {
-                printf("Adding some entity");
+                printf("Adding some entity\n");
                 m_selectedEntity = &entity;
             }
-
-            puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
 
             ImGui::SameLine(x);
             ImGui::Image((ImTextureID)m_GameObjectIcon->get(), ImVec2(20, 20));

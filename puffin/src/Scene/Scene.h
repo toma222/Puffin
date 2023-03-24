@@ -27,7 +27,7 @@ namespace puffin
     public:
         entt::registry registry;
 
-        // std::unordered_map<std::string, int> m_entityMap;
+        // std::unordered_map<UUID, entt::entity> m_entityMap;
         std::vector<Entity> m_entities;
     };
 } // namespace puffin

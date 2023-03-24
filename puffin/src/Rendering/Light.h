@@ -14,7 +14,7 @@ namespace puffin
     public:
         virtual PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY)
         {
-            return PNColor(0, 0, 0);
+            return PNColor(0, 255, 0);
         };
     };
 
@@ -34,13 +34,19 @@ namespace puffin
     class LightProfile
     {
     public:
-        LightType m_lightType;
+        // ! this is just a memory leak, here : cant delete because it causes undefined behavior
+        LightType *m_lightType;
 
         int m_x;
         int m_y;
 
-        LightProfile(LightType type, int x, int y)
+        LightProfile(LightType *type, int x, int y)
             : m_lightType(type), m_x(x), m_y(y){};
+
+        ~LightProfile()
+        {
+            // delete m_lightType;
+        }
     };
 
 } // namespace puffin

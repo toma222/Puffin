@@ -52,7 +52,7 @@ namespace puffin
 
         void PlaceImage(render::SDLSurface *image, SDL_Rect *bounds);
 
-        void PlaceLight(LightType light, int x, int y);
+        void PlaceLight(LightType *light, int x, int y);
         void PlaceLightFromProfile(LightProfile profile);
 
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };

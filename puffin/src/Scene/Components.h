@@ -7,6 +7,7 @@
 
 #include "Rendering/PSurface.h"
 #include "Rendering/Graphics.h"
+#include "Rendering/Light.h"
 #include "Core/ID.h"
 
 namespace puffin
@@ -69,9 +70,13 @@ namespace puffin
 
         struct Light
         {
+            // puffin::Graphics::Get().PlaceLight(new puffin::PointLight(100, 100), 0, 0);
+            puffin::LightType *m_lightType;
+
             Light() = default;
             Light(const Light &light) = default;
-            // Light();
+            Light(puffin::LightType *lightType)
+                : m_lightType(lightType){};
         };
     }
 }

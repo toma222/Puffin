@@ -60,8 +60,6 @@ namespace puffin
 
             m_layerStack->UpdateLayers();
 
-            puffin::Graphics::Get().PlaceLight(puffin::PointLight(0, 0), 0, 0);
-
             puffin::Graphics::Get().PresentAndEndRenderCycle();
             m_window->UpdateWindow();
         }

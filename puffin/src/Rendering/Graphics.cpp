@@ -79,7 +79,7 @@ namespace puffin
 
                 for (auto light : m_lightBuffer)
                 {
-                    PNColor lightColor = light.m_lightType.GetPixelColor(x, y, light.m_x, light.m_y);
+                    PNColor lightColor = light.m_lightType->GetPixelColor(x, y, light.m_x, light.m_y);
 
                     R *= lightColor.m_r;
                     G *= lightColor.m_g;
@@ -115,7 +115,7 @@ namespace puffin
         SDL_BlitScaled(image->get(), NULL, m_renderSurface.get()->get(), bounds);
     }
 
-    void Graphics::PlaceLight(LightType light, int x, int y)
+    void Graphics::PlaceLight(LightType *light, int x, int y)
     {
         PlaceLightFromProfile(LightProfile(light, x, y));
     }

@@ -15,6 +15,7 @@ namespace game
 
         puffin::Entity e = s_currentScene->AddEntity("jeff");
         e.AddComponent<puffin::components::Image>("C:/Users/aidan/Desktop/Puffin-rendering/ice/game/Assets/Images/BuildingWall.bmp");
+        e.AddComponent<puffin::components::Light>(new puffin::PointLight(5, 5));
     }
 
     void GameLayer::OnDetach()

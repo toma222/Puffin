@@ -106,26 +106,31 @@ public:
         if (m_selectedEntity != nullptr)
         {
             ImGui::Text("Entity selected");
-            // Gui for Transform
-            ImGui::Text("Transform Component");
-            puffin::components::Transform &transform = m_selectedEntity->GetComponent<puffin::components::Transform>();
+            
+            if(ImGui::TreeNode("Transform")){
+                puffin::components::Transform &transform = m_selectedEntity->GetComponent<puffin::components::Transform>();
 
-            ImGui::InputInt("Position x", &transform.m_rect->x);
-            ImGui::InputInt("Position y", &transform.m_rect->y);
-            ImGui::InputInt("Width", &transform.m_rect->w);
-            ImGui::InputInt("Height", &transform.m_rect->h);
+                ImGui::InputInt("Position x", &transform.m_rect->x);
+                ImGui::InputInt("Position y", &transform.m_rect->y);
+                ImGui::InputInt("Width", &transform.m_rect->w);
+                ImGui::InputInt("Height", &transform.m_rect->h);
 
-            // Gui for ID
-            ImGui::Text("ID Component");
-            puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
+                ImGui::TreePop();
+            }
 
-            ImGui::Text("%llu", (uint64_t)ID.m_ID);
+            if(ImGui::TreeNode("IDComponent")){
+                puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
 
-            // Gui for tag component
-            ImGui::Text("Tag Component");
-            puffin::components::Tag &tag = m_selectedEntity->GetComponent<puffin::components::Tag>();
+                ImGui::Text("%llu", (uint64_t)ID.m_ID);
+                ImGui::TreePop();
+            }
 
-            ImGui::Text("%s", tag.m_Tag.c_str());
+            if(ImGui::TreeNode("Tag")){
+                puffin::components::Tag &tag = m_selectedEntity->GetComponent<puffin::components::Tag>();
+
+                ImGui::Text("%s", tag.m_Tag.c_str());
+                ImGui::TreePop();
+            }
         }
 
         ImGui::End();

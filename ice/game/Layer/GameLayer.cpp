@@ -13,12 +13,12 @@ namespace game
         GM_CORE_INFO("Attach called for game layer");
         s_currentScene = new puffin::Scene();
 
-        puffin::Entity e = s_currentScene->AddEntity("jeff");
-        e.AddComponent<puffin::components::Image>("C:/Users/aidan/Desktop/Puffin-rendering/ice/game/Assets/Images/BuildingWall.bmp");
-        // e.AddComponent<puffin::components::Light>(new puffin::PointLight(5, 5));
+        puffin::Entity phil = s_currentScene->AddEntity("image");
+        phil.AddComponent<puffin::components::Image>("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets/Images/download.bmp");
 
-        puffin::Entity phil = s_currentScene->AddEntity("phil");
-        phil.AddComponent<puffin::components::Image>("C:/Users/aidan/Desktop/Puffin-rendering/ice/game/Assets/Images/TreeBuilding.bmp");
+        puffin::Entity e = s_currentScene->AddEntity("light");
+        e.AddComponent<puffin::components::Image>("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets/Images/Circle.bmp");
+        e.AddComponent<puffin::components::Light>(new puffin::PointLight(100, 100));
     }
 
     void GameLayer::OnDetach()

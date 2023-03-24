@@ -43,7 +43,8 @@ namespace puffin
         SDL_GetRendererOutputSize(m_renderer->get(), &w, &h);
         SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
 
-        m_renderSurface = std::make_shared<render::SDLSurface>("C:/Users/Aidan/Desktop/Puffin-newECS/ice/game/Assets/Images/TreeBuilding.bmp", 192, 108);
+        // ! this needs to be changed to work on the computer because it will give null if the image path does not work
+        m_renderSurface = std::make_shared<render::SDLSurface>("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets/Images/TreeBuilding.bmp", 192, 108);
     }
 
     Graphics::~Graphics()

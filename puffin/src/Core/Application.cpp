@@ -9,6 +9,9 @@
 #include "Logging.h"
 #include "Gui.h"
 
+#include "Rendering/Light.h"
+#include "Rendering/Graphics.h"
+
 #include "Application.h"
 
 namespace puffin
@@ -56,6 +59,8 @@ namespace puffin
             puffin::Graphics::Get().StartRenderCycle();
 
             m_layerStack->UpdateLayers();
+
+            puffin::Graphics::Get().PlaceLight(puffin::PointLight(0, 0), 0, 0);
 
             puffin::Graphics::Get().PresentAndEndRenderCycle();
             m_window->UpdateWindow();

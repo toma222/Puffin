@@ -40,7 +40,7 @@ namespace puffin
         PNColor() = default;
         PNColor(const PNColor &color) = default;
         PNColor(float r, float g, float b)
-            : m_r(r), m_g(g), m_b(b);
+            : m_r(r), m_g(g), m_b(b){};
     };
 
 } // namespace puffin

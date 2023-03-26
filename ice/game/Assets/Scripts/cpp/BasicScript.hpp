@@ -1,28 +1,19 @@
 
 #include <puffin.h>
 
-using namespace puffin;
-
-class BasicScript : public PN_SCRIPT_MONO
+class BasicScript : public puffin::NativeScript
 {
-    components::Transform *transform;
-    int speed = 4;
-
-    void Start() override
+public:
+    void OnCreate()
     {
-        transform = entity->GetComponent<components::Transform>();
+        // m_Entity
     }
 
-    void Update() override
+    void OnDestroy()
     {
-        if (Input::KeyDown(SDL_SCANCODE_D))
-        {
-            transform->Translate(speed, 0);
-        }
+    }
 
-        if (Input::KeyDown(SDL_SCANCODE_A))
-        {
-            transform->Translate(-speed, 0);
-        }
+    void OnUpdate()
+    {
     }
 };

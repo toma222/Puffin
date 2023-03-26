@@ -2,6 +2,7 @@
 #include <puffin.h>
 
 #include "GameLayer.h"
+#include "Assets/NativeScriptIncludes.h"
 
 namespace game
 {
@@ -14,10 +15,11 @@ namespace game
         s_currentScene = new puffin::Scene();
 
         puffin::Entity phil = s_currentScene->AddEntity("image");
-        phil.AddComponent<puffin::components::Image>("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets/Images/download.bmp");
+        phil.AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/download.bmp");
+        // phil.AddComponent<puffin::components::NativeScript>();
 
         puffin::Entity e = s_currentScene->AddEntity("light");
-        e.AddComponent<puffin::components::Image>("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets/Images/Circle.bmp");
+        e.AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/Circle.bmp");
         e.AddComponent<puffin::components::Light>(new puffin::PointLight(100, 100));
     }
 

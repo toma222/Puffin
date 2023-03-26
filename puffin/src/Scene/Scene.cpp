@@ -4,6 +4,7 @@
 
 #include "Core/ID.h"
 #include "Rendering/Graphics.h"
+#include "ScriptableComponent.h"
 
 #include <unordered_map>
 

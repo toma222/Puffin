@@ -74,6 +74,8 @@ public:
 
         ImGui::Begin("Hierarchy");
 
+        /*
+
         float x = ImGui::GetCursorPosX();
 
         for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
@@ -93,6 +95,34 @@ public:
             ImGui::Text("%s", tag.m_Tag.c_str());
         }
 
+        */
+
+        bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.c_str());
+
+        if (ImGui::IsItemClicked())
+        {
+            // m_SelectionContext = entity;
+            printf("Selected");
+        }
+
+        bool entityDeleted = false;
+        if (ImGui::BeginPopupContextItem())
+        {
+            if (ImGui::MenuItem("Delete Entity"))
+                entityDeleted = true;
+
+            ImGui::EndPopup();
+        }
+
+        if (opened)
+        {
+            ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+            bool opened = ImGui::TreeNodeEx((void *)9817239, flags, tag.c_str());
+            if (opened)
+                ImGui::TreePop();
+            ImGui::TreePop();
+        }
+
         ImGui::End();
 
         ImGui::Begin("Viewport");
@@ -106,8 +136,9 @@ public:
         if (m_selectedEntity != nullptr)
         {
             ImGui::Text("Entity selected");
-            
-            if(ImGui::TreeNode("Transform")){
+
+            if (ImGui::TreeNode("Transform"))
+            {
                 puffin::components::Transform &transform = m_selectedEntity->GetComponent<puffin::components::Transform>();
 
                 ImGui::InputInt("Position x", &transform.m_rect->x);
@@ -118,18 +149,32 @@ public:
                 ImGui::TreePop();
             }
 
-            if(ImGui::TreeNode("IDComponent")){
+            if (ImGui::TreeNode("IDComponent"))
+            {
                 puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
 
                 ImGui::Text("%llu", (uint64_t)ID.m_ID);
                 ImGui::TreePop();
             }
 
-            if(ImGui::TreeNode("Tag")){
+            if (ImGui::TreeNode("Tag"))
+            {
                 puffin::components::Tag &tag = m_selectedEntity->GetComponent<puffin::components::Tag>();
 
                 ImGui::Text("%s", tag.m_Tag.c_str());
                 ImGui::TreePop();
+            }
+
+            if (m_selectedEntity->HasComponent<puffin::components::Light>())
+            {
+                if (ImGui::TreeNode("Light"))
+                {
+                    puffin::components::Light &light = m_selectedEntity->GetComponent<puffin::components::Light>();
+
+                    ImGui::ColorEdit3("Light Color", light.m_lightType->m_lightColor.m_color);
+
+                    ImGui::TreePop();
+                }
             }
         }
 

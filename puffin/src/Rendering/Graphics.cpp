@@ -44,7 +44,7 @@ namespace puffin
         SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
 
         // ! this needs to be changed to work on the computer because it will give null if the image path does not work
-        m_renderSurface = std::make_shared<render::SDLSurface>("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets/Images/TreeBuilding.bmp", 192, 108);
+        m_renderSurface = std::make_shared<render::SDLSurface>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/BuildingWall.bmp", 192, 108);
     }
 
     Graphics::~Graphics()
@@ -82,9 +82,9 @@ namespace puffin
                 {
                     PNColor lightColor = light.m_lightType->GetPixelColor(x, y, light.m_x, light.m_y);
 
-                    R *= lightColor.m_r;
-                    G *= lightColor.m_g;
-                    B *= lightColor.m_b;
+                    R *= lightColor.m_color[0];
+                    G *= lightColor.m_color[1];
+                    B *= lightColor.m_color[2];
                 }
 
                 m_renderSurface->PutPixel(x, y, R, G, B);

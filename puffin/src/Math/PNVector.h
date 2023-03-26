@@ -33,14 +33,19 @@ namespace puffin
 
     struct PNColor
     {
-        float m_r;
-        float m_g;
-        float m_b;
+        // float m_r;
+        // float m_g;
+        // float m_b;
+        float m_color[3];
 
         PNColor() = default;
         PNColor(const PNColor &color) = default;
         PNColor(float r, float g, float b)
-            : m_r(r), m_g(g), m_b(b){};
+        {
+            m_color[0] = r;
+            m_color[1] = g;
+            m_color[2] = b;
+        }
     };
 
 } // namespace puffin

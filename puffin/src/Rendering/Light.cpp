@@ -13,6 +13,11 @@ namespace puffin
         // 0 meaning the pixel is not lit
         float lum = 1 - std::min(distance / m_power, 1.0f);
 
-        return PNColor(lum, lum, lum);
+        return PNColor(lum * m_lightColor.m_color[0], lum * m_lightColor.m_color[1], lum * m_lightColor.m_color[2]);
+    }
+
+    PNColor GlobalLight::GetPixelColor(int pixelX, int pixelY, int lightX, int lightY)
+    {
+        return PNColor(m_power * m_lightColor.m_color[0], m_power * m_lightColor.m_color[1], m_power * m_lightColor.m_color[2]);
     }
 } // namespace puffin

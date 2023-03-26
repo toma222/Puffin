@@ -77,7 +77,10 @@ public:
 
         // Load the icons
         m_GameObjectIcon = new puffin::render::SDLTexture(puffin::Graphics::Get().GetRenderer().get(),
-                                                          "/ice/game/Assets/Images/download.bmp", 50, 50);
+                                                          "/ice/icons/GameObject.bmp", 50, 50);
+
+        m_FileIcon = new puffin::render::SDLTexture(puffin::Graphics::Get().GetRenderer().get(),
+                                                    "/ice/icons/Folder.bmp", 50, 50);
 
         // m_selectedEntity = nullptr;
     };
@@ -119,6 +122,8 @@ public:
         ImGui::End();
 
         ImGui::Begin("Hierarchy");
+
+        float x = ImGui::GetCursorPosX();
 
         for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
         {
@@ -210,6 +215,17 @@ public:
 
         ImGui::Begin("Content Browser");
 
+        static float padding = 16.0f;
+        static float thumbnailSize = 128.0f;
+        float cellSize = thumbnailSize + padding;
+
+        float panelWidth = ImGui::GetContentRegionAvail().x;
+        int columnCount = (int)(panelWidth / cellSize);
+        if (columnCount < 1)
+            columnCount = 1;
+
+        ImGui::Columns(columnCount, 0, false);
+
         for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
         {
 
@@ -219,7 +235,7 @@ public:
             ImGui::PushID(filenameString.c_str());
             // Ref<Texture2D> icon = directoryEntry.is_directory() ? m_DirectoryIcon : m_FileIcon;
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-            ImGui::Button(filenameString.c_str(), {100, 100});
+            ImGui::ImageButton((ImTextureID)m_FileIcon->get(), {100, 100});
 
             if (ImGui::BeginDragDropSource())
             {
@@ -243,6 +259,8 @@ public:
             ImGui::PopID();
         }
 
+        ImGui::Columns(1);
+
         ImGui::End();
 
         ImGui::Render();
@@ -252,6 +270,8 @@ public:
     static puffin::Scene *s_currentScene;
 
     puffin::render::SDLTexture *m_GameObjectIcon;
+    puffin::render::SDLTexture *m_FileIcon;
+
     puffin::Entity m_selectedEntity;
 
     void SetCurrentScene()

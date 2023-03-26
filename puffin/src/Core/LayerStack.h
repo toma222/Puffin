@@ -28,7 +28,7 @@ namespace puffin
         template <typename T>
         void AddLayer()
         {
-            stack[m_layerStackLocation] = new T;
+            stack[m_layerStackLocation] = new T();
             m_layerStackLocation++;
         }
 

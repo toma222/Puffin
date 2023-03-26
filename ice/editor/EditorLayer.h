@@ -5,6 +5,18 @@
 
 #include "Layer/GameLayer.h"
 
+#include <fstream>
+#include <iostream>
+#include <filesystem>
+
+ImVec4 ImGuiConvertHex(Uint32 hexValue)
+{
+    return ImVec4((double)((hexValue >> 16) & 0xFF) / 255,
+                  (double)((hexValue >> 8) & 0xFF) / 255,
+                  (double)((hexValue)&0xFF) / 255,
+                  (double)255);
+}
+
 class GameLayer : public puffin::Layer
 {
 public:
@@ -26,14 +38,48 @@ public:
         ImGui::GetStyle().PopupRounding = 8;
         ImGui::GetStyle().ScrollbarRounding = 16;
 
+        /*
+
+        auto &colors = ImGui::GetStyle().Colors;
+        colors[ImGuiCol_WindowBg] = ImGuiConvertHex(1c1c16)
+
+        // Headers
+        colors[ImGuiCol_Header] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
+        colors[ImGuiCol_HeaderHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
+        colors[ImGuiCol_HeaderActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+
+        // Buttons
+        colors[ImGuiCol_Button] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
+        colors[ImGuiCol_ButtonHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
+        colors[ImGuiCol_ButtonActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+
+        // Frame BG
+        colors[ImGuiCol_FrameBg] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
+        colors[ImGuiCol_FrameBgHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
+        colors[ImGuiCol_FrameBgActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+
+        // Tabs
+        colors[ImGuiCol_Tab] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+        colors[ImGuiCol_TabHovered] = ImVec4{0.38f, 0.3805f, 0.381f, 1.0f};
+        colors[ImGuiCol_TabActive] = ImVec4{0.28f, 0.2805f, 0.281f, 1.0f};
+        colors[ImGuiCol_TabUnfocused] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+        colors[ImGuiCol_TabUnfocusedActive] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
+
+        // Title
+        colors[ImGuiCol_TitleBg] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+        colors[ImGuiCol_TitleBgActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+        colors[ImGuiCol_TitleBgCollapsed] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+
+        */
+
         ImGui_ImplSDL2_InitForSDLRenderer(puffin::Application::Get().GetWindow()->GetWindow()->GetWindow(), puffin::Graphics::Get().GetRenderer()->get());
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
 
         // Load the icons
         m_GameObjectIcon = new puffin::render::SDLTexture(puffin::Graphics::Get().GetRenderer().get(),
-                                                          "C:/Users/100044352/Desktop/Puffin-scripting/ice/editor/Assets/GameObjectSprite.bmp", 50, 50);
+                                                          "/ice/game/Assets/Images/download.bmp", 50, 50);
 
-        m_selectedEntity = nullptr;
+        // m_selectedEntity = nullptr;
     };
 
     void OnDetach() override{
@@ -74,53 +120,35 @@ public:
 
         ImGui::Begin("Hierarchy");
 
-        /*
-
-        float x = ImGui::GetCursorPosX();
-
         for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
         {
+            ImGuiTreeNodeFlags flags = ((m_selectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+            flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
             puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
 
-            // TODO fix the id's on this
-            if (ImGui::Button(tag.m_Tag.c_str(), {300, 50}))
+            bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
+
+            if (ImGui::IsItemClicked())
             {
-                printf("Adding some entity\n");
-                m_selectedEntity = &entity;
+                m_selectedEntity = entity;
+                printf("Selected");
             }
 
-            ImGui::SameLine(x);
-            ImGui::Image((ImTextureID)m_GameObjectIcon->get(), ImVec2(20, 20));
-            ImGui::SameLine();
-            ImGui::Text("%s", tag.m_Tag.c_str());
-        }
+            if (ImGui::BeginPopupContextItem())
+            {
+                if (ImGui::MenuItem("Delete Entity"))
+                {
+                    printf("Delete entity at some point\n");
+                }
 
-        */
+                ImGui::EndPopup();
+            }
 
-        bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.c_str());
-
-        if (ImGui::IsItemClicked())
-        {
-            // m_SelectionContext = entity;
-            printf("Selected");
-        }
-
-        bool entityDeleted = false;
-        if (ImGui::BeginPopupContextItem())
-        {
-            if (ImGui::MenuItem("Delete Entity"))
-                entityDeleted = true;
-
-            ImGui::EndPopup();
-        }
-
-        if (opened)
-        {
-            ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-            bool opened = ImGui::TreeNodeEx((void *)9817239, flags, tag.c_str());
             if (opened)
+            {
                 ImGui::TreePop();
-            ImGui::TreePop();
+            }
         }
 
         ImGui::End();
@@ -133,13 +161,13 @@ public:
 
         ImGui::Begin("Inspector");
 
-        if (m_selectedEntity != nullptr)
+        if (m_selectedEntity)
         {
             ImGui::Text("Entity selected");
 
             if (ImGui::TreeNode("Transform"))
             {
-                puffin::components::Transform &transform = m_selectedEntity->GetComponent<puffin::components::Transform>();
+                puffin::components::Transform &transform = m_selectedEntity.GetComponent<puffin::components::Transform>();
 
                 ImGui::InputInt("Position x", &transform.m_rect->x);
                 ImGui::InputInt("Position y", &transform.m_rect->y);
@@ -151,7 +179,7 @@ public:
 
             if (ImGui::TreeNode("IDComponent"))
             {
-                puffin::components::IDComponent &ID = m_selectedEntity->GetComponent<puffin::components::IDComponent>();
+                puffin::components::IDComponent &ID = m_selectedEntity.GetComponent<puffin::components::IDComponent>();
 
                 ImGui::Text("%llu", (uint64_t)ID.m_ID);
                 ImGui::TreePop();
@@ -159,23 +187,60 @@ public:
 
             if (ImGui::TreeNode("Tag"))
             {
-                puffin::components::Tag &tag = m_selectedEntity->GetComponent<puffin::components::Tag>();
+                puffin::components::Tag &tag = m_selectedEntity.GetComponent<puffin::components::Tag>();
 
                 ImGui::Text("%s", tag.m_Tag.c_str());
                 ImGui::TreePop();
             }
 
-            if (m_selectedEntity->HasComponent<puffin::components::Light>())
+            if (m_selectedEntity.HasComponent<puffin::components::Light>())
             {
                 if (ImGui::TreeNode("Light"))
                 {
-                    puffin::components::Light &light = m_selectedEntity->GetComponent<puffin::components::Light>();
+                    puffin::components::Light &light = m_selectedEntity.GetComponent<puffin::components::Light>();
 
                     ImGui::ColorEdit3("Light Color", light.m_lightType->m_lightColor.m_color);
 
                     ImGui::TreePop();
                 }
             }
+        }
+
+        ImGui::End();
+
+        ImGui::Begin("Content Browser");
+
+        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
+        {
+
+            const auto &path = directoryEntry.path();
+            std::string filenameString = path.filename().string();
+
+            ImGui::PushID(filenameString.c_str());
+            // Ref<Texture2D> icon = directoryEntry.is_directory() ? m_DirectoryIcon : m_FileIcon;
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            ImGui::Button(filenameString.c_str(), {100, 100});
+
+            if (ImGui::BeginDragDropSource())
+            {
+                std::filesystem::path relativePath(path);
+                const wchar_t *itemPath = relativePath.c_str();
+                ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+                ImGui::EndDragDropSource();
+            }
+
+            ImGui::PopStyleColor();
+            if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+            {
+                if (directoryEntry.is_directory())
+                    printf("Enter directory\n");
+            }
+
+            ImGui::TextWrapped(filenameString.c_str());
+
+            ImGui::NextColumn();
+
+            ImGui::PopID();
         }
 
         ImGui::End();
@@ -187,7 +252,7 @@ public:
     static puffin::Scene *s_currentScene;
 
     puffin::render::SDLTexture *m_GameObjectIcon;
-    puffin::Entity *m_selectedEntity;
+    puffin::Entity m_selectedEntity;
 
     void SetCurrentScene()
     {

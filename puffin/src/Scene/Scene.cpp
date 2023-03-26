@@ -1,6 +1,7 @@
 
 #include "Scene.h"
 #include "Entity.h"
+#include "Components.h"
 
 #include "Core/ID.h"
 #include "Rendering/Graphics.h"
@@ -35,6 +36,16 @@ namespace puffin
 
     void Scene::TickRuntime(float deltaTime)
     {
+
+        // Scripts
+        auto scripts = registry.view<components::NativeScriptComponent>();
+        for (auto e : scripts)
+        {
+            Entity entity = {this, e};
+            entity.GetComponent<components::NativeScriptComponent>().Instance->OnUpdate();
+        }
+
+        // Place images
         auto view = registry.view<components::Image>();
 
         for (auto e : view)
@@ -88,6 +99,11 @@ namespace puffin
 
     template <>
     void Scene::OnComponentAdded<components::Light>(Entity entity, components::Light &component)
+    {
+    }
+
+    template <>
+    void Scene::OnComponentAdded<components::NativeScriptComponent>(Entity entity, components::NativeScriptComponent &component)
     {
     }
 

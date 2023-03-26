@@ -23,6 +23,7 @@ namespace puffin
         void OnComponentAdded(Entity entity, T &component);
 
         void TickRuntime(float deltaTime);
+        void DrawGizmos();
 
     public:
         entt::registry registry;

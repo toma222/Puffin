@@ -12,6 +12,8 @@
 
 namespace puffin
 {
+    class NativeScript;
+
     namespace components
     {
 
@@ -79,25 +81,15 @@ namespace puffin
                 : m_lightType(lightType){};
         };
 
-        class NativeScript;
-
         // Borrowed from the cherno (thanks)
         struct NativeScriptComponent
         {
             NativeScript *Instance;
 
-            // Pointer to the constructor and destructor
-            NativeScript *(*InstantiateScript)();
-            void (*DestroyScript)(NativeScriptComponent *);
-
             template <typename T>
             void Bind()
             {
-                InstantiateScript = []()
-                { return static_cast<NativeScript *>(new T()); };
-
-                DestroyScript = [](NativeScriptComponent *nsc)
-                { delete nsc->Instance; nsc->Instance = nullptr; };
+                Instance = (NativeScript *)new T();
             }
         };
     }

@@ -16,11 +16,11 @@ namespace game
 
         puffin::Entity phil = s_currentScene->AddEntity("image");
         phil.AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/download.bmp");
-        // phil.AddComponent<puffin::components::NativeScript>();
+        phil.AddComponent<puffin::components::NativeScriptComponent>().Bind<BasicScript>();
 
         puffin::Entity e = s_currentScene->AddEntity("light");
-        e.AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/Circle.bmp");
-        e.AddComponent<puffin::components::Light>(new puffin::PointLight(100, 100));
+        // e.AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/Circle.bmp");
+        // e.AddComponent<puffin::components::Light>(new puffin::PointLight(100, 100, puffin::PNColor(255, 255, 255)));
     }
 
     void GameLayer::OnDetach()

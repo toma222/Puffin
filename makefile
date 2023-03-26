@@ -63,6 +63,10 @@ make: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)
 	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) ice/game.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 	make run
 
+script:
+	del $(addprefix obj\,$(notdir $(GAMEOBJ)))
+	make
+
 run:
 	./$(BIN_PATH)
 

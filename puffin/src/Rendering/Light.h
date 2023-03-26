@@ -28,7 +28,10 @@ namespace puffin
 
     public:
         PointLight(float power, float luminance, PNColor lightColor = PNColor(0, 0, 0))
-            : m_power(power), m_luminance(luminance){};
+            : m_power(power), m_luminance(luminance)
+        {
+            m_lightColor = lightColor;
+        };
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
     };

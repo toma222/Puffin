@@ -13,6 +13,8 @@ namespace puffin
     {
     public:
         Entity(Scene *scene, entt::entity entity);
+        Entity() = default;
+        Entity(const Entity &other) = default;
 
         template <typename T, typename... Args>
         T &AddComponent(Args &&...args)

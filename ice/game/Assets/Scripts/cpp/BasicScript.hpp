@@ -4,16 +4,18 @@
 class BasicScript : public puffin::NativeScript
 {
 public:
-    void OnCreate()
+    BasicScript()
     {
-        // m_Entity
+        printf("script\n");
     }
 
-    void OnDestroy()
+    ~BasicScript()
     {
+        printf("destroy script\n");
     }
 
     void OnUpdate()
     {
+        
     }
 };

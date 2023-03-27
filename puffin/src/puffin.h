@@ -5,6 +5,7 @@
 #include "Rendering/PTexture.h"
 #include "Rendering/PWindow.h"
 #include "Rendering/Graphics.h"
+#include "Rendering/Shader.h"
 
 #include "Core/Application.h"
 #include "Core/Window.h"

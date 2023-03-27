@@ -87,7 +87,9 @@ namespace puffin
                     B *= lightColor.m_color[2];
                 }
 
-                m_renderSurface->PutPixel(x, y, R, G, B);
+                puffin::PNColor shaded = m_pixelShader(x, y, puffin::PNColor(R, G, B));
+
+                m_renderSurface->PutPixel(x, y, shaded.m_color[0], shaded.m_color[1], shaded.m_color[2]);
             }
         }
 
@@ -124,5 +126,10 @@ namespace puffin
     void Graphics::PlaceLightFromProfile(LightProfile profile)
     {
         m_lightBuffer.push_back(profile);
+    }
+
+    void Graphics::PlacePixelShader(PNColor (*func)(int, int, PNColor))
+    {
+        m_pixelShader = func;
     }
 } // namespace puffin

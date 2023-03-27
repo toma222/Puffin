@@ -44,7 +44,7 @@ namespace puffin
         SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
 
         // ! this needs to be changed to work on the computer because it will give null if the image path does not work
-        m_renderSurface = std::make_shared<render::SDLSurface>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/BuildingWall.bmp", 192, 108);
+        m_renderSurface = std::make_shared<render::SDLSurface>("/ice/game/Assets/Images/BuildingWall.bmp", 192, 108);
     }
 
     Graphics::~Graphics()

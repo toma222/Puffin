@@ -43,7 +43,27 @@ namespace puffin
 
     public:
         GlobalLight(float power, PNColor lightColor = PNColor(0, 0, 0))
-            : m_power(power){};
+            : m_power(power)
+        {
+            m_lightColor = lightColor;
+        };;
+
+        PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
+    };
+
+    class SpotLight : public LightType
+    {
+    private:
+        float m_power;
+        double m_angle;
+        Vector2 m_direction;
+
+    public:
+        SpotLight(float power, double angle, PNColor lightColor = PNColor(0, 0, 0))
+            : m_power(power), m_angle(angle), m_direction(0,-1)
+        {
+            m_lightColor = lightColor;
+        };;
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
     };

@@ -29,6 +29,25 @@ namespace puffin
             direction = atan(y / x);
             return direction;
         }
+
+        void NormalizeVector()
+        {
+            double length = std::sqrt(x * x + y * y);
+
+            x /= length;
+            y /= length;
+        }
+
+        double DotProduct(Vector2 b)
+        {
+            return (x * b.x) + (y * b.y);
+        }
+
+        double AngleBetweenVectors(Vector2 b)
+        {
+            // ! this is a slow thing (std::acos)
+            return std::acos(DotProduct(b));
+        }
     };
 
     struct PNColor

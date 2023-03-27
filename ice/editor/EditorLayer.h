@@ -226,14 +226,14 @@ public:
 
         ImGui::Columns(columnCount, 0, false);
 
-        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
+        // ! will crash if the directory does not exist
+        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets"))
         {
 
             const auto &path = directoryEntry.path();
             std::string filenameString = path.filename().string();
 
             ImGui::PushID(filenameString.c_str());
-            // Ref<Texture2D> icon = directoryEntry.is_directory() ? m_DirectoryIcon : m_FileIcon;
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
             ImGui::ImageButton((ImTextureID)m_FileIcon->get(), {100, 100});
 

@@ -11,6 +11,14 @@
 #include <iostream>
 #include <memory>
 
+#ifdef WINDOWS
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 namespace puffin
 {
     namespace render
@@ -40,8 +48,10 @@ namespace puffin
 
         SDLSurface::SDLSurface(std::string path, int width, int height)
         {
-            // m_surface = CreateRef<SDL_Surface>(SDL_LoadBMP(path.c_str()));
-            m_surface = IMG_Load(path.c_str());
+            char buff[FILENAME_MAX]; // create string buffer to hold path
+            GetCurrentDir(buff, FILENAME_MAX);
+            std::string current_working_dir(buff);
+            m_surface = IMG_Load(current_working_dir.append(path.c_str()).c_str());
 
             if (m_surface == NULL)
                 std::cout << "could not load image, please check your file path\n";

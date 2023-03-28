@@ -23,6 +23,7 @@ namespace puffin
         void OnComponentAdded(Entity entity, T &component);
 
         void TickRuntime(float deltaTime);
+        void TickPhysicsSimulation(float deltaTime);
         void DrawGizmos();
 
     public:

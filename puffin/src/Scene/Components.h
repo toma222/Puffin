@@ -8,6 +8,7 @@
 #include "Rendering/PSurface.h"
 #include "Rendering/Graphics.h"
 #include "Rendering/Light.h"
+#include "Math/PNVector.h"
 #include "Core/ID.h"
 
 namespace puffin
@@ -92,5 +93,27 @@ namespace puffin
                 Instance = (NativeScript *)new T();
             }
         };
+
+        struct Rigidbody2D
+        {
+            float m_mass;
+            float m_angularVelocity; // z rotation 'buffer' if you will
+            float m_speed;
+
+            // constants
+            float cm_area;
+            float cm_length;
+
+            Vector2 m_velocityBody;
+            Vector2 m_forces;
+            Vector2 m_velocity;
+            Vector2 m_velocityBuffer; // this is added to the rigidbody then set to zero
+
+            bool m_gravity;
+
+            Rigidbody2D(float mass, bool gravity)
+                : m_mass(mass), m_angularVelocity(0), m_speed(0), m_velocityBody(0, 0), m_forces(0, 0), m_velocity(0, 0), m_gravity(gravity), cm_area(0), cm_length(0){};
+        };
+
     }
 }

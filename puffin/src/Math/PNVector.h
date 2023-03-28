@@ -12,6 +12,8 @@ namespace puffin
         double direction;
         double magnitude;
 
+        Vector2() = default;
+
         Vector2(double xv, double yv)
         {
             x = xv;
@@ -20,7 +22,7 @@ namespace puffin
 
         double CalculateMagnitude()
         {
-            magnitude = sqrt(x * x * y * y);
+            magnitude = sqrt(x * x + y * y);
             return magnitude;
         }
 
@@ -43,10 +45,11 @@ namespace puffin
             return (x * b.x) + (y * b.y);
         }
 
+        // @warning vectors must be normalized or this will be wrong
         double AngleBetweenVectors(Vector2 b)
         {
             // ! this is a slow thing (std::acos)
-            return std::acos(DotProduct(b));
+            return std::acos(DotProduct(b)) * (57.2957795131);
         }
     };
 

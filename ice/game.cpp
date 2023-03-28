@@ -15,13 +15,10 @@ puffin::Application *CreateApplication()
     // editor::EditorApplication *editorApp = new editor::EditorApplication();
 
     // editorApp->SetEditorGUI();
-    puffin::Vector2 a = puffin::Vector2(0,1);
-    puffin::Vector2 b = puffin::Vector2(1,0);
+    puffin::Vector2 a = puffin::Vector2(0, 1);
+    puffin::Vector2 b = puffin::Vector2(1, 0);
 
-    a.NormalizeVector();
-    b.NormalizeVector();
-
-    printf("%f\n",std::atan(b.DotProduct(a)));
+    printf("%f\n", a.AngleBetweenVectors(b));
 
     puffin::Application *app = new puffin::Application();
     app->GetLayerStack()->AddLayer<GameLayer>();

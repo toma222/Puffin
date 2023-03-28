@@ -6,8 +6,11 @@
 #include "Core/ID.h"
 #include "Rendering/Graphics.h"
 #include "ScriptableComponent.h"
+#include <SDL2/SDL.h>
 
 #include <unordered_map>
+
+#define LINIER_DRAG_COEFFICIENT 0.1
 
 namespace puffin
 {
@@ -36,6 +39,8 @@ namespace puffin
 
     void Scene::TickRuntime(float deltaTime)
     {
+
+        TickPhysicsSimulation(deltaTime);
 
         // Scripts
         auto scripts = registry.view<components::NativeScriptComponent>();
@@ -67,6 +72,56 @@ namespace puffin
             auto &light = entity.GetComponent<components::Light>();
 
             Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
+        }
+    }
+
+    void Scene::TickPhysicsSimulation(float deltaTime)
+    {
+        auto r = registry.view<components::Rigidbody2D>();
+
+        for (auto e : r)
+        {
+            Entity entity = {this, e};
+            auto &transform = entity.GetComponent<components::Transform>();
+            auto &rigidbody = entity.GetComponent<components::Rigidbody2D>();
+
+            // * implement some sort of custom Calculate Forces / loads function for different types of rigid bodies
+
+            rigidbody.m_speed = rigidbody.m_velocity.CalculateMagnitude();
+
+            // if (transform.m_rect->y < 80)
+            // {
+            if (rigidbody.m_gravity)
+            {
+                rigidbody.m_forces.y = 1; // Gravity force
+            }
+            // }
+            // else
+            // {
+            //     rigidbody.m_velocity.y = 0;
+            // }
+
+            float tmp = 0.5f * rigidbody.m_speed * rigidbody.m_speed;
+
+            rigidbody.m_forces.x += -rigidbody.m_velocity.x * tmp * LINIER_DRAG_COEFFICIENT;
+            rigidbody.m_forces.y += -rigidbody.m_velocity.y * tmp * LINIER_DRAG_COEFFICIENT;
+
+            // Done calculating loads
+
+            // Velocity and position things
+            Vector2 acceleration = Vector2(rigidbody.m_forces.x / rigidbody.m_mass,
+                                           rigidbody.m_forces.y / rigidbody.m_mass);
+
+            Vector2 deltaVelocity = Vector2(acceleration.x * deltaTime, acceleration.y * deltaTime);
+
+            rigidbody.m_velocity.x += deltaVelocity.x;
+            rigidbody.m_velocity.y += deltaVelocity.y;
+
+            transform.m_rect->x += rigidbody.m_velocity.x * deltaTime;
+            transform.m_rect->y += rigidbody.m_velocity.y * deltaTime;
+
+            rigidbody.m_forces.x = 0;
+            rigidbody.m_forces.y = 0;
         }
     }
 
@@ -104,6 +159,11 @@ namespace puffin
 
     template <>
     void Scene::OnComponentAdded<components::NativeScriptComponent>(Entity entity, components::NativeScriptComponent &component)
+    {
+    }
+
+    template <>
+    void Scene::OnComponentAdded<components::Rigidbody2D>(Entity entity, components::Rigidbody2D &component)
     {
     }
 

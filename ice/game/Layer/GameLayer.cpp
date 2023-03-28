@@ -16,13 +16,17 @@ namespace game
         GM_CORE_INFO("Attach called for game layer");
         s_currentScene = new puffin::Scene();
 
-        puffin::Entity phil = s_currentScene->AddEntity("image");
-        phil.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/download.bmp");
-        phil.AddComponent<puffin::components::NativeScriptComponent>().Bind<BasicScript>();
+        puffin::Entity ground = s_currentScene->AddEntity("ground");
+        ground.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/square.bmp");
+        auto &groundT = ground.GetComponent<puffin::components::Transform>();
+        groundT.m_rect->x = 0;
+        groundT.m_rect->y = 90;
+        groundT.m_rect->w = 50;
+        groundT.m_rect->h = 10;
 
-        puffin::Entity e = s_currentScene->AddEntity("light");
-        // e.AddComponent<puffin::components::Image>("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets/Images/Circle.bmp");
-        e.AddComponent<puffin::components::Light>(new puffin::SpotLight(0.5f,25, puffin::PNColor(255, 255, 255)));
+        puffin::Entity rigid = s_currentScene->AddEntity("rigid");
+        rigid.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/square.bmp");
+        rigid.AddComponent<puffin::components::Rigidbody2D>(5, false);
 
         puffin::Graphics::Get().PlacePixelShader(&puffin::PalletPixelShader);
     }
@@ -42,6 +46,6 @@ namespace game
 
     void GameLayer::Update()
     {
-        s_currentScene->TickRuntime(0.0f);
+        s_currentScene->TickRuntime(1.0f);
     }
 }

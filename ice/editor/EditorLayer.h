@@ -209,6 +209,31 @@ public:
                     ImGui::TreePop();
                 }
             }
+
+            if (m_selectedEntity.HasComponent<puffin::components::Rigidbody2D>())
+            {
+                if (ImGui::TreeNode("Rigidbody"))
+                {
+                    puffin::components::Rigidbody2D &rb = m_selectedEntity.GetComponent<puffin::components::Rigidbody2D>();
+
+                    ImGui::InputFloat("mass", &rb.m_mass);
+                    ImGui::InputFloat("speed", &rb.m_speed);
+                    ImGui::InputFloat("angular velocity", &rb.m_angularVelocity);
+                    ImGui::Checkbox("gravity", &rb.m_gravity);
+
+                    ImGui::Spacing();
+
+                    ImGui::InputDouble("Velocity x", &rb.m_velocity.x);
+                    ImGui::InputDouble("Velocity y", &rb.m_velocity.y);
+
+                    ImGui::Spacing();
+
+                    ImGui::InputDouble("Forces x", &rb.m_forces.x);
+                    ImGui::InputDouble("Forces y", &rb.m_forces.y);
+
+                    ImGui::TreePop();
+                }
+            }
         }
 
         ImGui::End();
@@ -227,7 +252,7 @@ public:
         ImGui::Columns(columnCount, 0, false);
 
         // ! will crash if the directory does not exist
-        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets"))
+        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
         {
 
             const auto &path = directoryEntry.path();

@@ -113,7 +113,7 @@ namespace puffin
                         Vector2 relativeVelocity = Vector2(Arigidbody.m_velocity.x - Brigidbody.m_velocity.x, Arigidbody.m_velocity.y - Brigidbody.m_velocity.y);
 
                         float fCr = 0; // who knows what this does
-                        // float j = (-(1 + fCr) * (relit));
+                        // float j = (-(1 + fCr) * (relit));C:\Users\100044352\Desktop\New folder\Puffin\ice\game\Assets
                     }
                 }
             }

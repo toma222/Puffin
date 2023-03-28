@@ -78,6 +78,8 @@ namespace puffin
     void Scene::TickPhysicsSimulation(float deltaTime)
     {
         auto c = registry.view<components::BoxCollider>();
+        int i = 0;
+        int j = 0;
 
         for (auto eA : c)
         {
@@ -86,11 +88,13 @@ namespace puffin
             auto &Acollider = A.GetComponent<components::BoxCollider>();
             auto &Arigidbody = A.GetComponent<components::Rigidbody2D>();
 
+            i = j + 1;
+
             for (auto eB : c)
             {
                 Entity B = {this, eB};
 
-                if (A != B)
+                if (A != B && j < i)
                 {
                     auto &Btransform = B.GetComponent<components::Transform>();
                     auto &Bcollider = B.GetComponent<components::BoxCollider>();
@@ -112,18 +116,21 @@ namespace puffin
                         Vector2 collisionNormal = Vector2(Atransform.m_rect->x - Btransform.m_rect->x, Atransform.m_rect->y - Btransform.m_rect->y);
                         Vector2 relativeVelocity = Vector2(Arigidbody.m_velocity.x - Brigidbody.m_velocity.x, Arigidbody.m_velocity.y - Brigidbody.m_velocity.y);
 
-                        float fCr = 0; // who knows what this does
-                        Vector2 j = Vector2((-(1 + fCr) * (relativeVelocity.x * collisionNormal.x)) / ((collisionNormal.x * collisionNormal.x) * (1/Arigidbody.m_mass + 1/Brigidbody.m_mass)),
-                                            (-(1 + fCr) * (relativeVelocity.y * collisionNormal.y)) / ((collisionNormal.y * collisionNormal.y) * (1/Arigidbody.m_mass + 1/Brigidbody.m_mass)));
+                        float e = 0.0f; // who knows what this does
+                        float J = ((-(1 + e)) * relativeVelocity.DotProduct(collisionNormal)) / ((1 / Arigidbody.m_mass) + (1 / Brigidbody.m_mass));
 
-                        Arigidbody.m_velocity.x += (j.x * collisionNormal.x) / Arigidbody.m_mass;
-                        Arigidbody.m_velocity.y += (j.y * collisionNormal.y) / Arigidbody.m_mass;
+                        Arigidbody.m_velocity.x -= (1 / Arigidbody.m_mass) * J * relativeVelocity.x;
+                        Arigidbody.m_velocity.y -= (1 / Arigidbody.m_mass) * J * relativeVelocity.y;
 
-                        Brigidbody.m_velocity.x += (j.x * collisionNormal.x) / Brigidbody.m_mass;
-                        Brigidbody.m_velocity.y += (j.y * collisionNormal.y) / Brigidbody.m_mass;
+                        Brigidbody.m_velocity.x += (1 / Brigidbody.m_mass) * J * relativeVelocity.x;
+                        Brigidbody.m_velocity.y += (1 / Brigidbody.m_mass) * J * relativeVelocity.y;
                     }
                 }
+
+                j++;
             }
+
+            i++;
         }
 
         auto r = registry.view<components::Rigidbody2D>();

@@ -250,6 +250,8 @@ public:
 
         ImGui::Begin("Content Browser");
 
+        /*
+
         static float padding = 16.0f;
         static float thumbnailSize = 128.0f;
         float cellSize = thumbnailSize + padding;
@@ -295,6 +297,8 @@ public:
         }
 
         ImGui::Columns(1);
+
+        */
 
         ImGui::End();
 

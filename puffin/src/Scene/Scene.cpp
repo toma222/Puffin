@@ -77,6 +77,40 @@ namespace puffin
 
     void Scene::TickPhysicsSimulation(float deltaTime)
     {
+        auto c = registry.view<components::BoxCollider>();
+
+        for (auto eA : c)
+        {
+            Entity A = {this, eA};
+            auto &Atransform = A.GetComponent<components::Transform>();
+            auto &Acollider = A.GetComponent<components::BoxCollider>();
+
+            for (auto eB : c)
+            {
+                Entity B = {this, eB};
+
+                if (A != B)
+                {
+                    auto &Btransform = B.GetComponent<components::Transform>();
+                    auto &Bcollider = B.GetComponent<components::BoxCollider>();
+
+                    bool colliding = true;
+
+                    Vector2 r2 = Vector2(Atransform.m_rect->x + Atransform.m_rect->w, Atransform.m_rect->y + Atransform.m_rect->h);
+                    Vector2 l2 = Vector2(Btransform.m_rect->x + Btransform.m_rect->w, Btransform.m_rect->y + Btransform.m_rect->h);
+
+                    Vector2 r1 = Vector2(Atransform.m_rect->x, Atransform.m_rect->y);
+                    Vector2 l1 = Vector2(Btransform.m_rect->x, Btransform.m_rect->y);
+
+                    if (!((r1.x > l2.x) || (r2.x < l1.x) || (r1.y > l2.y) ||
+                          (r2.y < l1.y)))
+                    {
+                        printf("asd\n");
+                    }
+                }
+            }
+        }
+
         auto r = registry.view<components::Rigidbody2D>();
 
         for (auto e : r)
@@ -164,6 +198,11 @@ namespace puffin
 
     template <>
     void Scene::OnComponentAdded<components::Rigidbody2D>(Entity entity, components::Rigidbody2D &component)
+    {
+    }
+
+    template <>
+    void Scene::OnComponentAdded<components::BoxCollider>(Entity entity, components::BoxCollider &component)
     {
     }
 

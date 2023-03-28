@@ -115,5 +115,13 @@ namespace puffin
                 : m_mass(mass), m_angularVelocity(0), m_speed(0), m_velocityBody(0, 0), m_forces(0, 0), m_velocity(0, 0), m_gravity(gravity), cm_area(0), cm_length(0){};
         };
 
+        struct BoxCollider
+        {
+            Vector2 m_offset;
+
+            BoxCollider() = default;
+            BoxCollider(Vector2 offset) : m_offset(offset){};
+            // BoxCollider(const BoxCollider &box) = default;
+        };
     }
 }

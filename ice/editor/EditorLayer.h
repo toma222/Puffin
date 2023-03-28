@@ -210,6 +210,16 @@ public:
                 }
             }
 
+            if (m_selectedEntity.HasComponent<puffin::components::BoxCollider>())
+            {
+                if (ImGui::TreeNode("Box Collider"))
+                {
+                    // puffin::components::BoxCollider &light = m_selectedEntity.GetComponent<puffin::components::BoxCollider>();
+
+                    ImGui::TreePop();
+                }
+            }
+
             if (m_selectedEntity.HasComponent<puffin::components::Rigidbody2D>())
             {
                 if (ImGui::TreeNode("Rigidbody"))

@@ -227,19 +227,21 @@ public:
                     puffin::components::Rigidbody2D &rb = m_selectedEntity.GetComponent<puffin::components::Rigidbody2D>();
 
                     ImGui::InputFloat("mass", &rb.m_mass);
-                    ImGui::InputFloat("speed", &rb.m_speed);
-                    ImGui::InputFloat("angular velocity", &rb.m_angularVelocity);
+                    ImGui::InputFloat("drag", &rb.m_drag);
+
+                    ImGui::Spacing();
+
                     ImGui::Checkbox("gravity", &rb.m_gravity);
+                    ImGui::Checkbox("simulated", &rb.m_simulated);
 
                     ImGui::Spacing();
 
-                    ImGui::InputDouble("Velocity x", &rb.m_velocity.x);
-                    ImGui::InputDouble("Velocity y", &rb.m_velocity.y);
+                    ImGui::InputFloat("angular velocity", &rb.m_angularVelocity);
 
-                    ImGui::Spacing();
+                    ImGui::Text("Speed %f", rb.m_speed);
 
-                    ImGui::InputDouble("Forces x", &rb.m_forces.x);
-                    ImGui::InputDouble("Forces y", &rb.m_forces.y);
+                    ImGui::Text("Velocity x:%f  y:%f", rb.m_velocity.x, rb.m_velocity.y);
+                    ImGui::Text("Forces x:%f  y:%f", rb.m_forces.x, rb.m_forces.y);
 
                     ImGui::TreePop();
                 }

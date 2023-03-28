@@ -99,20 +99,22 @@ namespace puffin
             float m_mass;
             float m_angularVelocity; // z rotation 'buffer' if you will
             float m_speed;
-
-            // constants
-            float cm_area;
-            float cm_length;
+            float m_drag;
 
             Vector2 m_velocityBody;
             Vector2 m_forces;
             Vector2 m_velocity;
             Vector2 m_velocityBuffer; // this is added to the rigidbody then set to zero
+            Vector2 m_centerOfMass;
 
             bool m_gravity;
+            bool m_simulated;
 
             Rigidbody2D(float mass, bool gravity)
-                : m_mass(mass), m_angularVelocity(0), m_speed(0), m_velocityBody(0, 0), m_forces(0, 0), m_velocity(0, 0), m_gravity(gravity), cm_area(0), cm_length(0){};
+                : m_mass(mass), m_angularVelocity(0), m_speed(0), m_velocityBody(0, 0), m_forces(0, 0), m_velocity(0, 0), m_gravity(gravity), m_drag(1), m_simulated(true)
+            {
+                m_centerOfMass = Vector2(0, 0);
+            };
         };
 
         struct BoxCollider

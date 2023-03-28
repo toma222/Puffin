@@ -77,6 +77,11 @@ namespace puffin
 
     void Scene::TickPhysicsSimulation(float deltaTime)
     {
+        // ! the collision normal is not calculated using the center of the object
+        // ! the collision needs to be in another function so you can back up the physics sim to when the objects are colliding not penetrating
+        // * no spacial partitioning so this thing is slow
+        // * IT WORKS
+
         auto c = registry.view<components::BoxCollider>();
         int i = 0;
         int j = 0;
@@ -116,14 +121,16 @@ namespace puffin
                         Vector2 collisionNormal = Vector2(Atransform.m_rect->x - Btransform.m_rect->x, Atransform.m_rect->y - Btransform.m_rect->y);
                         Vector2 relativeVelocity = Vector2(Arigidbody.m_velocity.x - Brigidbody.m_velocity.x, Arigidbody.m_velocity.y - Brigidbody.m_velocity.y);
 
+                        collisionNormal.NormalizeVector();
+
                         float e = 0.0f; // who knows what this does
-                        float J = ((-(1 + e)) * relativeVelocity.DotProduct(collisionNormal)) / ((1 / Arigidbody.m_mass) + (1 / Brigidbody.m_mass));
+                        float J = (-(1 + e) * relativeVelocity.DotProduct(collisionNormal)) / ((1 / Arigidbody.m_mass) + (1 / Brigidbody.m_mass));
 
-                        Arigidbody.m_velocity.x -= (1 / Arigidbody.m_mass) * J * relativeVelocity.x;
-                        Arigidbody.m_velocity.y -= (1 / Arigidbody.m_mass) * J * relativeVelocity.y;
+                        Arigidbody.m_velocity.x += (1 / Arigidbody.m_mass) * J * collisionNormal.x;
+                        Arigidbody.m_velocity.y += (1 / Arigidbody.m_mass) * J * collisionNormal.y;
 
-                        Brigidbody.m_velocity.x += (1 / Brigidbody.m_mass) * J * relativeVelocity.x;
-                        Brigidbody.m_velocity.y += (1 / Brigidbody.m_mass) * J * relativeVelocity.y;
+                        Brigidbody.m_velocity.x -= (1 / Brigidbody.m_mass) * J * collisionNormal.x;
+                        Brigidbody.m_velocity.y -= (1 / Brigidbody.m_mass) * J * collisionNormal.y;
                     }
                 }
 
@@ -143,41 +150,52 @@ namespace puffin
 
             // * implement some sort of custom Calculate Forces / loads function for different types of rigid bodies
 
-            rigidbody.m_speed = rigidbody.m_velocity.CalculateMagnitude();
-
-            // if (transform.m_rect->y < 80)
-            // {
-            if (rigidbody.m_gravity)
+            if (rigidbody.m_simulated)
             {
-                rigidbody.m_forces.y = 1; // Gravity force
+
+                rigidbody.m_speed = rigidbody.m_velocity.CalculateMagnitude();
+
+                // if (transform.m_rect->y < 80)
+                // {
+                if (rigidbody.m_gravity)
+                {
+                    rigidbody.m_forces.y = rigidbody.m_gravity; // Gravity force
+                }
+                // }
+                // else
+                // {
+                //     rigidbody.m_velocity.y = 0;
+                // }
+
+                const Uint8 *state = SDL_GetKeyboardState(nullptr);
+
+                if (state[SDL_SCANCODE_W])
+                {
+                    rigidbody.m_forces.y = 1;
+                }
+
+                float tmp = 0.5f * rigidbody.m_speed * rigidbody.m_speed * rigidbody.m_drag;
+
+                rigidbody.m_forces.x += -rigidbody.m_velocity.x * tmp * LINIER_DRAG_COEFFICIENT;
+                rigidbody.m_forces.y += -rigidbody.m_velocity.y * tmp * LINIER_DRAG_COEFFICIENT;
+
+                // Done calculating loads
+
+                // Velocity and position things
+                Vector2 acceleration = Vector2(rigidbody.m_forces.x / rigidbody.m_mass,
+                                               rigidbody.m_forces.y / rigidbody.m_mass);
+
+                Vector2 deltaVelocity = Vector2(acceleration.x * deltaTime, acceleration.y * deltaTime);
+
+                rigidbody.m_velocity.x += deltaVelocity.x;
+                rigidbody.m_velocity.y += deltaVelocity.y;
+
+                transform.m_rect->x += rigidbody.m_velocity.x * deltaTime;
+                transform.m_rect->y += rigidbody.m_velocity.y * deltaTime;
+
+                rigidbody.m_forces.x = 0;
+                rigidbody.m_forces.y = 0;
             }
-            // }
-            // else
-            // {
-            //     rigidbody.m_velocity.y = 0;
-            // }
-
-            float tmp = 0.5f * rigidbody.m_speed * rigidbody.m_speed;
-
-            rigidbody.m_forces.x += -rigidbody.m_velocity.x * tmp * LINIER_DRAG_COEFFICIENT;
-            rigidbody.m_forces.y += -rigidbody.m_velocity.y * tmp * LINIER_DRAG_COEFFICIENT;
-
-            // Done calculating loads
-
-            // Velocity and position things
-            Vector2 acceleration = Vector2(rigidbody.m_forces.x / rigidbody.m_mass,
-                                           rigidbody.m_forces.y / rigidbody.m_mass);
-
-            Vector2 deltaVelocity = Vector2(acceleration.x * deltaTime, acceleration.y * deltaTime);
-
-            rigidbody.m_velocity.x += deltaVelocity.x;
-            rigidbody.m_velocity.y += deltaVelocity.y;
-
-            transform.m_rect->x += rigidbody.m_velocity.x * deltaTime;
-            transform.m_rect->y += rigidbody.m_velocity.y * deltaTime;
-
-            rigidbody.m_forces.x = 0;
-            rigidbody.m_forces.y = 0;
         }
     }
 
@@ -221,6 +239,10 @@ namespace puffin
     template <>
     void Scene::OnComponentAdded<components::Rigidbody2D>(Entity entity, components::Rigidbody2D &component)
     {
+        components::Transform &t = entity.GetComponent<components::Transform>();
+
+        component.m_centerOfMass.x = (t.m_rect->w / 2);
+        component.m_centerOfMass.y = (t.m_rect->h / 2);
     }
 
     template <>

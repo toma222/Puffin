@@ -18,7 +18,6 @@ namespace game
 
         puffin::Entity ground = s_currentScene->AddEntity("ground");
         ground.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/square.bmp");
-        ground.AddComponent<puffin::components::Rigidbody2D>(5, false);
         ground.AddComponent<puffin::components::BoxCollider>();
         auto &groundT = ground.GetComponent<puffin::components::Transform>();
         groundT.m_rect->x = 0;
@@ -26,10 +25,19 @@ namespace game
         groundT.m_rect->w = 50;
         groundT.m_rect->h = 10;
 
+        ground.AddComponent<puffin::components::Rigidbody2D>(5, false);
+
         puffin::Entity rigid = s_currentScene->AddEntity("rigid");
         rigid.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/square.bmp");
-        rigid.AddComponent<puffin::components::Rigidbody2D>(5, false);
         rigid.AddComponent<puffin::components::BoxCollider>();
+        auto &t = rigid.GetComponent<puffin::components::Transform>();
+        t.m_rect->x = 0;
+        t.m_rect->y = 0;
+        t.m_rect->w = 10;
+        t.m_rect->h = 10;
+
+        rigid.AddComponent<puffin::components::Rigidbody2D>(5, false);
+
         puffin::Graphics::Get().PlacePixelShader(&puffin::PalletPixelShader);
     }
 

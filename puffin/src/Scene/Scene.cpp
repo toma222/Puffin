@@ -84,6 +84,7 @@ namespace puffin
             Entity A = {this, eA};
             auto &Atransform = A.GetComponent<components::Transform>();
             auto &Acollider = A.GetComponent<components::BoxCollider>();
+            auto &Arigidbody = A.GetComponent<components::Rigidbody2D>();
 
             for (auto eB : c)
             {
@@ -93,6 +94,7 @@ namespace puffin
                 {
                     auto &Btransform = B.GetComponent<components::Transform>();
                     auto &Bcollider = B.GetComponent<components::BoxCollider>();
+                    auto &Brigidbody = B.GetComponent<components::Rigidbody2D>();
 
                     bool colliding = true;
 
@@ -106,6 +108,12 @@ namespace puffin
                           (r2.y < l1.y)))
                     {
                         printf("asd\n");
+
+                        Vector2 collisionNormal = Vector2(Atransform.m_rect->x - Btransform.m_rect->x, Atransform.m_rect->y - Btransform.m_rect->y);
+                        Vector2 relativeVelocity = Vector2(Arigidbody.m_velocity.x - Brigidbody.m_velocity.x, Arigidbody.m_velocity.y - Brigidbody.m_velocity.y);
+
+                        float fCr = 0; // who knows what this does
+                        // float j = (-(1 + fCr) * (relit));
                     }
                 }
             }

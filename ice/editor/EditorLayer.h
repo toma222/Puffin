@@ -262,7 +262,7 @@ public:
         ImGui::Columns(columnCount, 0, false);
 
         // ! will crash if the directory does not exist
-        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
+        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets"))
         {
 
             const auto &path = directoryEntry.path();

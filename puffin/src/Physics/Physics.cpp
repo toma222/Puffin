@@ -1,12 +1,19 @@
 
-#include "Math/PNVector.h"
 
-#define PENETRATING 1
-#define COLLIDING 0
-#define NOT_COLLIDING -1;
+#include "Math/PNVector.h"
+#include "Physics.h"
+#include "Collision.h"
 
 namespace puffin
 {
-    
+    void UpdateBodyEuler(Entity body, DeltaTime time)
+    {
+
+    }
+
+    void CalculateLoads(Entity body, DeltaTime time)
+    {
+        
+    }
 } // namespace puffin
 

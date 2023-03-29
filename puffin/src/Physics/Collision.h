@@ -1,6 +1,18 @@
 
+#include "Scene/Entity.h"
+
+#include <functional>
+
 namespace puffin
 {
-    void CheckCollision();
+    /*
+    class Collider
+    {
+        public:
+            std::function<int(Entity)>() CheckFunction;
+    }
+    */
+
+    int CheckCollision(Entity A, Entity B);
     void ApplyImpulse();
 } // namespace puffin

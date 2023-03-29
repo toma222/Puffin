@@ -7,6 +7,9 @@
 #include "Rendering/Graphics.h"
 #include "ScriptableComponent.h"
 #include <SDL2/SDL.h>
+#include "Core/Timestep.h"
+
+#include "Physics/Physics.h"
 
 #include <unordered_map>
 
@@ -82,6 +85,8 @@ namespace puffin
         // * no spacial partitioning so this thing is slow
         // * IT WORKS
 
+        /*
+
         auto c = registry.view<components::BoxCollider>();
         int i = 0;
         int j = 0;
@@ -140,63 +145,20 @@ namespace puffin
             i++;
         }
 
+        */
+
         auto r = registry.view<components::Rigidbody2D>();
 
         for (auto e : r)
         {
             Entity entity = {this, e};
-            auto &transform = entity.GetComponent<components::Transform>();
-            auto &rigidbody = entity.GetComponent<components::Rigidbody2D>();
-
-            // * implement some sort of custom Calculate Forces / loads function for different types of rigid bodies
-
-            if (rigidbody.m_simulated)
-            {
-
-                rigidbody.m_speed = rigidbody.m_velocity.CalculateMagnitude();
-
-                // if (transform.m_rect->y < 80)
-                // {
-                if (rigidbody.m_gravity)
-                {
-                    rigidbody.m_forces.y = rigidbody.m_gravity; // Gravity force
-                }
-                // }
-                // else
-                // {
-                //     rigidbody.m_velocity.y = 0;
-                // }
-
-                const Uint8 *state = SDL_GetKeyboardState(nullptr);
-
-                if (state[SDL_SCANCODE_W])
-                {
-                    rigidbody.m_forces.y = 1;
-                }
-
-                float tmp = 0.5f * rigidbody.m_speed * rigidbody.m_speed * rigidbody.m_drag;
-
-                rigidbody.m_forces.x += -rigidbody.m_velocity.x * tmp * LINIER_DRAG_COEFFICIENT;
-                rigidbody.m_forces.y += -rigidbody.m_velocity.y * tmp * LINIER_DRAG_COEFFICIENT;
-
-                // Done calculating loads
-
-                // Velocity and position things
-                Vector2 acceleration = Vector2(rigidbody.m_forces.x / rigidbody.m_mass,
-                                               rigidbody.m_forces.y / rigidbody.m_mass);
-
-                Vector2 deltaVelocity = Vector2(acceleration.x * deltaTime, acceleration.y * deltaTime);
-
-                rigidbody.m_velocity.x += deltaVelocity.x;
-                rigidbody.m_velocity.y += deltaVelocity.y;
-
-                transform.m_rect->x += rigidbody.m_velocity.x * deltaTime;
-                transform.m_rect->y += rigidbody.m_velocity.y * deltaTime;
-
-                rigidbody.m_forces.x = 0;
-                rigidbody.m_forces.y = 0;
-            }
+            Physics2D::UpdateBodyEuler(entity, Timestep(1.0f));
         }
+    }
+
+    void Scene::DrawGizmos()
+    {
+        
     }
 
     template <typename T>

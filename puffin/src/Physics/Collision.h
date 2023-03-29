@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include "Scene/Entity.h"
 
 #include <functional>

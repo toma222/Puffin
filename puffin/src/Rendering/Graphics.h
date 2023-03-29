@@ -59,6 +59,8 @@ namespace puffin
 
         void PlacePixelShader(PNColor (*func)(int, int, PNColor));
 
+        // void DrawLineGizmo(Vector2 A, Vector2 B);
+
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };
         Ref<render::SDLTexture> GetRenderTexture() { return m_renderTexture; };
 
@@ -83,6 +85,5 @@ namespace puffin
 
         std::vector<LightProfile> m_lightBuffer;
         PNColor (*m_pixelShader)(int, int, PNColor);
-        // std::function<PNColor(int, int, PNColor)> m_pixelShader;
     };
 } // namespace puffin

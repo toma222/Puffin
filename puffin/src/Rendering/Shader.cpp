@@ -51,10 +51,25 @@ static Uint32 Pallet[40] = {
     0xb3b09f,
     0xdbdbd0};
 
+int map[4][4] = {{0, 8, 2, 10}, {12, 4, 14, 6}, {3, 11, 1, 9}, {15, 7, 13, 5}};
+
 namespace puffin
 {
     PNColor PalletPixelShader(int x, int y, PNColor color)
     {
+
+        // ANTI ALIASING
+        int xm = x % 4;
+        int ym = y % 4;
+
+        float M = map[xm][ym];
+        float p = M * (1 / 16) - 0.5f;
+        float spread = .5f;
+
+        color.m_color[0] += (spread * M);
+        color.m_color[1] += (spread * M);
+        color.m_color[2] += (spread * M);
+
         float maxDistance = 260;
         PNColor picked = intToColor(Pallet[0]);
 

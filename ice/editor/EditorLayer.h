@@ -304,6 +304,15 @@ public:
 
         ImGui::End();
 
+        ImGui::Begin("Post Controll Panel");
+
+        for (auto effect : puffin::Graphics::Get().m_postBuffer)
+        {
+            effect->ImGuiUpdate();
+        }
+        
+        ImGui::End();
+
         ImGui::Render();
         ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
     }

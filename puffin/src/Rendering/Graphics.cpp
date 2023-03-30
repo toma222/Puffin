@@ -88,7 +88,16 @@ namespace puffin
                     B += lightColor.m_color[2] * SplitB;
                 }
 
-                puffin::PNColor shaded = m_pixelShader(x, y, puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)));
+                puffin::PNColor shaded = puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)); //m_pixelShader(x, y, puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)));
+
+                for (auto effect : m_postBuffer)
+                {
+                    puffin::PNColor rast = effect->Frag(x, y, shaded);
+
+                    shaded.m_color[0] = rast.m_color[0];
+                    shaded.m_color[1] = rast.m_color[1];
+                    shaded.m_color[2] = rast.m_color[2];
+                }
 
                 m_renderSurface->PutPixel(x, y, shaded.m_color[0], shaded.m_color[1], shaded.m_color[2]);
             }
@@ -111,6 +120,7 @@ namespace puffin
     {
         m_renderer->Clear();
         m_lightBuffer.clear();
+
         SDL_FillRect(m_renderSurface->get(), NULL, 0x000000);
     }
 

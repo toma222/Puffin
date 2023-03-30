@@ -65,6 +65,8 @@ namespace game
         l2T.m_rect->x = 162;
         l2T.m_rect->y = 27;
 
+        puffin::Graphics::Get().PlacePostEffect<puffin::PalletCurver>();
+
         /*
         puffin::Entity l3 = s_currentScene->AddEntity("light 3");
         l3.AddComponent<puffin::components::Light>(new puffin::PointLight(10, 10, puffin::PNColor(255, 255, 255)));
@@ -72,8 +74,6 @@ namespace game
         l3T.m_rect->x = 60;
         l3T.m_rect->y = 80;
         */
-
-        puffin::Graphics::Get().PlacePixelShader(&puffin::PalletPixelShader);
     }
 
     void GameLayer::OnDetach()

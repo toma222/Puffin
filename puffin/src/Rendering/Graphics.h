@@ -9,6 +9,8 @@
 #include "Shader.h"
 #include "Light.h"
 
+#include "Core/Logging.h"
+
 #include <vector>
 #include <array>
 #include <memory>
@@ -58,8 +60,15 @@ namespace puffin
         void PlaceLightFromProfile(LightProfile profile);
 
         void PlacePixelShader(PNColor (*func)(int, int, PNColor));
-
-        // void DrawLineGizmo(Vector2 A, Vector2 B);
+        
+        template<typename T,typename... Args>
+        T *PlacePostEffect(Args &&...args)
+        {
+            PN_CORE_INFO("Adding post effect");
+            T *effect = new T(std::forward<Args>(args)...);
+            m_postBuffer.push_back((PostEffect*)effect);
+            return effect;
+        }
 
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };
         Ref<render::SDLTexture> GetRenderTexture() { return m_renderTexture; };
@@ -78,12 +87,14 @@ namespace puffin
         };
 
         Statistics m_stats;
+        std::vector<PostEffect*> m_postBuffer;
 
     private:
         static Graphics *s_graphics;
         bool m_rendering = false;
 
         std::vector<LightProfile> m_lightBuffer;
+
         PNColor (*m_pixelShader)(int, int, PNColor);
     };
 } // namespace puffin

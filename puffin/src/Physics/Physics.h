@@ -11,7 +11,6 @@
 
 // Holds the code for the physics model
 
-
 namespace puffin
 {
     class Model
@@ -22,17 +21,16 @@ namespace puffin
         // ! implement this with the std::function loading and stuff
         void AttachLoadFunction()
         {
-
         }
     };
 
     class Physics2D
     {
-        public:
-        static void UpdateBodyEuler(Entity body, Timestep time);
+    public:
+        static void UpdateBodyEuler(Entity e, Timestep deltaTime);
         static void CalculateLoads(components::Rigidbody2D &body, Timestep time);
 
-        public:
+    public:
         static float s_gravity;
         static float s_e; // the elastic for collision IDK // TODO find out what e means in the j calc
     };

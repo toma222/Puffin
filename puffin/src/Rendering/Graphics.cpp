@@ -75,20 +75,20 @@ namespace puffin
                 Uint8 SplitG = albedoColor[1];
                 Uint8 SplitB = albedoColor[0];
 
-                Uint8 R = SplitR;
-                Uint8 G = SplitG;
-                Uint8 B = SplitB;
+                Uint8 R = 0;
+                Uint8 G = 0;
+                Uint8 B = 0;
 
                 for (auto light : m_lightBuffer)
                 {
                     PNColor lightColor = light.m_lightType->GetPixelColor(x, y, light.m_x, light.m_y);
 
-                    R *= lightColor.m_color[0];
-                    G *= lightColor.m_color[1];
-                    B *= lightColor.m_color[2];
+                    R += lightColor.m_color[0] * SplitR;
+                    G += lightColor.m_color[1] * SplitG;
+                    B += lightColor.m_color[2] * SplitB;
                 }
 
-                puffin::PNColor shaded = m_pixelShader(x, y, puffin::PNColor(R, G, B));
+                puffin::PNColor shaded = m_pixelShader(x, y, puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)));
 
                 m_renderSurface->PutPixel(x, y, shaded.m_color[0], shaded.m_color[1], shaded.m_color[2]);
             }

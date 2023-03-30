@@ -13,7 +13,7 @@ IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o o
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src -Iice/game
 LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image -llua-5.4.4
 
-ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/Physics.o obj/PWindow.o obj/ID.o obj/Shader.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Instrumentor.o obj/Entity.o obj/Scene.o obj/SceneLoading.o obj/Light.o
+ENGINEOBJ = obj/PRenderer.o obj/PSurface.o obj/PTexture.o obj/Physics.o obj/Collision.o obj/PWindow.o obj/ID.o obj/Shader.o obj/Application.o obj/Graphics.o obj/Window.o obj/Logging.o obj/Instrumentor.o obj/Entity.o obj/Scene.o obj/SceneLoading.o obj/Light.o
 EDITOR_OBJ = obj/EditorApplication.o obj/EditorLayer.o
 GAMEOBJ = obj/GameLayer.o
 

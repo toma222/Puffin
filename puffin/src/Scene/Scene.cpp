@@ -10,6 +10,7 @@
 #include "Core/Timestep.h"
 
 #include "Physics/Physics.h"
+#include "Physics/Collision.h"
 
 #include <unordered_map>
 
@@ -85,80 +86,54 @@ namespace puffin
         // * no spacial partitioning so this thing is slow
         // * IT WORKS
 
-        /*
-
-        auto c = registry.view<components::BoxCollider>();
+        auto r = registry.view<components::Rigidbody2D>();
         int i = 0;
-        int j = 0;
 
-        for (auto eA : c)
+        for (auto e : r)
         {
-            Entity A = {this, eA};
-            auto &Atransform = A.GetComponent<components::Transform>();
-            auto &Acollider = A.GetComponent<components::BoxCollider>();
-            auto &Arigidbody = A.GetComponent<components::Rigidbody2D>();
+            float dTime;
+            int tryAgain = true;
+            bool didPen = false;
 
-            i = j + 1;
+            Entity entity = {this, e};
+            // components::Transform transform = entity.GetComponent<components::Transform>();
+            // components::Rigidbody2D &rigidbody = entity.GetComponent<components::Rigidbody2D>();
 
-            for (auto eB : c)
+            // loop through the objects it could collide with
+            for (int j = 0; j < m_entities.size() - i; j++)
             {
-                Entity B = {this, eB};
-
-                if (A != B && j < i)
+                if (m_entities[j] != entity)
                 {
-                    auto &Btransform = B.GetComponent<components::Transform>();
-                    auto &Bcollider = B.GetComponent<components::BoxCollider>();
-                    auto &Brigidbody = B.GetComponent<components::Rigidbody2D>();
-
-                    bool colliding = true;
-
-                    Vector2 r2 = Vector2(Atransform.m_rect->x + Atransform.m_rect->w, Atransform.m_rect->y + Atransform.m_rect->h);
-                    Vector2 l2 = Vector2(Btransform.m_rect->x + Btransform.m_rect->w, Btransform.m_rect->y + Btransform.m_rect->h);
-
-                    Vector2 r1 = Vector2(Atransform.m_rect->x, Atransform.m_rect->y);
-                    Vector2 l1 = Vector2(Btransform.m_rect->x, Btransform.m_rect->y);
-
-                    if (!((r1.x > l2.x) || (r2.x < l1.x) || (r1.y > l2.y) ||
-                          (r2.y < l1.y)))
+                    while (tryAgain == true)
                     {
-                        printf("asd\n");
+                        int resp = CheckCollision(entity, m_entities[j]);
 
-                        Vector2 collisionNormal = Vector2(Atransform.m_rect->x - Btransform.m_rect->x, Atransform.m_rect->y - Btransform.m_rect->y);
-                        Vector2 relativeVelocity = Vector2(Arigidbody.m_velocity.x - Brigidbody.m_velocity.x, Arigidbody.m_velocity.y - Brigidbody.m_velocity.y);
+                        if (resp == PENETRATING)
+                        {
+                            printf("colliding\n");
+                            ApplyImpulse(entity, m_entities[j]);
+                        }
 
-                        collisionNormal.NormalizeVector();
-
-                        float e = 0.0f; // who knows what this does
-                        float J = (-(1 + e) * relativeVelocity.DotProduct(collisionNormal)) / ((1 / Arigidbody.m_mass) + (1 / Brigidbody.m_mass));
-
-                        Arigidbody.m_velocity.x += (1 / Arigidbody.m_mass) * J * collisionNormal.x;
-                        Arigidbody.m_velocity.y += (1 / Arigidbody.m_mass) * J * collisionNormal.y;
-
-                        Brigidbody.m_velocity.x -= (1 / Brigidbody.m_mass) * J * collisionNormal.x;
-                        Brigidbody.m_velocity.y -= (1 / Brigidbody.m_mass) * J * collisionNormal.y;
+                        tryAgain = false;
                     }
                 }
-
-                j++;
             }
 
             i++;
         }
 
-        */
-
-        auto r = registry.view<components::Rigidbody2D>();
-
         for (auto e : r)
         {
             Entity entity = {this, e};
+            components::Transform transform = entity.GetComponent<components::Transform>();
+            components::Rigidbody2D &rigidbody = entity.GetComponent<components::Rigidbody2D>();
+
             Physics2D::UpdateBodyEuler(entity, Timestep(1.0f));
         }
     }
 
     void Scene::DrawGizmos()
     {
-        
     }
 
     template <typename T>

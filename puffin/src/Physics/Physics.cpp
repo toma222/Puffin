@@ -12,12 +12,10 @@ namespace puffin
     float Physics2D::s_e = 0.5f;
     float Physics2D::s_gravity = 5.0f;
 
-    void Physics2D::UpdateBodyEuler(Entity body, Timestep deltaTime)
+    void Physics2D::UpdateBodyEuler(Entity e, Timestep deltaTime)
     {
-        components::Rigidbody2D &rigidbody = body.GetComponent<components::Rigidbody2D>();
-        components::Transform &transform = body.GetComponent<components::Transform>();
-
-        // Calculate loads here
+        components::Rigidbody2D &rigidbody = e.GetComponent<components::Rigidbody2D>();
+        components::Transform &transform = e.GetComponent<components::Transform>();
 
         CalculateLoads(rigidbody, deltaTime);
 
@@ -25,13 +23,6 @@ namespace puffin
 
         if (rigidbody.m_simulated)
         {
-            rigidbody.m_speed = rigidbody.m_velocity.CalculateMagnitude();
-
-            float tmp = 0.5f * rigidbody.m_speed * rigidbody.m_speed * rigidbody.m_drag;
-
-            rigidbody.m_forces.x += -rigidbody.m_velocity.x * tmp * LINIER_DRAG_COEFFICIENT;
-            rigidbody.m_forces.y += -rigidbody.m_velocity.y * tmp * LINIER_DRAG_COEFFICIENT;
-
             Vector2 acceleration = Vector2(rigidbody.m_forces.x / rigidbody.m_mass,
                                            rigidbody.m_forces.y / rigidbody.m_mass);
 
@@ -51,10 +42,16 @@ namespace puffin
     void Physics2D::CalculateLoads(components::Rigidbody2D &body, Timestep time)
     {
         // Calculate Gravity
-        if(body.m_gravity)
+        if (body.m_gravity)
         {
             body.m_forces.y += s_gravity;
         }
+
+        body.m_speed = body.m_velocity.CalculateMagnitude();
+
+        float tmp = 0.5f * body.m_speed * body.m_speed * body.m_drag;
+
+        body.m_forces.x += -body.m_velocity.x * tmp * LINIER_DRAG_COEFFICIENT;
+        body.m_forces.y += -body.m_velocity.y * tmp * LINIER_DRAG_COEFFICIENT;
     }
 }; // namespace puffin
-

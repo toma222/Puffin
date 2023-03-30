@@ -45,6 +45,6 @@ namespace puffin
 
     PNColor GlobalLight::GetPixelColor(int pixelX, int pixelY, int lightX, int lightY)
     {
-        return PNColor(m_power * (m_lightColor.m_color[0] / 255), m_power * (m_lightColor.m_color[1] / 255), m_power * (m_lightColor.m_color[2] / 255));
+        return PNColor(m_power * (m_lightColor.m_color[0]), m_power * (m_lightColor.m_color[1]), m_power * (m_lightColor.m_color[2]));
     }
 } // namespace puffin

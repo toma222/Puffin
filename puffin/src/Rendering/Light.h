@@ -30,7 +30,7 @@ namespace puffin
         PointLight(float power, float luminance, PNColor lightColor = PNColor(0, 0, 0))
             : m_power(power), m_luminance(luminance)
         {
-            m_lightColor = lightColor;
+            m_lightColor = PNColor(lightColor.m_color[0] / 255, lightColor.m_color[1] / 255, lightColor.m_color[2] / 255);
         };
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
@@ -45,9 +45,8 @@ namespace puffin
         GlobalLight(float power, PNColor lightColor = PNColor(0, 0, 0))
             : m_power(power)
         {
-            m_lightColor = lightColor;
+            m_lightColor = PNColor(lightColor.m_color[0] / 255, lightColor.m_color[1] / 255, lightColor.m_color[2] / 255);
         };
-        ;
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
     };
@@ -63,7 +62,7 @@ namespace puffin
         SpotLight(float power, double angle, PNColor lightColor = PNColor(0, 0, 0))
             : m_power(power), m_angle(angle), m_direction(0, -1)
         {
-            m_lightColor = lightColor;
+            m_lightColor.m_color[0] = lightColor.m_color[0] / 255;
         };
         ;
 

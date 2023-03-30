@@ -64,7 +64,7 @@ namespace puffin
 
         float M = map[xm][ym];
         float p = M * (1 / 16) - 0.5f;
-        float spread = .5f;
+        float spread = .8f;
 
         color.m_color[0] += (spread * M);
         color.m_color[1] += (spread * M);

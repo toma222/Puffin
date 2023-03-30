@@ -9,6 +9,7 @@ puffin::PNColor intToColor(Uint32 hexValue)
                            (double)((hexValue)&0xFF));
 }
 
+/*
 static Uint32 Pallet[40] = {
     0x7a2d30,
     0x632b38,
@@ -50,6 +51,15 @@ static Uint32 Pallet[40] = {
     0x8f897b,
     0xb3b09f,
     0xdbdbd0};
+*/
+
+static Uint32 Pallet[6] = {
+    0xbdb5a8,
+    0xa0938e,
+    0x201d1f,
+    0xfff2e6,
+    0x5a5353,
+    0x7d7071};
 
 int map[4][4] = {{0, 8, 2, 10}, {12, 4, 14, 6}, {3, 11, 1, 9}, {15, 7, 13, 5}};
 
@@ -73,7 +83,7 @@ namespace puffin
         float maxDistance = 260;
         PNColor picked = intToColor(Pallet[0]);
 
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 6; i++)
         {
             PNColor iter = intToColor(Pallet[i]);
 

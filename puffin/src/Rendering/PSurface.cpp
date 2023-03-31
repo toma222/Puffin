@@ -6,6 +6,7 @@
 
 #include "Core/Core.h"
 #include "Core/Logging.h"
+#include "Math/PNVector.h"
 
 #include <string>
 #include <iostream>
@@ -25,25 +26,24 @@ namespace puffin
     {
         SDLSurface::SDLSurface(int width, int height)
         {
-            //m_surface = new SDL_Surface; // CreateRef<SDL_Surface>();
+            // m_surface = new SDL_Surface; // CreateRef<SDL_Surface>();
 
-            
-                m_surface = SDL_CreateRGBSurface(
-                    SDL_SWSURFACE,
-                    width, height,  // Sizes
-                    16,             // BPP
+            m_surface = SDL_CreateRGBSurface(
+                SDL_SWSURFACE,
+                width, height, // Sizes
+                16,            // BPP
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-                    0x000000FF,
-                    0x0000FF00,
-                    0x00FF0000,
-                    0xFF000000);
+                0x000000FF,
+                0x0000FF00,
+                0x00FF0000,
+                0xFF000000);
 #else
-                    0xFF000000,
-                    0x00FF0000,
-                    0x0000FF00,
-                    0x000000FF);
+                0xFF000000,
+                0x00FF0000,
+                0x0000FF00,
+                0x000000FF);
 #endif
-                    //;
+            //;
         }
 
         SDLSurface::SDLSurface(std::string path, int width, int height)
@@ -99,5 +99,11 @@ namespace puffin
             m_surface = SDL_ConvertSurface(m_surface, windowSurface->get()->format, 0);
         }
 
+        PNColor SDLSurface::GetPixel(int x, int y)
+        {
+            Uint8 *const target_pixel = ((Uint8 *)m_surface->pixels + y * m_surface->pitch + x * m_surface->format->BytesPerPixel);
+
+            return PNColor(target_pixel[2], target_pixel[1], target_pixel[0]);
+        }
     } // namespace render
 } // namespace pn

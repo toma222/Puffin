@@ -62,6 +62,13 @@ namespace puffin
         SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
         m_renderer->Clear();
 
+        // ! CPP might have optimized this out :(
+        for (auto effect : m_postBuffer)
+        {
+            // printf("Load surface");
+            effect->LoadSurface(m_renderSurface.get());
+        }
+
         // Render the pixels and things
         // TODO put this in a more elegant fashion and have maybe custom render shaders
         // * multi threading would also be really cool (and fast)

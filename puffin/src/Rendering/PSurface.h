@@ -4,6 +4,7 @@
 #include "SDL2/SDL.h"
 
 #include "Core/Core.h"
+#include "Math/PNVector.h"
 
 #include <string>
 #include <memory>
@@ -35,6 +36,8 @@ namespace puffin
         public:
             void PutPixel(int x, int y, int r, int g, int b);
             void PutPixel(int x, int y, Uint32 color);
+
+            PNColor GetPixel(int x, int y);
 
             // Does a scaled blit so that you can change the size and such
             void BlitSurface(SDLSurface *from);

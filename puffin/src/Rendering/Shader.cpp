@@ -170,8 +170,24 @@ namespace puffin
         bottomRightSTD = std::sqrt(BRsum / (m_boxSize * m_boxSize));
 
         // pick the square with the least STD
-        int xSign = 1;
-        int ySign = -1;
+        int xSign = 0;
+        int ySign = 0;
+
+        if (topLeftSTD > topRightSTD && topLeftSTD > bottomRightSTD && topLeftSTD > bottomLeftSTD)
+        {
+            // Top Left wins
+            xSign = -1;
+            ySign = -1;
+        }
+
+        if (topRightSTD > topLeftSTD && topRightSTD > bottomRightSTD && topRightSTD > bottomLeftSTD)
+        {
+            // Top Right wins
+            xSign = 1;
+            ySign = -1;
+        }
+
+        // ! make bottom
 
         // Top Left tester
         PNColor averageColor = PNColor(0, 0, 0);

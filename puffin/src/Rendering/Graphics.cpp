@@ -88,7 +88,7 @@ namespace puffin
                     B += lightColor.m_color[2] * SplitB;
                 }
 
-                puffin::PNColor shaded = puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)); //m_pixelShader(x, y, puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)));
+                puffin::PNColor shaded = puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)); // m_pixelShader(x, y, puffin::PNColor(std::min((int)R, 255), std::min((int)G, 255), std::min((int)B, 255)));
 
                 for (auto effect : m_postBuffer)
                 {

@@ -27,11 +27,10 @@ namespace puffin
         // ! may cause memory leaks
         ~PostEffect() = default;
 
-        virtual PNColor Frag(int x, int y, PNColor){ return PNColor(0,0,0); };
-        virtual void ImGuiUpdate() {};
+        virtual PNColor Frag(int x, int y, PNColor) { return PNColor(0, 0, 0); };
+        virtual void ImGuiUpdate(){};
     };
 
-    
     class PalletCurver : public PostEffect
     {
     private:
@@ -44,19 +43,27 @@ namespace puffin
         PalletCurver() = default;
 
     public:
-        template<int size>
+        template <int size>
         void AppendPallet(int pallet[size])
         {
             for (size_t c = 0; c < size; c++)
             {
-                m_pallet.push_back(puffin::PNColor((double)((pallet[c] >> 16) & 0xFF),
-                                                (double)((pallet[c] >> 8) & 0xFF),
-                                                (double)((pallet[c])&0xFF)));
+                m_pallet.push_back(puffin::PNColor(((double)((pallet[c] >> 16) & 0xFF)),
+                                                   ((double)((pallet[c] >> 8) & 0xFF)),
+                                                   ((double)((pallet[c]) & 0xFF))));
             }
         }
     };
 
-    // ---------------- BASIC OUT THE BOX SHADER ---------------- //
-    PNColor PalletPixelShader(int x, int y, PNColor color);
+    class CrossDithering : public PostEffect
+    {
+    private:
+        float m_spread;
 
+    public:
+        CrossDithering(float spread) : m_spread(spread){};
+
+        PNColor Frag(int x, int y, PNColor) override;
+        void ImGuiUpdate() override;
+    };
 } // namespace puffin

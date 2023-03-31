@@ -65,7 +65,53 @@ namespace game
         l2T.m_rect->x = 162;
         l2T.m_rect->y = 27;
 
-        puffin::Graphics::Get().PlacePostEffect<puffin::PalletCurver>();
+        // Post
+        puffin::Graphics::Get().PlacePostEffect<puffin::CrossDithering>(0.5f);
+        puffin::PalletCurver *p = puffin::Graphics::Get().PlacePostEffect<puffin::PalletCurver>();
+
+        static int Pallet[40] = {
+            0x7a2d30,
+            0x632b38,
+            0x4a2936,
+            0x362530,
+            0x292225,
+            0x8f422c,
+            0x995325,
+            0xab6c2c,
+            0xa67c23,
+            0x996d20,
+            0x805622,
+            0x5e431f,
+            0x403125,
+            0x8c7f0b,
+            0x686700,
+            0x4d5e21,
+            0x374529,
+            0x364f33,
+            0x81a867,
+            0x669170,
+            0x466b5d,
+            0x344a4d,
+            0x29323b,
+            0x304452,
+            0x375c69,
+            0x418791,
+            0x9c525a,
+            0x783e51,
+            0x5c3047,
+            0x442e4a,
+            0x63413f,
+            0x9e6a55,
+            0xbe9167,
+            0xccab78,
+            0x3e3c42,
+            0x5e5d5d,
+            0x78736d,
+            0x8f897b,
+            0xb3b09f,
+            0xdbdbd0};
+
+        p->AppendPallet<40>(Pallet);
 
         /*
         puffin::Entity l3 = s_currentScene->AddEntity("light 3");

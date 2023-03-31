@@ -68,6 +68,11 @@ namespace puffin
             m_color[1] = g;
             m_color[2] = b;
         }
+
+        float LuminanceScaled()
+        {
+            return (m_color[0] * .299) + (m_color[1] * .587) + (m_color[2] * .114);
+        }
     };
 
 } // namespace puffin

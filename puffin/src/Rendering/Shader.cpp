@@ -38,18 +38,22 @@ namespace puffin
 
     PNColor CrossDithering::Frag(int x, int y, PNColor color)
     {
-        const int map4x4[4][4] = {
-            {0, 8, 2, 10},
-            {12, 4, 14, 6},
-            {3, 11, 1, 9},
-            {15, 7, 13, 5}};
+        const int dithering_matrix[8][8] = {
+            {2, 50, 14, 62, 3, 51, 15, 63},
+            {48, 18, 46, 16, 52, 22, 50, 20},
+            {13, 45, 7, 39, 12, 44, 6, 38},
+            {61, 31, 59, 29, 62, 32, 60, 30},
+            {4, 52, 16, 64, 1, 49, 13, 61},
+            {50, 20, 48, 18, 52, 22, 50, 20},
+            {15, 47, 9, 41, 14, 46, 8, 40},
+            {63, 33, 61, 31, 62, 32, 60, 30}};
 
         // ANTI ALIASING
-        int xm = x % 4;
-        int ym = y % 4;
+        int xm = x % 8;
+        int ym = y % 8;
 
-        float M = map4x4[xm][ym];
-        float p = M * (1 / 16) - 0.5f;
+        float M = dithering_matrix[xm][ym];
+        float p = M * (1 / 64) - 0.5f;
 
         color.m_color[0] += (m_spread * M);
         color.m_color[1] += (m_spread * M);
@@ -102,9 +106,8 @@ namespace puffin
             {
                 PNColor c = m_surfaceRef->GetPixel(px + x, py + y);
 
-                float brightness = (c.m_color[0] + c.m_color[1] + c.m_color[2]) / 3;
-                bottomRightSquare[(px * m_boxSize) + py] = brightness;
-                bottomRightSTD += brightness;
+                bottomRightSquare[(px * m_boxSize) + py] = c.LuminanceScaled();
+                bottomRightSTD += c.LuminanceScaled();
             }
         }
 
@@ -115,9 +118,8 @@ namespace puffin
             {
                 PNColor c = m_surfaceRef->GetPixel(x - px, py + y);
 
-                float brightness = (c.m_color[0] + c.m_color[1] + c.m_color[2]) / 3;
-                bottomLeftSquare[(px * m_boxSize) + py] = brightness;
-                bottomLeftSTD += brightness;
+                bottomLeftSquare[(px * m_boxSize) + py] = c.LuminanceScaled();
+                bottomLeftSTD += c.LuminanceScaled();
             }
         }
 
@@ -128,9 +130,8 @@ namespace puffin
             {
                 PNColor c = m_surfaceRef->GetPixel(x - px, y - py);
 
-                float brightness = (c.m_color[0] + c.m_color[1] + c.m_color[2]) / 3;
-                topLeftSquare[(px * m_boxSize) + py] = brightness;
-                topLeftSTD += brightness;
+                topLeftSquare[(px * m_boxSize) + py] = c.LuminanceScaled();
+                topLeftSTD += c.LuminanceScaled();
             }
         }
 
@@ -141,9 +142,8 @@ namespace puffin
             {
                 PNColor c = m_surfaceRef->GetPixel(px + x, y - py);
 
-                float brightness = (c.m_color[0] + c.m_color[1] + c.m_color[2]) / 3;
-                topRightSquare[(px * m_boxSize) + py] = brightness;
-                topRightSTD += brightness;
+                topRightSquare[(px * m_boxSize) + py] = c.LuminanceScaled();
+                topRightSTD += c.LuminanceScaled();
             }
         }
 
@@ -232,7 +232,7 @@ namespace puffin
         if (ImGui::TreeNode("Kuwahara Filter"))
         {
             ImGui::Checkbox("Active", &m_active);
-            ImGui::SliderInt("Box Size", &m_boxSize,0,50);
+            ImGui::SliderInt("Box Size", &m_boxSize, 0, 50);
             ImGui::TreePop();
         }
     }

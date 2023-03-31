@@ -99,11 +99,14 @@ namespace puffin
 
                 for (auto effect : m_postBuffer)
                 {
-                    puffin::PNColor rast = effect->Frag(x, y, shaded);
+                    if(effect->m_active)
+                    {
+                        puffin::PNColor rast = effect->Frag(x, y, shaded);
 
-                    shaded.m_color[0] = rast.m_color[0];
-                    shaded.m_color[1] = rast.m_color[1];
-                    shaded.m_color[2] = rast.m_color[2];
+                        shaded.m_color[0] = rast.m_color[0];
+                        shaded.m_color[1] = rast.m_color[1];
+                        shaded.m_color[2] = rast.m_color[2];
+                    }
                 }
 
                 m_renderSurface->PutPixel(x, y, shaded.m_color[0], shaded.m_color[1], shaded.m_color[2]);

@@ -31,6 +31,7 @@ namespace puffin
     {
         if (ImGui::TreeNode("Pallet Curve"))
         {
+            ImGui::Checkbox("Active", &m_active);
             ImGui::TreePop();
         }
     }
@@ -61,6 +62,7 @@ namespace puffin
     {
         if (ImGui::TreeNode("Cross Dithering"))
         {
+            ImGui::Checkbox("Active", &m_active);
             ImGui::SliderFloat("Spread", &m_spread, 0, 1.0f);
 
             ImGui::TreePop();
@@ -187,6 +189,20 @@ namespace puffin
             ySign = -1;
         }
 
+        if (bottomLeftSTD > topRightSTD && bottomLeftSTD > bottomRightSTD && bottomLeftSTD > topLeftSTD)
+        {
+            // Bottom Left wins
+            xSign = -1;
+            ySign = 1;
+        }
+
+        if (bottomRightSTD > topLeftSTD && bottomRightSTD > topRightSTD && bottomRightSTD > bottomLeftSTD)
+        {
+            // Bottom Right wins
+            xSign = 1;
+            ySign = 1;
+        }
+
         // ! make bottom
 
         // Top Left tester
@@ -215,6 +231,8 @@ namespace puffin
     {
         if (ImGui::TreeNode("Kuwahara Filter"))
         {
+            ImGui::Checkbox("Active", &m_active);
+            ImGui::SliderInt("Box Size", &m_boxSize,0,50);
             ImGui::TreePop();
         }
     }

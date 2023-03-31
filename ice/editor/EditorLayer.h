@@ -9,6 +9,8 @@
 #include <iostream>
 #include <filesystem>
 
+#define GRAPH_DATA 100
+
 ImVec4 ImGuiConvertHex(Uint32 hexValue)
 {
     return ImVec4((double)((hexValue >> 16) & 0xFF) / 255,
@@ -37,6 +39,8 @@ public:
         ImGui::GetStyle().GrabRounding = 8;
         ImGui::GetStyle().PopupRounding = 8;
         ImGui::GetStyle().ScrollbarRounding = 16;
+
+        m_fpsGraphIndex = 0;
 
         /*
 
@@ -115,9 +119,24 @@ public:
 
         ImGui::ShowDemoWindow();
 
-        ImGui::Begin("Logging");
+        ImGui::Begin("Debug");
 
         ImGui::Text("TODO : this lol");
+        
+        // FPS Historgram
+        ImGui::PlotHistogram(" ", m_fpsGraphData, IM_ARRAYSIZE(m_fpsGraphData), 0, NULL, 0.0f, 80.0f, ImVec2(0,80));
+        ImGui::SameLine(80);
+        ImGui::TextColored(ImVec4(0,0,0,255), "FPS");
+
+        if(m_fpsGraphIndex < GRAPH_DATA)
+        {
+            m_fpsGraphData[m_fpsGraphIndex] = 1.0f / ImGui::GetIO().DeltaTime;
+            m_fpsGraphIndex++;
+        }
+        else
+        {
+            m_fpsGraphIndex = 0;
+        }
 
         ImGui::End();
 
@@ -321,8 +340,10 @@ public:
 
     puffin::render::SDLTexture *m_GameObjectIcon;
     puffin::render::SDLTexture *m_FileIcon;
-
     puffin::Entity m_selectedEntity;
+
+    float m_fpsGraphData[GRAPH_DATA];
+    int m_fpsGraphIndex;
 
     void SetCurrentScene()
     {

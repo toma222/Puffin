@@ -17,7 +17,7 @@ namespace puffin
 
     class PostEffect
     {
-    private:
+    public:
         PostEffect *m_ref;
         bool m_active;
 

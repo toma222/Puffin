@@ -40,8 +40,6 @@ public:
         ImGui::GetStyle().PopupRounding = 8;
         ImGui::GetStyle().ScrollbarRounding = 16;
 
-        m_fpsGraphIndex = 0;
-
         /*
 
         auto &colors = ImGui::GetStyle().Colors;
@@ -124,18 +122,28 @@ public:
         ImGui::Text("TODO : this lol");
         
         // FPS Historgram
-        ImGui::PlotHistogram(" ", m_fpsGraphData, IM_ARRAYSIZE(m_fpsGraphData), 0, NULL, 0.0f, 80.0f, ImVec2(0,80));
-        ImGui::SameLine(80);
-        ImGui::TextColored(ImVec4(0,0,0,255), "FPS");
 
-        if(m_fpsGraphIndex < GRAPH_DATA)
+        float FrameFPS = 1.0f / ImGui::GetIO().DeltaTime;
+        float RollingAverage = ImGui::GetIO().Framerate;
+        
+        if(FrameFPS > 55)
         {
-            m_fpsGraphData[m_fpsGraphIndex] = 1.0f / ImGui::GetIO().DeltaTime;
-            m_fpsGraphIndex++;
+            ImGui::TextColored(ImVec4(0,255,0,255), "Per Frame FPS %f", FrameFPS);
+        }else if(FrameFPS > 30)
+        {
+            ImGui::TextColored(ImVec4(255,0,255,255), "Per Frame FPS %f", FrameFPS);
+        }else{
+            ImGui::TextColored(ImVec4(255,0,0,255), "Per Frame FPS %f", FrameFPS);
         }
-        else
+
+        if(RollingAverage > 55)
         {
-            m_fpsGraphIndex = 0;
+            ImGui::TextColored(ImVec4(0,255,0,255), "Rolling Average FPS FPS %f", RollingAverage);
+        }else if(RollingAverage > 30)
+        {
+            ImGui::TextColored(ImVec4(255,0,255,255), "Rolling Average FPS FPS %f", RollingAverage);
+        }else{
+            ImGui::TextColored(ImVec4(255,0,0,255), "Rolling Average FPS FPS %f", RollingAverage);
         }
 
         ImGui::End();
@@ -341,9 +349,6 @@ public:
     puffin::render::SDLTexture *m_GameObjectIcon;
     puffin::render::SDLTexture *m_FileIcon;
     puffin::Entity m_selectedEntity;
-
-    float m_fpsGraphData[GRAPH_DATA];
-    int m_fpsGraphIndex;
 
     void SetCurrentScene()
     {

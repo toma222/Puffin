@@ -17,6 +17,8 @@
 #include <functional>
 #include <SDL2/SDL.h>
 
+#include "Debug/Instrumentor.h"
+
 namespace puffin
 {
     class Graphics
@@ -60,13 +62,13 @@ namespace puffin
         void PlaceLightFromProfile(LightProfile profile);
 
         void PlacePixelShader(PNColor (*func)(int, int, PNColor));
-        
-        template<typename T,typename... Args>
+
+        template <typename T, typename... Args>
         T *PlacePostEffect(Args &&...args)
         {
             PN_CORE_INFO("Adding post effect");
             T *effect = new T(std::forward<Args>(args)...);
-            m_postBuffer.push_back((PostEffect*)effect);
+            m_postBuffer.push_back((PostEffect *)effect);
             return effect;
         }
 
@@ -84,10 +86,12 @@ namespace puffin
         struct Statistics
         {
             int m_drawCalls;
+            Timer m_postTime;
+            Timer m_openCloseGraphicsTime;
         };
 
         Statistics m_stats;
-        std::vector<PostEffect*> m_postBuffer;
+        std::vector<PostEffect *> m_postBuffer;
 
     private:
         static Graphics *s_graphics;

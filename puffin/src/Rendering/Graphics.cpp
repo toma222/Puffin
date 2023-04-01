@@ -54,11 +54,14 @@ namespace puffin
 
     void Graphics::StartRenderCycle()
     {
+        m_stats.m_openCloseGraphicsTime.start();
         Flush();
     }
 
     void Graphics::PresentAndEndRenderCycle()
     {
+        m_stats.m_postTime.start();
+
         SDL_SetRenderTarget(m_renderer->get(), m_renderTexture->get());
         m_renderer->Clear();
 
@@ -99,7 +102,7 @@ namespace puffin
 
                 for (auto effect : m_postBuffer)
                 {
-                    if(effect->m_active)
+                    if (effect->m_active)
                     {
                         puffin::PNColor rast = effect->Frag(x, y, shaded);
 
@@ -113,6 +116,9 @@ namespace puffin
             }
         }
 
+        m_stats.m_postTime.stop();
+        m_stats.m_openCloseGraphicsTime.stop();
+
         SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer.get()->get(), m_renderSurface.get()->get());
         SDL_RenderCopy(m_renderer.get()->get(), texture, NULL, NULL);
         SDL_DestroyTexture(texture);
@@ -123,7 +129,6 @@ namespace puffin
         Application::Get().GetLayerStack()->ImGuiUpdate();
 
         m_renderer->Present();
-        // Flush();
     }
 
     void Graphics::Flush()

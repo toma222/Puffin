@@ -33,33 +33,81 @@ public:
 
         ImGui::StyleColorsDark();
 
-        ImGui::GetStyle().WindowRounding = 8; // <- Set this on init or use ImGui::PushStyleVar()
-        ImGui::GetStyle().ChildRounding = 8;
-        ImGui::GetStyle().FrameRounding = 8;
-        ImGui::GetStyle().GrabRounding = 8;
-        ImGui::GetStyle().PopupRounding = 8;
-        ImGui::GetStyle().ScrollbarRounding = 16;
+        ImGui::GetStyle().WindowRounding = 0; // <- Set this on init or use ImGui::PushStyleVar()
+        ImGui::GetStyle().ChildRounding = 0;
+        ImGui::GetStyle().FrameRounding = 0;
+        ImGui::GetStyle().GrabRounding = 0;
+        ImGui::GetStyle().PopupRounding = 0;
+        ImGui::GetStyle().ScrollbarRounding = 0;
 
         // Set up ImGui style with dark theme and pastel orange accents
+        ImVec4 primaryColor1 = ImVec4(0.85f, 0.45f, 0.25f, 1.00f);                   // Orange
+        ImVec4 primaryColor2 = ImVec4(0.85f / 1.5, 0.45f / 1.5, 0.25f / 1.5, 1.00f); // Orange
+        ImVec4 primaryColor3 = ImVec4(0.85f / 2, 0.45f / 2, 0.25f / 2, 1.00f);       // Orange
+        ImVec4 primaryColor4 = ImVec4(0.85f / 2.5, 0.45f / 2.5, 0.25f / 2.5, 1.00f); // Orange
+
+        ImVec4 secondaryColor = ImVec4(0.5f, 0.5f, 0.5f, 1.00f); // Light gray
+        // ImVec4 secondaryColor2 = ImVec4(0.96f, 0.96f, 0.96f, 1.00f); // Light gray
+        // ImVec4 secondaryColor3 = ImVec4(0.96f, 0.96f, 0.96f, 1.00f); // Light gray
+        // ImVec4 secondaryColor4 = ImVec4(0.96f, 0.96f, 0.96f, 1.00f); // Light gray
+
+        ImVec4 textColor = ImVec4(0.8f, 0.8f, 0.8f, 0.8f);
+
+        ImVec4 bgColor1 = ImVec4(0.20f, 0.20f, 0.20f, 0.80f);                   // Dark gray
+        ImVec4 bgColor2 = ImVec4(0.20f * 1.5, 0.20f * 1.5, 0.20f * 1.5, 0.80f); // light gray
+        ImVec4 bgColor3 = ImVec4(0.20f * 2, 0.20f * 2, 0.20f * 2, 0.80f);       // Lightest gray
+
         ImGuiStyle &style = ImGui::GetStyle();
-        style.Colors[ImGuiCol_Text] = ImVec4(0.78f, 0.78f, 0.78f, 1.00f);
-        style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.42f, 0.42f, 0.42f, 1.00f);
-        style.Colors[ImGuiCol_WindowBg] = ImVec4(0.16f, 0.16f, 0.16f, 0.90f);
-        style.Colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        style.Colors[ImGuiCol_PopupBg] = ImVec4(0.16f, 0.16f, 0.16f, 0.90f);
-        style.Colors[ImGuiCol_Border] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+
+        style.Colors[ImGuiCol_Text] = textColor;
+        style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+        style.Colors[ImGuiCol_WindowBg] = bgColor1;
+        style.Colors[ImGuiCol_ChildBg] = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
+        style.Colors[ImGuiCol_PopupBg] = bgColor2;
+        style.Colors[ImGuiCol_Border] = secondaryColor;
         style.Colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        style.Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
-        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.32f, 0.32f, 0.32f, 1.00f);
-        style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.48f, 0.48f, 0.48f, 1.00f);
-        style.Colors[ImGuiCol_TitleBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
-        style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.22f, 0.22f, 0.22f, 1.00f);
-        style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
-        style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
-        style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.02f, 0.02f, 0.02f, 0.53f);
-        style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.80f, 0.60f, 0.40f, 1.00f);        // Pastel orange
-        style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.90f, 0.70f, 0.50f, 1.00f); // Lighter pastel orange
-        style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.60f, 0.40f, 0.20f, 1.00f);  // Darker pastel orange
+        style.Colors[ImGuiCol_FrameBg] = bgColor2;
+        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.35f, 0.35f, 0.35f, 1.00f);
+        style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.45f, 0.45f, 0.45f, 1.00f);
+        style.Colors[ImGuiCol_TitleBg] = primaryColor1;
+        style.Colors[ImGuiCol_TitleBgActive] = primaryColor2;
+        style.Colors[ImGuiCol_TitleBgCollapsed] = primaryColor3;
+        style.Colors[ImGuiCol_MenuBarBg] = bgColor1;
+        style.Colors[ImGuiCol_ScrollbarBg] = bgColor2;
+        style.Colors[ImGuiCol_ScrollbarGrab] = secondaryColor;
+        style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.40f, 0.40f, 0.40f, 1.00f);
+        style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
+        style.Colors[ImGuiCol_CheckMark] = primaryColor1;
+        style.Colors[ImGuiCol_SliderGrab] = secondaryColor;
+        style.Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.55f, 0.55f, 0.55f, 1.00f);
+        style.Colors[ImGuiCol_Button] = primaryColor1;
+        style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.80f, 0.50f, 0.30f, 1.00f);
+        style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.90f, 0.60f, 0.40f, 1.00f);
+        style.Colors[ImGuiCol_Header] = primaryColor1;
+        style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.80f, 0.50f, 0.30f, 1.00f);
+        style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.90f, 0.60f, 0.40f, 1.00f);
+        style.Colors[ImGuiCol_Separator] = secondaryColor;
+        style.Colors[ImGuiCol_SeparatorHovered] = ImVec4(0.40f, 0.40f, 0.40f, 1.00f);
+        style.Colors[ImGuiCol_SeparatorActive] = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
+        style.Colors[ImGuiCol_ResizeGrip] = secondaryColor;
+        style.Colors[ImGuiCol_ResizeGripHovered] = primaryColor2;
+        style.Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.90f, 0.60f, 0.40f, 1.00f);
+        style.Colors[ImGuiCol_Tab] = primaryColor1;
+        style.Colors[ImGuiCol_TabHovered] = primaryColor3;
+        style.Colors[ImGuiCol_TabActive] = primaryColor3;
+        style.Colors[ImGuiCol_TabUnfocused] = primaryColor2;
+        style.Colors[ImGuiCol_TabUnfocusedActive] = primaryColor2;
+        style.Colors[ImGuiCol_DockingPreview] = primaryColor1;
+        style.Colors[ImGuiCol_DockingEmptyBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.80f);
+        style.Colors[ImGuiCol_PlotLines] = primaryColor2;
+        style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(0.90f, 0.70f, 0.50f, 1.00f);
+        style.Colors[ImGuiCol_PlotHistogram] = primaryColor1;
+        style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.90f, 0.70f, 0.50f, 1.00f);
+        style.Colors[ImGuiCol_TextSelectedBg] = primaryColor2;
+        style.Colors[ImGuiCol_DragDropTarget] = ImVec4(0.90f, 0.60f, 0.40f, 1.00f);
+        style.Colors[ImGuiCol_NavHighlight] = ImVec4(0.80f, 0.50f, 0.30f, 1.00f);
+        style.Colors[ImGuiCol_NavWindowingHighlight] = primaryColor2;
+        style.Colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.80f);
 
         ImGui_ImplSDL2_InitForSDLRenderer(puffin::Application::Get().GetWindow()->GetWindow()->GetWindow(), puffin::Graphics::Get().GetRenderer()->get());
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
@@ -112,31 +160,69 @@ public:
 
         float FrameFPS = 1.0f / ImGui::GetIO().DeltaTime;
         float RollingAverage = ImGui::GetIO().Framerate;
+        double effectsAndLighting = (puffin::Graphics::Get().m_stats.m_postTime.m_savedTime / 1000);
+        double renderCycle = (puffin::Graphics::Get().m_stats.m_openCloseGraphicsTime.m_savedTime / 1000);
 
-        if (FrameFPS > 55)
+        ImGui::Text("Time Data");
+        if (ImGui::BeginTable("table", 3, ImGuiTableFlags_Borders))
         {
-            ImGui::TextColored(ImVec4(0, 255, 0, 255), "Per Frame FPS %f", FrameFPS);
-        }
-        else if (FrameFPS > 30)
-        {
-            ImGui::TextColored(ImVec4(255, 0, 255, 255), "Per Frame FPS %f", FrameFPS);
-        }
-        else
-        {
-            ImGui::TextColored(ImVec4(255, 0, 0, 255), "Per Frame FPS %f", FrameFPS);
-        }
+            ImGui::TableNextColumn();
+            ImGui::Text("Name");
+            ImGui::TableNextColumn();
+            ImGui::Text("Status");
+            ImGui::TableNextColumn();
+            ImGui::Text("Time");
 
-        if (RollingAverage > 55)
-        {
-            ImGui::TextColored(ImVec4(0, 255, 0, 255), "Rolling Average FPS FPS %f", RollingAverage);
-        }
-        else if (RollingAverage > 30)
-        {
-            ImGui::TextColored(ImVec4(255, 0, 255, 255), "Rolling Average FPS FPS %f", RollingAverage);
-        }
-        else
-        {
-            ImGui::TextColored(ImVec4(255, 0, 0, 255), "Rolling Average FPS FPS %f", RollingAverage);
+            ImGui::TableNextColumn();
+            ImGui::Text("Per Frame FPS");
+            ImGui::TableNextColumn();
+            if (FrameFPS > 55)
+                ImGui::TextColored(ImVec4(0, 255, 0, 255), "Good");
+            else if (FrameFPS > 30)
+                ImGui::TextColored(ImVec4(255, 0, 255, 255), "Poor");
+            else
+                ImGui::TextColored(ImVec4(255, 0, 0, 255), "Bad");
+            ImGui::TableNextColumn();
+            ImGui::Text("%f", FrameFPS);
+
+            ImGui::TableNextColumn();
+            ImGui::Text("Rolling Average FPS");
+            ImGui::TableNextColumn();
+            if (RollingAverage > 55)
+                ImGui::TextColored(ImVec4(0, 255, 0, 255), "Good");
+            else if (RollingAverage > 30)
+                ImGui::TextColored(ImVec4(255, 0, 255, 255), "Poor");
+            else
+                ImGui::TextColored(ImVec4(255, 0, 0, 255), "Bad");
+            ImGui::TableNextColumn();
+            ImGui::Text("%f", RollingAverage);
+
+            ImGui::TableNextColumn();
+            ImGui::Text("Effects And Lighting");
+            ImGui::TableNextColumn();
+            if (effectsAndLighting > 0 && effectsAndLighting < 6)
+                ImGui::TextColored(ImVec4(0, 255, 0, 255), "Good");
+            if (effectsAndLighting >= 6 && effectsAndLighting < 10)
+                ImGui::TextColored(ImVec4(255, 0, 255, 255), "Poor");
+            if (effectsAndLighting >= 14)
+                ImGui::TextColored(ImVec4(255, 0, 0, 255), "Bad");
+            ImGui::TableNextColumn();
+            ImGui::Text("%f", effectsAndLighting);
+
+            ImGui::TableNextColumn();
+            ImGui::Text("Render Cycle");
+            ImGui::TableNextColumn();
+            if (renderCycle > 0 && renderCycle < 17)
+                ImGui::TextColored(ImVec4(0, 255, 0, 255), "Good");
+            if (renderCycle >= 17 && renderCycle < 21)
+                ImGui::TextColored(ImVec4(255, 0, 255, 255), "Poor");
+            if (renderCycle >= 21)
+                ImGui::TextColored(ImVec4(255, 0, 0, 255), "Bad");
+
+            ImGui::TableNextColumn();
+            ImGui::Text("%f", renderCycle);
+
+            ImGui::EndTable();
         }
 
         ImGui::End();
@@ -153,6 +239,9 @@ public:
             puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
 
             bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
+
+            // ImGui::SameLine();
+            // ImGui::InvisibleButton(tag.m_Tag.c_str(), ImVec2(0, 100));
 
             if (ImGui::IsItemClicked())
             {

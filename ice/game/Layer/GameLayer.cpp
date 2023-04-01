@@ -66,7 +66,7 @@ namespace game
         l2T.m_rect->y = 27;
 
         // Post
-        // puffin::Graphics::Get().PlacePostEffect<puffin::KuwaharaFilter>(2);
+        puffin::Graphics::Get().PlacePostEffect<puffin::KuwaharaFilter>(2);
         puffin::Graphics::Get().PlacePostEffect<puffin::CrossDithering>(0.25f);
         puffin::PalletCurver *p = puffin::Graphics::Get().PlacePostEffect<puffin::PalletCurver>();
 

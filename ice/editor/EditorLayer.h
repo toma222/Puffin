@@ -40,39 +40,26 @@ public:
         ImGui::GetStyle().PopupRounding = 8;
         ImGui::GetStyle().ScrollbarRounding = 16;
 
-        /*
-
-        auto &colors = ImGui::GetStyle().Colors;
-        colors[ImGuiCol_WindowBg] = ImGuiConvertHex(1c1c16)
-
-        // Headers
-        colors[ImGuiCol_Header] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
-        colors[ImGuiCol_HeaderHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
-        colors[ImGuiCol_HeaderActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-
-        // Buttons
-        colors[ImGuiCol_Button] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
-        colors[ImGuiCol_ButtonHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
-        colors[ImGuiCol_ButtonActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-
-        // Frame BG
-        colors[ImGuiCol_FrameBg] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
-        colors[ImGuiCol_FrameBgHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
-        colors[ImGuiCol_FrameBgActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-
-        // Tabs
-        colors[ImGuiCol_Tab] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-        colors[ImGuiCol_TabHovered] = ImVec4{0.38f, 0.3805f, 0.381f, 1.0f};
-        colors[ImGuiCol_TabActive] = ImVec4{0.28f, 0.2805f, 0.281f, 1.0f};
-        colors[ImGuiCol_TabUnfocused] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-        colors[ImGuiCol_TabUnfocusedActive] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
-
-        // Title
-        colors[ImGuiCol_TitleBg] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-        colors[ImGuiCol_TitleBgActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-        colors[ImGuiCol_TitleBgCollapsed] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-
-        */
+        // Set up ImGui style with dark theme and pastel orange accents
+        ImGuiStyle &style = ImGui::GetStyle();
+        style.Colors[ImGuiCol_Text] = ImVec4(0.78f, 0.78f, 0.78f, 1.00f);
+        style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.42f, 0.42f, 0.42f, 1.00f);
+        style.Colors[ImGuiCol_WindowBg] = ImVec4(0.16f, 0.16f, 0.16f, 0.90f);
+        style.Colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+        style.Colors[ImGuiCol_PopupBg] = ImVec4(0.16f, 0.16f, 0.16f, 0.90f);
+        style.Colors[ImGuiCol_Border] = ImVec4(0.36f, 0.36f, 0.36f, 1.00f);
+        style.Colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+        style.Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+        style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.32f, 0.32f, 0.32f, 1.00f);
+        style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.48f, 0.48f, 0.48f, 1.00f);
+        style.Colors[ImGuiCol_TitleBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+        style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.22f, 0.22f, 0.22f, 1.00f);
+        style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
+        style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
+        style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.02f, 0.02f, 0.02f, 0.53f);
+        style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.80f, 0.60f, 0.40f, 1.00f);        // Pastel orange
+        style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.90f, 0.70f, 0.50f, 1.00f); // Lighter pastel orange
+        style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.60f, 0.40f, 0.20f, 1.00f);  // Darker pastel orange
 
         ImGui_ImplSDL2_InitForSDLRenderer(puffin::Application::Get().GetWindow()->GetWindow()->GetWindow(), puffin::Graphics::Get().GetRenderer()->get());
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
@@ -120,30 +107,36 @@ public:
         ImGui::Begin("Debug");
 
         ImGui::Text("TODO : this lol");
-        
+
         // FPS Historgram
 
         float FrameFPS = 1.0f / ImGui::GetIO().DeltaTime;
         float RollingAverage = ImGui::GetIO().Framerate;
-        
-        if(FrameFPS > 55)
+
+        if (FrameFPS > 55)
         {
-            ImGui::TextColored(ImVec4(0,255,0,255), "Per Frame FPS %f", FrameFPS);
-        }else if(FrameFPS > 30)
+            ImGui::TextColored(ImVec4(0, 255, 0, 255), "Per Frame FPS %f", FrameFPS);
+        }
+        else if (FrameFPS > 30)
         {
-            ImGui::TextColored(ImVec4(255,0,255,255), "Per Frame FPS %f", FrameFPS);
-        }else{
-            ImGui::TextColored(ImVec4(255,0,0,255), "Per Frame FPS %f", FrameFPS);
+            ImGui::TextColored(ImVec4(255, 0, 255, 255), "Per Frame FPS %f", FrameFPS);
+        }
+        else
+        {
+            ImGui::TextColored(ImVec4(255, 0, 0, 255), "Per Frame FPS %f", FrameFPS);
         }
 
-        if(RollingAverage > 55)
+        if (RollingAverage > 55)
         {
-            ImGui::TextColored(ImVec4(0,255,0,255), "Rolling Average FPS FPS %f", RollingAverage);
-        }else if(RollingAverage > 30)
+            ImGui::TextColored(ImVec4(0, 255, 0, 255), "Rolling Average FPS FPS %f", RollingAverage);
+        }
+        else if (RollingAverage > 30)
         {
-            ImGui::TextColored(ImVec4(255,0,255,255), "Rolling Average FPS FPS %f", RollingAverage);
-        }else{
-            ImGui::TextColored(ImVec4(255,0,0,255), "Rolling Average FPS FPS %f", RollingAverage);
+            ImGui::TextColored(ImVec4(255, 0, 255, 255), "Rolling Average FPS FPS %f", RollingAverage);
+        }
+        else
+        {
+            ImGui::TextColored(ImVec4(255, 0, 0, 255), "Rolling Average FPS FPS %f", RollingAverage);
         }
 
         ImGui::End();
@@ -337,7 +330,7 @@ public:
         {
             effect->ImGuiUpdate();
         }
-        
+
         ImGui::End();
 
         ImGui::Render();

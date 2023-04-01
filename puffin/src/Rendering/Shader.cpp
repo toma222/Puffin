@@ -158,12 +158,12 @@ namespace puffin
         float TRsum = 0;
         float BRsum = 0;
 
-        for (int i = 0; i < m_boxSize; i++)
+        for (int i = 0; i < m_boxSize * m_boxSize; i++)
         {
             TLsum += (topLeftSquare[i] - topLeftSTD) * (topLeftSquare[i] - topLeftSTD);
-            BLsum += (topLeftSquare[i] - bottomLeftSTD) * (topLeftSquare[i] - bottomLeftSTD);
-            TRsum += (topLeftSquare[i] - topRightSTD) * (topLeftSquare[i] - topRightSTD);
-            BRsum += (topLeftSquare[i] - bottomRightSTD) * (topLeftSquare[i] - bottomRightSTD);
+            BLsum += (bottomLeftSquare[i] - bottomLeftSTD) * (bottomLeftSquare[i] - bottomLeftSTD);
+            TRsum += (topRightSquare[i] - topRightSTD) * (topRightSquare[i] - topRightSTD);
+            BRsum += (bottomRightSquare[i] - bottomRightSTD) * (bottomRightSquare[i] - bottomRightSTD);
         }
 
         topLeftSTD = std::sqrt(TLsum / (m_boxSize * m_boxSize));

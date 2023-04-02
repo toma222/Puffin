@@ -9,6 +9,8 @@ extern puffin::Application *CreateApplication();
 
 int main(int argc, char *argv[])
 {
+    srand((unsigned)time(NULL));
+
     // Asks the engine to make an app with all it's thing
     PN_CORE_INFO("Main function called");
     puffin::Application *app = CreateApplication();

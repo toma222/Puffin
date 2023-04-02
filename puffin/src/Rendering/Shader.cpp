@@ -32,6 +32,7 @@ namespace puffin
         if (ImGui::TreeNode("Pallet Curve"))
         {
             ImGui::Checkbox("Active", &m_active);
+
             ImGui::TreePop();
         }
     }
@@ -52,7 +53,7 @@ namespace puffin
         int xm = x % 8;
         int ym = y % 8;
 
-        float M = dithering_matrix[xm][ym];
+        float M = dithering_matrix[xm][ym] + 1;
         float p = M * (1 / 64) - 0.5f;
 
         color.m_color[0] += (m_spread * M);

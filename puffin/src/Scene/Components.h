@@ -111,8 +111,10 @@ namespace puffin
             bool m_simulated;
 
             Rigidbody2D(float mass, bool gravity)
-                : m_mass(mass), m_angularVelocity(0), m_speed(0), m_velocityBody(0, 0), m_forces(0, 0), m_velocity(0, 0), m_gravity(gravity), m_drag(1), m_simulated(true)
+                : m_mass(mass), m_angularVelocity(0), m_speed(0), m_velocityBody(0, 0), m_forces(0, 0), m_velocity(0, 0), m_simulated(true)
             {
+                m_gravity = gravity;
+                m_drag = 1;
                 m_centerOfMass = Vector2(0, 0);
             };
         };
@@ -123,7 +125,47 @@ namespace puffin
 
             BoxCollider() = default;
             BoxCollider(Vector2 offset) : m_offset(offset){};
-            // BoxCollider(const BoxCollider &box) = default;
+        };
+
+        struct Particle
+        {
+            int x;
+            int y;
+            int w;
+            int h;
+
+            std::shared_ptr<render::SDLSurface> m_image;
+        };
+
+        struct ParticleSystem
+        {
+            bool m_update;
+            int m_instantiations;
+            std::shared_ptr<SDL_Rect> m_rect;
+            std::vector<Particle> m_particles;
+            std::shared_ptr<render::SDLSurface> m_surface;
+
+            ParticleSystem() = default;
+            ParticleSystem(const ParticleSystem &system) = default;
+            ParticleSystem(std::string path, int instantiations, int sizeX, int sizeY, bool update = false) : m_update(update)
+            {
+                m_instantiations = instantiations;
+                m_rect = std::make_shared<SDL_Rect>();
+                m_rect->w = sizeX;
+                m_rect->h = sizeY;
+                m_surface = std::make_shared<render::SDLSurface>(path.c_str(), sizeX, sizeY);
+
+                for (int i = 0; i < instantiations; i++)
+                {
+                    Particle p = Particle();
+
+                    p.w = sizeX;
+                    p.h = sizeY;
+                    p.m_image = m_surface;
+
+                    m_particles.push_back(p);
+                }
+            };
         };
     }
 }

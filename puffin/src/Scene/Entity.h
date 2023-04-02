@@ -25,10 +25,8 @@ namespace puffin
                 m_sceneRef->OnComponentAdded<T>(*this, component);
                 return component;
             }
-            else
-            {
-                printf("Already has component you can't tell me what to do :(, I am not adding it\n");
-            }
+
+            assert(false);
 
             // return T(std::forward<Args>(args)...);
         }

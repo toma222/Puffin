@@ -77,6 +77,50 @@ namespace puffin
 
             Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
         }
+
+        // Particle
+        auto particleView = registry.view<components::ParticleSystem>();
+
+        for (auto e : particleView)
+        {
+            Entity entity = {this, e};
+            auto &transform = entity.GetComponent<components::Transform>();
+            auto &particle = entity.GetComponent<components::ParticleSystem>();
+
+            if (particle.m_update)
+            {
+                // ! work with the instantiations
+                /*
+                for (size_t i = 0; i < particle.m_instantiations; i++)
+                {
+                    particle.m_rect->x = transform.m_rect->x + (rand() % 10);
+                    particle.m_rect->y = transform.m_rect->y + (rand() % 10);
+
+                    Graphics::Get().PlaceImage(particle.m_surface.get(), particle.m_rect.get());
+                }
+                */
+            }
+
+            for (size_t i = 0; i < particle.m_instantiations; i++)
+            {
+                particle.m_rect->x = transform.m_rect->x + (rand() % 10);
+                particle.m_rect->y = transform.m_rect->y + (rand() % 10);
+
+                printf("%i %i\n", particle.m_rect->x, particle.m_rect->y);
+
+                Graphics::Get().PlaceImage(particle.m_surface.get(), particle.m_rect.get());
+            }
+
+            /*
+            for (int i = 0; i < particle.m_instantiations; i++)
+            {
+                particle.m_rect->x = transform.m_rect->x + particle.m_particles[i].x;
+                particle.m_rect->y = transform.m_rect->y + particle.m_particles[i].y;
+
+                Graphics::Get().PlaceImage(particle.m_surface.get(), particle.m_rect.get());
+            }
+            */
+        }
     }
 
     void Scene::TickPhysicsSimulation(float deltaTime)
@@ -185,6 +229,18 @@ namespace puffin
     template <>
     void Scene::OnComponentAdded<components::BoxCollider>(Entity entity, components::BoxCollider &component)
     {
+    }
+
+    template <>
+    void Scene::OnComponentAdded<components::ParticleSystem>(Entity entity, components::ParticleSystem &component)
+    {
+        components::Transform &transform = entity.GetComponent<components::Transform>();
+
+        for (size_t i = 0; i < component.m_instantiations; i++)
+        {
+            component.m_particles[i].x += (rand() % transform.m_rect->w);
+            component.m_particles[i].y += (rand() % transform.m_rect->h);
+        }
     }
 
 } // namespace puffin

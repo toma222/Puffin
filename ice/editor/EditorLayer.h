@@ -29,7 +29,7 @@ public:
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-        //(void)io;
+        io.Fonts->AddFontFromFileTTF("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/resources/Editor/Fonts/static/FiraCode-Medium.ttf", 16);
 
         ImGui::StyleColorsDark();
 
@@ -39,12 +39,13 @@ public:
         ImGui::GetStyle().GrabRounding = 0;
         ImGui::GetStyle().PopupRounding = 0;
         ImGui::GetStyle().ScrollbarRounding = 0;
+        ImGui::GetStyle().TabRounding = 0;
 
         // Set up ImGui style with dark theme and pastel orange accents
         ImVec4 primaryColor1 = ImVec4(0.85f, 0.45f, 0.25f, 1.00f);                   // Orange
         ImVec4 primaryColor2 = ImVec4(0.85f / 1.5, 0.45f / 1.5, 0.25f / 1.5, 1.00f); // Orange
         ImVec4 primaryColor3 = ImVec4(0.85f / 2, 0.45f / 2, 0.25f / 2, 1.00f);       // Orange
-        ImVec4 primaryColor4 = ImVec4(0.85f / 2.5, 0.45f / 2.5, 0.25f / 2.5, 1.00f); // Orange
+        // ImVec4 primaryColor4 = ImVec4(0.85f / 2.5, 0.45f / 2.5, 0.25f / 2.5, 1.00f); // Orange
 
         ImVec4 secondaryColor = ImVec4(0.5f, 0.5f, 0.5f, 1.00f); // Light gray
         // ImVec4 secondaryColor2 = ImVec4(0.96f, 0.96f, 0.96f, 1.00f); // Light gray
@@ -55,7 +56,7 @@ public:
 
         ImVec4 bgColor1 = ImVec4(0.20f, 0.20f, 0.20f, 0.80f);                   // Dark gray
         ImVec4 bgColor2 = ImVec4(0.20f * 1.5, 0.20f * 1.5, 0.20f * 1.5, 0.80f); // light gray
-        ImVec4 bgColor3 = ImVec4(0.20f * 2, 0.20f * 2, 0.20f * 2, 0.80f);       // Lightest gray
+        // ImVec4 bgColor3 = ImVec4(0.20f * 2, 0.20f * 2, 0.20f * 2, 0.80f);       // Lightest gray
 
         ImGuiStyle &style = ImGui::GetStyle();
 
@@ -118,6 +119,8 @@ public:
 
         m_FileIcon = new puffin::render::SDLTexture(puffin::Graphics::Get().GetRenderer().get(),
                                                     "/ice/icons/Folder.bmp", 50, 50);
+
+        m_viewportScale = 5;
 
         // m_selectedEntity = nullptr;
     };
@@ -229,8 +232,6 @@ public:
 
         ImGui::Begin("Hierarchy");
 
-        float x = ImGui::GetCursorPosX();
-
         for (puffin::Entity entity : game::GameLayer::GetCurrentScene().m_entities)
         {
             ImGuiTreeNodeFlags flags = ((m_selectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
@@ -239,9 +240,6 @@ public:
             puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
 
             bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
-
-            // ImGui::SameLine();
-            // ImGui::InvisibleButton(tag.m_Tag.c_str(), ImVec2(0, 100));
 
             if (ImGui::IsItemClicked())
             {
@@ -269,7 +267,13 @@ public:
 
         ImGui::Begin("Viewport");
 
-        ImGui::Image((ImTextureID)puffin::Graphics::Get().GetRenderTexture().get()->get(), ImVec2(192 * 5, 108 * 5));
+        ImGui::Image((ImTextureID)puffin::Graphics::Get().GetRenderTexture().get()->get(), ImVec2(192 * m_viewportScale, 108 * m_viewportScale));
+
+        if (ImGui::BeginPopupContextItem("Viewport settings"))
+        {
+            ImGui::SliderFloat("Viewport size", &m_viewportScale, 1, 12);
+            ImGui::EndPopup();
+        }
 
         ImGui::End();
 
@@ -361,8 +365,6 @@ public:
 
         ImGui::Begin("Content Browser");
 
-        /*
-
         static float padding = 16.0f;
         static float thumbnailSize = 128.0f;
         float cellSize = thumbnailSize + padding;
@@ -375,7 +377,7 @@ public:
         ImGui::Columns(columnCount, 0, false);
 
         // ! will crash if the directory does not exist
-        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/100044352/Desktop/New folder/Puffin/ice/game/Assets"))
+        for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
         {
 
             const auto &path = directoryEntry.path();
@@ -409,8 +411,6 @@ public:
 
         ImGui::Columns(1);
 
-        */
-
         ImGui::End();
 
         ImGui::Begin("Post Controll Panel");
@@ -431,6 +431,8 @@ public:
     puffin::render::SDLTexture *m_GameObjectIcon;
     puffin::render::SDLTexture *m_FileIcon;
     puffin::Entity m_selectedEntity;
+
+    float m_viewportScale;
 
     void SetCurrentScene()
     {

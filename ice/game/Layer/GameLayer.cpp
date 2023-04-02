@@ -41,7 +41,7 @@ namespace game
         rigid.AddComponent<puffin::components::Rigidbody2D>(5, false);
         */
 
-        // GRAPHICS-DEMO
+        /*
         puffin::Entity Image = s_currentScene->AddEntity("image");
         Image.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/BuildingWall.bmp");
         auto &imageT = Image.GetComponent<puffin::components::Transform>();
@@ -64,12 +64,23 @@ namespace game
         auto &l2T = l2.GetComponent<puffin::components::Transform>();
         l2T.m_rect->x = 162;
         l2T.m_rect->y = 27;
+        */
+
+        puffin::Entity grassParticles = s_currentScene->AddEntity("light 2");
+        auto &gpT = grassParticles.GetComponent<puffin::components::Transform>();
+        gpT.m_rect->x = 0;
+        gpT.m_rect->y = 0;
+        gpT.m_rect->w = 192;
+        gpT.m_rect->h = 108;
+
+        grassParticles.AddComponent<puffin::components::ParticleSystem>("/ice/game/Assets/Images/BuildingWall.bmp", 5, 5, 5);
 
         // Post
-        puffin::Graphics::Get().PlacePostEffect<puffin::KuwaharaFilter>(2);
+        // puffin::Graphics::Get().PlacePostEffect<puffin::KuwaharaFilter>(2);
         puffin::Graphics::Get().PlacePostEffect<puffin::CrossDithering>(0.25f);
         puffin::PalletCurver *p = puffin::Graphics::Get().PlacePostEffect<puffin::PalletCurver>();
 
+        /*
         static int Pallet[40] = {
             0x7a2d30,
             0x632b38,
@@ -111,8 +122,21 @@ namespace game
             0x8f897b,
             0xb3b09f,
             0xdbdbd0};
+        */
 
-        p->AppendPallet<40>(Pallet);
+        static int Pallet[9] = {
+            0xfafafa,
+            0xd4d8e0,
+            0xacacac,
+            0x918b8c,
+            0x6b615e,
+            0x3b342e,
+            0x24211a,
+            0x0e0d0a,
+            0x030201,
+        };
+
+        p->AppendPallet<9>(Pallet);
 
         /*
         puffin::Entity l3 = s_currentScene->AddEntity("light 3");

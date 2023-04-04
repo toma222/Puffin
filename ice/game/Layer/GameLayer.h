@@ -13,7 +13,7 @@ namespace game
         void Update() override;
         void Start() override;
 
-        static puffin::Scene *s_currentScene;
+        static std::shared_ptr<puffin::Scene> s_currentScene;
 
         static puffin::Scene &GetCurrentScene()
         {

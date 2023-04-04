@@ -237,4 +237,50 @@ namespace puffin
             ImGui::TreePop();
         }
     }
+
+    PNColor Blur::Frag(int x, int y, PNColor color)
+    {
+        PNColor convolution = PNColor(0, 0, 0);
+
+        if (x < m_kernalSize && y < m_kernalSize)
+            return color;
+
+        if (x + m_kernalSize > 192 && y + m_kernalSize > 108)
+            return color;
+
+        for (int kernalX = 0; kernalX < m_kernalSize; kernalX++)
+        {
+            for (int kernalY = 0; kernalY < m_kernalSize; kernalY++)
+            {
+                convolution.m_color[0] += color.m_color[0] * 0.1;
+                convolution.m_color[1] += color.m_color[2] * 0.1;
+                convolution.m_color[2] += color.m_color[2] * 0.1;
+            }
+        }
+
+        return convolution;
+    };
+
+    void Blur::SetKernel(BLUR_ALGORITHM algorithm, int kernalSize)
+    {
+        printf("%i\n", m_kernalSize);
+        for (int x = 0; x < m_kernalSize; x++)
+        {
+            for (int y = 0; y < m_kernalSize; y++)
+            {
+                printf("%f\n", (double)(1 / 9));
+                m_kernal[x][y] = 1 / (m_kernalSize * m_kernalSize);
+            }
+        }
+    }
+
+    void Blur::ImGuiUpdate()
+    {
+        if (ImGui::TreeNode("Blur"))
+        {
+            ImGui::SliderInt("Kernal Size (does not update)", &m_kernalSize, 0, 5);
+
+            ImGui::TreePop();
+        }
+    };
 } // namespace puffin

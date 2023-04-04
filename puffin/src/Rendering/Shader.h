@@ -92,4 +92,31 @@ namespace puffin
         PNColor Frag(int x, int y, PNColor color) override;
         void ImGuiUpdate() override;
     };
+
+    enum BLUR_ALGORITHM
+    {
+        BOX,
+        GAUSSIAN
+    };
+
+    class Blur : public PostEffect
+    {
+    private:
+        int m_kernalSize;
+        float m_kernal[3][3];
+        BLUR_ALGORITHM m_algorithm; // Does not update if changed, only updates when SetKernel() is called
+
+    public:
+        // Default algorithm is box
+        Blur(int kernalSize) : m_kernalSize(kernalSize)
+        {
+            m_algorithm = BLUR_ALGORITHM::BOX;
+            SetKernel(m_algorithm, m_kernalSize);
+        };
+
+        void SetKernel(BLUR_ALGORITHM algorithm, int kernalSize);
+
+        PNColor Frag(int x, int y, PNColor color) override;
+        void ImGuiUpdate() override;
+    };
 } // namespace puffin

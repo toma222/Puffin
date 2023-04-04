@@ -8,79 +8,34 @@
 
 namespace game
 {
-    puffin::Scene *GameLayer::s_currentScene = nullptr;
-    // puffin::Container *GameLayer::m_currentContainer = nullptr;
+    std::shared_ptr<puffin::Scene> GameLayer::s_currentScene = std::make_shared<puffin::Scene>();
 
     void GameLayer::OnAttach()
     {
         GM_CORE_INFO("Attach called for game layer");
-        s_currentScene = new puffin::Scene();
 
         /*
-        ! put physics in latter
-        puffin::Entity ground = s_currentScene->AddEntity("ground");
-        ground.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/square.bmp");
-        ground.AddComponent<puffin::components::BoxCollider>();
-        auto &groundT = ground.GetComponent<puffin::components::Transform>();
-        groundT.m_rect->x = 0;
-        groundT.m_rect->y = 90;
-        groundT.m_rect->w = 50;
-        groundT.m_rect->h = 10;
-
-        ground.AddComponent<puffin::components::Rigidbody2D>(5, false);
-
-        puffin::Entity rigid = s_currentScene->AddEntity("rigid");
-        rigid.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/square.bmp");
-        rigid.AddComponent<puffin::components::BoxCollider>();
-        auto &t = rigid.GetComponent<puffin::components::Transform>();
-        t.m_rect->x = 0;
-        t.m_rect->y = 0;
-        t.m_rect->w = 10;
-        t.m_rect->h = 10;
-
-        rigid.AddComponent<puffin::components::Rigidbody2D>(5, false);
-        */
-
-        /*
-        puffin::Entity Image = s_currentScene->AddEntity("image");
-        Image.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/BuildingWall.bmp");
+        puffin::Entity Image = s_currentScene->AddEntity("Tree Building Image");
+        Image.AddComponent<puffin::components::Image>("/ice/game/Assets/Images/TreeBuilding.bmp");
         auto &imageT = Image.GetComponent<puffin::components::Transform>();
         imageT.m_rect->x = 0;
         imageT.m_rect->y = 0;
         imageT.m_rect->w = 192;
         imageT.m_rect->h = 108;
 
-        puffin::Entity globalLight = s_currentScene->AddEntity("global light");
-        globalLight.AddComponent<puffin::components::Light>(new puffin::GlobalLight(0.4f, puffin::PNColor(255, 255, 255)));
+        puffin::Entity l3 = s_currentScene->AddEntity("light 3");
+        l3.AddComponent<puffin::components::Light>(new puffin::GlobalLight(1, puffin::PNColor(255, 255, 255)));
+        auto &l3T = l3.GetComponent<puffin::components::Transform>();
+        l3T.m_rect->x = 60;
+        l3T.m_rect->y = 80;
 
-        puffin::Entity l1 = s_currentScene->AddEntity("light 1");
-        l1.AddComponent<puffin::components::Light>(new puffin::PointLight(60, 0, puffin::PNColor(211, 226, 140)));
-        auto &l1T = l1.GetComponent<puffin::components::Transform>();
-        l1T.m_rect->x = 34;
-        l1T.m_rect->y = 28;
-
-        puffin::Entity l2 = s_currentScene->AddEntity("light 2");
-        l2.AddComponent<puffin::components::Light>(new puffin::PointLight(50, 10, puffin::PNColor(211, 226, 140)));
-        auto &l2T = l2.GetComponent<puffin::components::Transform>();
-        l2T.m_rect->x = 162;
-        l2T.m_rect->y = 27;
         */
-
-        puffin::Entity grassParticles = s_currentScene->AddEntity("light 2");
-        auto &gpT = grassParticles.GetComponent<puffin::components::Transform>();
-        gpT.m_rect->x = 0;
-        gpT.m_rect->y = 0;
-        gpT.m_rect->w = 192;
-        gpT.m_rect->h = 108;
-
-        grassParticles.AddComponent<puffin::components::ParticleSystem>("/ice/game/Assets/Images/BuildingWall.bmp", 5, 5, 5);
 
         // Post
         // puffin::Graphics::Get().PlacePostEffect<puffin::KuwaharaFilter>(2);
         puffin::Graphics::Get().PlacePostEffect<puffin::CrossDithering>(0.25f);
         puffin::PalletCurver *p = puffin::Graphics::Get().PlacePostEffect<puffin::PalletCurver>();
 
-        /*
         static int Pallet[40] = {
             0x7a2d30,
             0x632b38,
@@ -122,29 +77,12 @@ namespace game
             0x8f897b,
             0xb3b09f,
             0xdbdbd0};
-        */
 
-        static int Pallet[9] = {
-            0xfafafa,
-            0xd4d8e0,
-            0xacacac,
-            0x918b8c,
-            0x6b615e,
-            0x3b342e,
-            0x24211a,
-            0x0e0d0a,
-            0x030201,
-        };
+        p->AppendPallet<40>(Pallet);
 
-        p->AppendPallet<9>(Pallet);
-
-        /*
-        puffin::Entity l3 = s_currentScene->AddEntity("light 3");
-        l3.AddComponent<puffin::components::Light>(new puffin::PointLight(10, 10, puffin::PNColor(255, 255, 255)));
-        auto &l3T = l3.GetComponent<puffin::components::Transform>();
-        l3T.m_rect->x = 60;
-        l3T.m_rect->y = 80;
-        */
+        puffin::SceneSerializer serialize(s_currentScene);
+        // serialize.SerializeScene("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
+        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
     }
 
     void GameLayer::OnDetach()

@@ -7,6 +7,8 @@
 #include "Core/ID.h"
 #include "entt/entt.hpp"
 
+#include "Core/Assert.h"
+
 namespace puffin
 {
     class Entity
@@ -19,22 +21,17 @@ namespace puffin
         template <typename T, typename... Args>
         T &AddComponent(Args &&...args)
         {
-            if (HasComponent<T>() == false)
-            {
-                T &component = m_sceneRef->registry.emplace<T>(m_entity, std::forward<Args>(args)...);
-                m_sceneRef->OnComponentAdded<T>(*this, component);
-                return component;
-            }
-
-            assert(false);
-
-            // return T(std::forward<Args>(args)...);
+            PN_CORE_ASSERT(!HasComponent<T>(), "Component already exists in the entity");
+            T &component = m_sceneRef->registry.emplace<T>(m_entity, std::forward<Args>(args)...);
+            m_sceneRef->OnComponentAdded<T>(*this, component);
+            return component;
         }
 
         // Assumes the entity has this component
         template <typename T>
         T &GetComponent()
         {
+            PN_CORE_ASSERT(HasComponent<T>(), "Calling Get Component when entity does not have that component");
             return m_sceneRef->registry.get<T>(m_entity);
         }
 
@@ -47,6 +44,7 @@ namespace puffin
         template <typename T>
         T RemoveComponent()
         {
+            PN_CORE_ASSERT(false, "Function not implemented yet");
         }
 
         operator bool() const { return m_entity != entt::null; }

@@ -82,7 +82,8 @@ namespace game
 
         puffin::SceneSerializer serialize(s_currentScene);
         // serialize.SerializeScene("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
-        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
+        // C:\Users\100044352\Desktop\New folder\Puffin\Scene.json
+        serialize.Deserialize("C:/Users/100044352/Desktop/New folder/Puffin/Scene.json");
     }
 
     void GameLayer::OnDetach()

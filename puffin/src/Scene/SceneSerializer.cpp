@@ -63,6 +63,7 @@ namespace puffin
 
             // Entity Found
             Entity e = m_Scene->AddEntity(key.c_str());
+            e.AddComponent<components::Transform>();
 
             for (auto &[component, data] : value.items())
             {
@@ -77,8 +78,6 @@ namespace puffin
 
                 if (component == "Image")
                 {
-                    printf("Image");
-                    e.AddComponent<components::Image>("asdasd");
                 }
             }
         }

@@ -29,7 +29,7 @@ public:
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-        io.Fonts->AddFontFromFileTTF("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/resources/Editor/Fonts/static/FiraCode-Medium.ttf", 16);
+        // io.Fonts->AddFontFromFileTTF("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/resources/Editor/Fonts/static/FiraCode-Medium.ttf", 16);
 
         ImGui::StyleColorsDark();
 
@@ -377,6 +377,7 @@ public:
         ImGui::Columns(columnCount, 0, false);
 
         // ! will crash if the directory does not exist
+        /*
         for (auto &directoryEntry : std::filesystem::directory_iterator("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/game/Assets"))
         {
 
@@ -410,6 +411,7 @@ public:
         }
 
         ImGui::Columns(1);
+        */
 
         ImGui::End();
 

@@ -323,6 +323,18 @@ public:
                 }
             }
 
+            if (m_selectedEntity.HasComponent<puffin::components::Image>())
+            {
+                if (ImGui::TreeNode("Image"))
+                {
+                    puffin::components::Image &image = m_selectedEntity.GetComponent<puffin::components::Image>();
+
+                    ImGui::Text("%s", image.m_path.c_str());
+
+                    ImGui::TreePop();
+                }
+            }
+
             if (m_selectedEntity.HasComponent<puffin::components::BoxCollider>())
             {
                 if (ImGui::TreeNode("Box Collider"))

@@ -1,5 +1,7 @@
 
 #include "SceneSerializer.h"
+#include "Entity.h"
+#include "Components.h"
 
 #include "json/json.hpp"
 
@@ -63,7 +65,6 @@ namespace puffin
 
             // Entity Found
             Entity e = m_Scene->AddEntity(key.c_str());
-            e.AddComponent<components::Transform>();
 
             for (auto &[component, data] : value.items())
             {
@@ -78,6 +79,8 @@ namespace puffin
 
                 if (component == "Image")
                 {
+                    printf("Serialize Image\n");
+                    e.AddComponent<puffin::components::Image>("Path to image");
                 }
             }
         }

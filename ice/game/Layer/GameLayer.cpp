@@ -22,14 +22,13 @@ namespace game
         imageT.m_rect->y = 0;
         imageT.m_rect->w = 192;
         imageT.m_rect->h = 108;
+        */
 
-        puffin::Entity l3 = s_currentScene->AddEntity("light 3");
+        puffin::Entity l3 = s_currentScene->AddEntity("Global Light");
         l3.AddComponent<puffin::components::Light>(new puffin::GlobalLight(1, puffin::PNColor(255, 255, 255)));
         auto &l3T = l3.GetComponent<puffin::components::Transform>();
         l3T.m_rect->x = 60;
         l3T.m_rect->y = 80;
-
-        */
 
         // Post
         // puffin::Graphics::Get().PlacePostEffect<puffin::KuwaharaFilter>(2);
@@ -83,7 +82,7 @@ namespace game
         puffin::SceneSerializer serialize(s_currentScene);
         // serialize.SerializeScene("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
         // C:\Users\100044352\Desktop\New folder\Puffin\Scene.json
-        serialize.Deserialize("C:/Users/100044352/Desktop/New folder/Puffin/Scene.json");
+        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
     }
 
     void GameLayer::OnDetach()

@@ -5,7 +5,6 @@
 
 namespace game
 {
-
     class GameLayer : public puffin::Layer
     {
     public:
@@ -14,26 +13,11 @@ namespace game
         void Update() override;
         void Start() override;
 
-        static puffin::Scene *s_currentScene;
-        static puffin::Container *m_currentContainer;
+        static std::shared_ptr<puffin::Scene> s_currentScene;
 
-        template <typename T>
-        void SetCurrentScene()
+        static puffin::Scene &GetCurrentScene()
         {
-            if (s_currentScene == nullptr)
-            {
-                s_currentScene = new T();
-            }
-            else
-            {
-                s_currentScene->ClearScene();
-                s_currentScene->DestroyScene();
-
-                delete s_currentScene;
-
-                s_currentScene = new T();
-                s_currentScene->StartScene();
-            }
+            return *s_currentScene;
         }
     };
 

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace puffin
 {
@@ -36,6 +37,7 @@ namespace puffin
 
     static Logging *PuffinLogger = new Logging("PUFFIN");
     static Logging *GameLogger = new Logging("GAME");
+    // static std::vector<std::string> s_logArchive = {"Log Started"};
 }
 
 // engine logging macros

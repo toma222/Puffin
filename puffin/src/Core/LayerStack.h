@@ -28,7 +28,7 @@ namespace puffin
         template <typename T>
         void AddLayer()
         {
-            stack[m_layerStackLocation] = new T;
+            stack[m_layerStackLocation] = new T();
             m_layerStackLocation++;
         }
 
@@ -51,6 +51,14 @@ namespace puffin
             for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
             {
                 stack[lIndex]->Update();
+            }
+        }
+
+        void ImGuiUpdate()
+        {
+            for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
+            {
+                stack[lIndex]->ImGuiUpdate();
             }
         }
 

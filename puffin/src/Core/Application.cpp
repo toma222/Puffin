@@ -3,10 +3,14 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
 
-#include "Graphics.h"
+#include "Rendering/Graphics.h"
+
 #include "Window.h"
 #include "Logging.h"
 #include "Gui.h"
+
+#include "Rendering/Light.h"
+#include "Rendering/Graphics.h"
 
 #include "Application.h"
 
@@ -18,12 +22,12 @@ namespace puffin
     {
         s_Instance = this;
 
-        // Init the systems for the application
-        m_graphics = std::make_shared<Graphics>(0);
+        Graphics::Get(); // Wakes up SDL
+
         m_window = std::make_shared<Window>();
         m_layerStack = std::make_shared<LayerStack>();
 
-        m_graphics->CreateRenderer(m_window->GetWindow());
+        Graphics::Get().InitRenderer(m_window->GetWindow());
     }
 
     Application::~Application()
@@ -39,11 +43,11 @@ namespace puffin
 
         while (open == true)
         {
-            // poll for events
-
             SDL_Event e;
             while (SDL_PollEvent(&e) > 0)
             {
+                ImGui_ImplSDL2_ProcessEvent(&e);
+
                 switch (e.type)
                 {
                 case SDL_QUIT:
@@ -51,11 +55,12 @@ namespace puffin
                     break;
                 }
             }
-            m_graphics->ClearRenderer();
-            m_graphics->RenderTextures();
+
+            puffin::Graphics::Get().StartRenderCycle();
+
             m_layerStack->UpdateLayers();
 
-            m_graphics->RenderPresent();
+            puffin::Graphics::Get().PresentAndEndRenderCycle();
             m_window->UpdateWindow();
         }
 

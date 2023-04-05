@@ -3,13 +3,14 @@
 
 #include "Application.h"
 #include "Logging.h"
+#include "ID.h"
 
 extern puffin::Application *CreateApplication();
 
-// puffin::Application *puffin::Application::s_Instance = CreateApplication();
-
 int main(int argc, char *argv[])
 {
+    srand((unsigned)time(NULL));
+
     // Asks the engine to make an app with all it's thing
     PN_CORE_INFO("Main function called");
     puffin::Application *app = CreateApplication();

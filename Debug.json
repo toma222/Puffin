@@ -1,0 +1,8 @@
+{"otherData": {},"traceEvents":[{},{"cat":"function","dur":199001.000,"name":"Graphics","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+,{"cat":"function","dur":56017.000,"name":"Window","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+,{"cat":"function","dur":195983.000,"name":"CreateRenderer","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+,{"cat":"function","dur":1999.000,"name":"StartScene","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+,{"cat":"function","dur":5999.000,"name":"AttachLayers","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+,{"cat":"function","dur":2000.000,"name":"StartScene","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+,{"cat":"function","dur":4000.000,"name":"DetachLayers","ph":"X","pid":0,"tid":0,"ts":1674606924076679168.000}
+]}

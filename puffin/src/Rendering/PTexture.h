@@ -27,7 +27,7 @@ namespace puffin
             SDLTexture(SDLRenderer *renderer, SDLSurface *surface);
             SDLTexture(SDLRenderer *render, std::string imagePath, int width, int height);
             SDLTexture(SDLRenderer *renderer, int width, int height);
-
+            
             SDLTexture(std::shared_ptr<SDL_Rect> attachToRect, SDLRenderer *render, std::string imagePath, int width, int height);
 
             ~SDLTexture();

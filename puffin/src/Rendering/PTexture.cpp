@@ -6,8 +6,31 @@
 #include "PRenderer.h"
 
 #include "Core/Logging.h"
+// #include "Core/FileSystem.h"
 
 #include <iostream>
+#include <string>
+
+#include <filesystem>
+
+#ifdef WINDOWS
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
+namespace puffin
+{
+    std::string GetRootPath()
+    {
+        char buff[FILENAME_MAX]; // create string buffer to hold path
+        GetCurrentDir(buff, FILENAME_MAX);
+        std::string current_working_dir(buff);
+        return current_working_dir;
+    }
+} // namespace puffin
 
 namespace puffin
 {
@@ -46,12 +69,15 @@ namespace puffin
 
         SDLTexture::SDLTexture(SDLRenderer *renderer, std::string imagePath, int width, int height)
         {
-            SDL_Surface *surface = IMG_Load(imagePath.c_str());
+            // char *cwd = std::filesystem::current_path.get_current_dir_name();
+
+            SDL_Surface *surface = IMG_Load(GetRootPath().append(imagePath.c_str()).c_str());
 
             if (surface == NULL)
             {
                 PN_CORE_FATAL("Could not load image : PATH ->");
-                std::cout << imagePath.c_str() << "\n";
+                std::cout << GetRootPath().append(imagePath.c_str()).c_str()
+                          << "\n";
             }
 
             m_texture = SDL_CreateTextureFromSurface(renderer->get(), surface);

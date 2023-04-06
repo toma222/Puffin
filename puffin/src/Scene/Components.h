@@ -73,12 +73,12 @@ namespace puffin
 
         struct Light
         {
-            float m_power;
-            PNColor m_lightColor;
+            puffin::LightType *m_lightType;
 
             Light() = default;
             Light(const Light &light) = default;
-            Light(float power, PNColor lightColor = PNColor(255, 255, 255)) : m_power(power), m_lightColor(lightColor) {}
+            Light(puffin::LightType *lightType)
+                : m_lightType(lightType){};
         };
     }
 }

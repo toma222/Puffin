@@ -53,7 +53,8 @@ namespace puffin
             }
 
             if (removeComponent)
-                entity.RemoveComponent<T>();
+                GM_CORE_FATAL("function remove component not implemented yet");
+            // entity.RemoveComponent<T>();
         }
     }
 
@@ -117,5 +118,8 @@ namespace puffin
 
         DrawComponent<components::Image>("Image", entity, [](auto &component)
                                          { ImGui::Text("%s", component.m_path.c_str()); });
+
+        DrawComponent<components::Light>("Light", entity, [](auto &component)
+                                         { component.m_lightType->UpdateImGui(); });
     }
 } // namespace antarctica

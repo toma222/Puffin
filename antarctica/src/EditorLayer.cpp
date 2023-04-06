@@ -92,6 +92,10 @@ namespace puffin
         serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
 
         m_heirarchyPanel.AttachContext(m_activeScene);
+
+        /* TESTING NEW COMPONENTS */
+        Entity entity = m_activeScene->AddEntity("point light");
+        entity.AddComponent<components::Light>(new PointLight(10, 10));
     }
 
     void EditorLayer::OnDetach()

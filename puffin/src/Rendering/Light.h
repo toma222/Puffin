@@ -2,15 +2,19 @@
 
 #include <functional>
 #include <cstdio>
+#include <memory>
 
 #include "Math/PNVector.h"
+
+#include "imgui.h"
 
 namespace puffin
 {
     enum LIGHT_TYPE
     {
         POINT,
-        GLOBAL
+        GLOBAL,
+        ERROR
     };
 
     // @param func this function must take in two ints and output a float
@@ -19,10 +23,8 @@ namespace puffin
     public:
         PNColor m_lightColor;
 
-        virtual PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY)
-        {
-            return PNColor(0, 255, 0);
-        };
+        virtual PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) { return PNColor(0, 255, 0); };
+        virtual void UpdateImGui(){};
     };
 
     class PointLight : public LightType
@@ -39,6 +41,7 @@ namespace puffin
         };
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
+        void UpdateImGui() override;
     };
 
     class GlobalLight : public LightType
@@ -54,12 +57,13 @@ namespace puffin
         };
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
+        void UpdateImGui() override;
     };
 
     class LightProfile
     {
     public:
-        // ! change to smart pointer later
+        // ! this is just a memory leak, here : cant delete because it causes undefined behavior
         LightType *m_lightType;
 
         int m_x;
@@ -68,9 +72,11 @@ namespace puffin
         LightProfile(LightType *type, int x, int y)
             : m_lightType(type), m_x(x), m_y(y){};
 
-        ~LightProfile()
+        ~LightProfile() = default;
+
+        void UpdateImGui()
         {
-            // delete m_lightType;
+            m_lightType->UpdateImGui();
         }
     };
 

@@ -70,7 +70,7 @@ namespace puffin
             auto &transform = entity.GetComponent<components::Transform>();
             auto &light = entity.GetComponent<components::Light>();
 
-            // Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
+            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
         }
     }
 

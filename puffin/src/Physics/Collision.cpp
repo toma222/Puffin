@@ -1,4 +1,5 @@
 
+/*
 
 #include "Scene/Entity.h"
 #include "Collision.h"
@@ -60,3 +61,4 @@ namespace puffin
         Brigidbody.m_velocity.y -= (1 / Brigidbody.m_mass) * J * collisionNormal.y;
     }
 } // namespace puffin
+*/

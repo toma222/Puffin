@@ -14,6 +14,6 @@ namespace puffin
         virtual void Start() { return; };
         virtual void ImGuiUpdate() { return; };
 
-        virtual ~Layer() { return; };
+        virtual ~Layer() = default;
     };
 } // namespace pn

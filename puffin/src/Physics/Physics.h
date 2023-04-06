@@ -1,4 +1,5 @@
 
+/*
 #pragma once
 
 #include "Scene/Components.h"
@@ -36,3 +37,4 @@ namespace puffin
     };
 
 } // namespace puffin
+*/

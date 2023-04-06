@@ -58,20 +58,6 @@ namespace puffin
 
         void PlaceImage(render::SDLSurface *image, SDL_Rect *bounds);
 
-        void PlaceLight(LightType *light, int x, int y);
-        void PlaceLightFromProfile(LightProfile profile);
-
-        void PlacePixelShader(PNColor (*func)(int, int, PNColor));
-
-        template <typename T, typename... Args>
-        T *PlacePostEffect(Args &&...args)
-        {
-            PN_CORE_INFO("Adding post effect");
-            T *effect = new T(std::forward<Args>(args)...);
-            m_postBuffer.push_back((PostEffect *)effect);
-            return effect;
-        }
-
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };
         Ref<render::SDLTexture> GetRenderTexture() { return m_renderTexture; };
 
@@ -91,14 +77,9 @@ namespace puffin
         };
 
         Statistics m_stats;
-        std::vector<PostEffect *> m_postBuffer;
 
     private:
         static Graphics *s_graphics;
         bool m_rendering = false;
-
-        std::vector<LightProfile> m_lightBuffer;
-
-        PNColor (*m_pixelShader)(int, int, PNColor);
     };
 } // namespace puffin

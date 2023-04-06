@@ -31,7 +31,7 @@ ENGINEOBJ = obj/PRenderer.o \
 			obj/SceneSerializer.o \
 			obj/Light.o \
 
-EDITOR_OBJ = obj/EditorApplication.o obj/EditorLayer.o
+EDITOR_OBJ = obj/EditorLayer.o
 GAMEOBJ = obj/GameLayer.o
 
 obj/%.o : include/windows/imgui/%.cpp
@@ -62,26 +62,22 @@ obj/%.o : puffin/src/Scene/%.cpp puffin/src/Scene/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
-obj/%.o : ice/%.cpp ice/%.h
+obj/%.o : ice/src/%.cpp ice/src/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
-obj/%.o : ice/editor/%.cpp ice/editor/%.h
+obj/%.o : antarctica/src/%.cpp antarctica/src/%.h
 	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
-
-obj/%.o : ice/game/Layer/%.cpp ice/game/Layer/%.h
-	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
-
-obj/%.o : ice/game/Scene/%.cpp ice/game/Scene/%.h
-	@echo ------ COMPILING  FILE $< -------
-	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< -Iice/game $(INCLUDE_PATH) $(LIBRARY_FLAGS)
-
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 make: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)
 	@echo ------ COMPILING OBJECTS -------
-	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) ice/game.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) antarctica/src/EditorApplication.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	make run
+
+game: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)
+	@echo ------ COMPILING OBJECTS -------
+	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) ice/src/GameApplication.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 	make run
 
 script:

@@ -9,7 +9,6 @@
 
 puffin::Application *CreateApplication()
 {
-
     puffin::Application *app = new puffin::Application();
     app->GetLayerStack()->AddLayer<puffin::EditorLayer>();
 

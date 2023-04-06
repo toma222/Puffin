@@ -31,7 +31,9 @@ ENGINEOBJ = obj/PRenderer.o \
 			obj/SceneSerializer.o \
 			obj/Light.o \
 
-EDITOR_OBJ = obj/EditorLayer.o
+EDITOR_OBJ = obj/EditorLayer.o \
+			 obj/Heirarchy.o
+
 GAMEOBJ = obj/GameLayer.o
 
 obj/%.o : include/windows/imgui/%.cpp
@@ -70,14 +72,18 @@ obj/%.o : antarctica/src/%.cpp antarctica/src/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
+obj/%.o : antarctica/src/panels/%.cpp antarctica/src/panels/%.h
+	@echo ------ COMPILING  FILE $< -------
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+
 make: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)
 	@echo ------ COMPILING OBJECTS -------
-	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) antarctica/src/EditorApplication.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) antarctica/src/EditorApplication.cpp $(ENGINEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 	make run
 
 game: $(ENGINEOBJ) $(GAMEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ)
 	@echo ------ COMPILING OBJECTS -------
-	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) ice/src/GameApplication.cpp $(ENGINEOBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+	$(COMPILER) -Wall -D$(RELEASE_MODE) -o $(BIN_PATH) ice/src/GameApplication.cpp $(ENGINEOBJ) $(EDITOR_OBJ) $(IMGUIOBJ) $(GAMEOBJ) $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 	make run
 
 script:

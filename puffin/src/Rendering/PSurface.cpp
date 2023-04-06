@@ -56,8 +56,6 @@ namespace puffin
             if (m_surface == NULL)
                 std::cout << "could not load image, please check your file path\n";
 
-            printf("%s\n", current_working_dir.append(path.c_str()).c_str());
-
             m_surfaceRect = new SDL_Rect;
 
             m_surfaceRect->h = height;

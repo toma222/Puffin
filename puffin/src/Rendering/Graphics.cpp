@@ -45,7 +45,7 @@ namespace puffin
 
         // ! this needs to be changed to work on the computer because it will give null if the image path does not work
         // ! we need a texture that us used just by the engine
-        m_renderSurface = std::make_shared<render::SDLSurface>("/ice/game/Assets/Images/BuildingWall.bmp", 192, 108);
+        m_renderSurface = std::make_shared<render::SDLSurface>("/ice/assets/Images/BuildingWall.bmp", 192, 108);
     }
 
     Graphics::~Graphics()
@@ -87,7 +87,6 @@ namespace puffin
     void Graphics::Flush()
     {
         m_renderer->Clear();
-
         SDL_FillRect(m_renderSurface->get(), NULL, 0x000000);
     }
 

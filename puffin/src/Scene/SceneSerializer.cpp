@@ -80,7 +80,7 @@ namespace puffin
                 if (component == "Image")
                 {
                     printf("Serialize Image\n");
-                    e.AddComponent<puffin::components::Image>((std::string)data);
+                    e.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
                 }
             }
         }

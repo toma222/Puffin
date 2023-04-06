@@ -62,6 +62,14 @@ namespace puffin
             }
         }
 
+        void GizmosUpdate()
+        {
+            for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)
+            {
+                stack[lIndex]->GizmosRender();
+            }
+        }
+
         void ClearLayers()
         {
             for (int lIndex = 0; lIndex < m_layerStackLocation; lIndex++)

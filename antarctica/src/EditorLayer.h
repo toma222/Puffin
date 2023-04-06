@@ -17,6 +17,7 @@ namespace puffin
         void OnDetach() override;
         void Update() override;
         void ImGuiUpdate() override;
+        void GizmosRender() override;
         void Start() override;
 
     private:

@@ -32,7 +32,8 @@ ENGINEOBJ = obj/PRenderer.o \
 			obj/Light.o \
 
 EDITOR_OBJ = obj/EditorLayer.o \
-			 obj/Heirarchy.o
+			 obj/Heirarchy.o \
+			 obj/Gizmos.o
 
 GAMEOBJ = obj/GameLayer.o
 
@@ -73,6 +74,10 @@ obj/%.o : antarctica/src/%.cpp antarctica/src/%.h
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : antarctica/src/panels/%.cpp antarctica/src/panels/%.h
+	@echo ------ COMPILING  FILE $< -------
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+
+obj/%.o : antarctica/src/tools/%.cpp antarctica/src/tools/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 

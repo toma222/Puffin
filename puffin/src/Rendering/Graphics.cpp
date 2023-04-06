@@ -108,9 +108,12 @@ namespace puffin
         SDL_RenderCopy(m_renderer.get()->get(), texture, NULL, NULL);
         SDL_DestroyTexture(texture);
 
+        Application::Get().GetLayerStack()->GizmosUpdate();
+
         SDL_SetRenderTarget(m_renderer->get(), NULL);
         m_renderer->CopyFull(m_renderTexture.get());
 
+        // ! make this called from the application.cpp class and not from here for readability
         Application::Get().GetLayerStack()->ImGuiUpdate();
 
         m_renderer->Present();

@@ -7,6 +7,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
 
+#include "tools/Gizmos.h"
+
 #include <functional>
 
 namespace puffin
@@ -89,7 +91,8 @@ namespace puffin
 
         m_activeScene = std::make_shared<Scene>();
         puffin::SceneSerializer serialize(m_activeScene);
-        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
+        // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
+        serialize.Deserialize("C:/Users/100044352/Desktop/refactor/Puffin/Scene.json");
 
         m_heirarchyPanel.AttachContext(m_activeScene);
 
@@ -110,6 +113,15 @@ namespace puffin
     void EditorLayer::Update()
     {
         m_activeScene->TickRuntime(0);
+    }
+
+    void EditorLayer::GizmosRender()
+    {
+        antarctica::Gizmos::StartGizmosRender();
+        
+        antarctica::Gizmos::PlaceSquare(0,0,20,20);
+
+        antarctica::Gizmos::EndGizmosRender();
     }
 
     void EditorLayer::ImGuiUpdate()

@@ -13,6 +13,7 @@ namespace puffin
         virtual void Update() { return; };
         virtual void Start() { return; };
         virtual void ImGuiUpdate() { return; };
+        virtual void GizmosRender() { return; };
 
         virtual ~Layer() = default;
     };

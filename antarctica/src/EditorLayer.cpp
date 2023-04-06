@@ -92,7 +92,8 @@ namespace puffin
         m_activeScene = std::make_shared<Scene>();
         puffin::SceneSerializer serialize(m_activeScene);
         // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
-        serialize.Deserialize("C:/Users/100044352/Desktop/refactor/Puffin/Scene.json");
+        // C:/Users/100044352/Desktop/refactor/Puffin/Scene.json
+        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
 
         m_heirarchyPanel.AttachContext(m_activeScene);
 
@@ -118,8 +119,12 @@ namespace puffin
     void EditorLayer::GizmosRender()
     {
         antarctica::Gizmos::StartGizmosRender();
-        
-        antarctica::Gizmos::PlaceSquare(0,0,20,20);
+
+        if (m_heirarchyPanel.GetSelectedEntity())
+        {
+            components::Transform &t = m_heirarchyPanel.GetSelectedEntity().GetComponent<components::Transform>();
+            antarctica::Gizmos::PlaceSquare(t.m_rect->x, t.m_rect->y, t.m_rect->w, t.m_rect->h);
+        }
 
         antarctica::Gizmos::EndGizmosRender();
     }

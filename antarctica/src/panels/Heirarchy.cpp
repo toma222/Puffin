@@ -58,6 +58,11 @@ namespace puffin
         }
     }
 
+    Entity Heirarchy::GetSelectedEntity()
+    {
+        return m_selectedEntity;
+    }
+
     void Heirarchy::RenderImGui()
     {
         ImGui::Begin("Heirarchy");

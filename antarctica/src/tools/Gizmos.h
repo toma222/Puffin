@@ -16,6 +16,6 @@ namespace antarctica
         static void EndGizmosRender();
 
         static void PlaceSquare(int x, int y, int w, int h);
+        static void PlaceCircle(int r, int px, int py);
     };
 } // namespace antarctica
-

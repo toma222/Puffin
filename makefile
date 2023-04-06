@@ -33,7 +33,8 @@ ENGINEOBJ = obj/PRenderer.o \
 
 EDITOR_OBJ = obj/EditorLayer.o \
 			 obj/Heirarchy.o \
-			 obj/Gizmos.o
+			 obj/Gizmos.o \
+			 obj/GizmosPanel.o
 
 GAMEOBJ = obj/GameLayer.o
 

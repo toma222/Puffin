@@ -22,5 +22,6 @@ namespace puffin
 
         void RenderImGui();
         void RenderSelectedEntityComponents(Entity entity);
+        Entity GetSelectedEntity();
     };
 } // namespace antarctica

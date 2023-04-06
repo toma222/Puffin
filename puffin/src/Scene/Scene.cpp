@@ -12,6 +12,9 @@
 #include "Physics/Physics.h"
 #include "Physics/Collision.h"
 
+#include "Core/Logging.h"
+#include "Core/Assert.h"
+
 #include <unordered_map>
 
 #define LINIER_DRAG_COEFFICIENT 0.1
@@ -20,11 +23,12 @@ namespace puffin
 {
     Scene::Scene()
     {
-        printf("Making Scene\n");
+        PN_CORE_INFO("Scene constructor called");
     }
 
     Entity Scene::AddEntity(const std::string &name)
     {
+        PN_CORE_INFO("Adding entity");
         return MakeEntityWithUUID(UUID(), name);
     }
 
@@ -46,7 +50,6 @@ namespace puffin
 
         TickPhysicsSimulation(deltaTime);
 
-        // Place images
         auto view = registry.view<components::Image>();
 
         for (auto e : view)

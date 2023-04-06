@@ -20,18 +20,18 @@ namespace puffin
 
     Application::Application()
     {
+        PN_CORE_INFO("Application Constructor Called");
+
         s_Instance = this;
-
-        Graphics::Get(); // Wakes up SDL
-
+        Graphics::Get();
         m_window = std::make_shared<Window>();
         m_layerStack = std::make_shared<LayerStack>();
-
         Graphics::Get().InitRenderer(m_window->GetWindow());
     }
 
     Application::~Application()
     {
+        PN_CORE_CLEAN("Application Deconstructor called");
         s_Instance = nullptr;
     }
 

@@ -10,8 +10,6 @@ namespace puffin
     {
         m_logginLevel = INFO;
         m_name = name;
-
-        // s_logArchive.resize(0);
     }
 
     void Logging::SetLoggingLevel(LOGGING_LEVEL level)

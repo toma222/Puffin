@@ -11,6 +11,7 @@ namespace puffin
 {
     Window::Window()
     {
+        PN_CORE_INFO("Window Constructor called");
         SDL_DisplayMode dm;
 
         if (SDL_GetDesktopDisplayMode(0, &dm) != 0)

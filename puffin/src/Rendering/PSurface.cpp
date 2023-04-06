@@ -54,7 +54,10 @@ namespace puffin
             m_surface = IMG_Load(current_working_dir.append(path.c_str()).c_str());
 
             if (m_surface == NULL)
-                std::cout << "could not load image, please check your file path\n";
+            {
+                printf("%s", current_working_dir.append(path.c_str()).c_str());
+                PN_CORE_FATAL("Could not load image, path above");
+            }
 
             m_surfaceRect = new SDL_Rect;
 

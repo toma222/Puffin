@@ -6,7 +6,7 @@
 #include <math.h>
 
 #include "Rendering/PRenderer.h"
-
+#include "Core/Assert.h"
 #include "Core/Logging.h"
 #include "Core/Application.h"
 #include "Core/Core.h"
@@ -37,7 +37,10 @@ namespace puffin
         m_renderTexture = std::make_shared<render::SDLTexture>(m_renderer.get(), 192, 108);
 
         if (m_renderer == NULL)
-            printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+        {
+            printf("%s\n", SDL_GetError());
+            PN_CORE_ASSERT(false, "SDL Could not create renderer, error above");
+        }
 
         int w, h;
         SDL_GetRendererOutputSize(m_renderer->get(), &w, &h);
@@ -50,6 +53,7 @@ namespace puffin
 
     Graphics::~Graphics()
     {
+        PN_CORE_CLEAN("Graphics deconstructor called");
     }
 
     void Graphics::StartRenderCycle()

@@ -38,6 +38,7 @@ namespace puffin
 
     void SceneSerializer::SerializeScene(const std::string &filepath)
     {
+        PN_CORE_INFO("Serializing Scene");
         nlohmann::json parser;
 
         for (auto entity : m_Scene->m_entities)
@@ -51,10 +52,12 @@ namespace puffin
         // Write to the file
         std::ofstream o(filepath.c_str());
         o << std::setw(4) << parser << std::endl;
+        PN_CORE_INFO("Finished Serializing the scene");
     }
 
     bool SceneSerializer::Deserialize(const std::string &filepath)
     {
+        PN_CORE_INFO("Serializing Scene");
         std::ifstream i(filepath.c_str());
         nlohmann::json o;
         i >> o;
@@ -79,11 +82,12 @@ namespace puffin
 
                 if (component == "Image")
                 {
-                    printf("Serialize Image\n");
                     e.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
                 }
             }
         }
+
+        PN_CORE_INFO("Finished Serializing the scene");
 
         return true;
     }

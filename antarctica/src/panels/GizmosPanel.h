@@ -8,6 +8,10 @@ namespace antarctica
     {
     private:
         std::shared_ptr<puffin::Scene> m_sceneRef;
+        bool m_showTransformGizmos;
+
+    public:
+        int m_transformGizmoLength;
 
     public:
         void AttachContext(std::shared_ptr<puffin::Scene> sceneRef);

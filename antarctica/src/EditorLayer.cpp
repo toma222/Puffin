@@ -100,6 +100,7 @@ namespace puffin
 
         m_heirarchyPanel.AttachContext(m_activeScene);
         m_gizmosPanel.AttachContext(m_activeScene);
+        m_gizmosPanel.m_transformGizmoLength = 10;
         m_currentScenePath = "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json";
     }
 
@@ -219,6 +220,7 @@ namespace puffin
         ImGui::End();
 
         m_heirarchyPanel.RenderImGui();
+        m_gizmosPanel.RenderGizmosPanel();
 
         ImGui::Render();
         ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());

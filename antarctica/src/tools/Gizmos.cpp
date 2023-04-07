@@ -21,7 +21,7 @@ namespace antarctica
     void Gizmos::EndGizmosRender()
     {
         if (!s_rendering)
-            PN_CORE_ASSERT(false, "EndGizmosRender when rendering is false. You might have forgoten to open a render session");
+            PN_CORE_ASSERT(false, "EndGizmosRender when rendering is false. You might have forgotten to open a render session");
 
         s_rendering = false;
     }
@@ -79,5 +79,16 @@ namespace antarctica
         }
 
         SDL_RenderDrawPoints(puffin::Graphics::Get().GetRenderer()->get(), points, drawCount);
+    }
+
+    void Gizmos::PlaceLine(int x1, int y1, int x2, int y2)
+    {
+        SDL_SetRenderDrawColor(puffin::Graphics::Get().GetRenderer()->get(), s_gizmosColor.m_color[0], s_gizmosColor.m_color[1], s_gizmosColor.m_color[2], 255);
+        SDL_RenderDrawLine(puffin::Graphics::Get().GetRenderer()->get(), x1, y1, x2, y2);
+    }
+
+    void Gizmos::ChangeEditorColor(puffin::PNColor color)
+    {
+        s_gizmosColor = color;
     }
 } // namespace antarctica

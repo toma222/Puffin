@@ -94,26 +94,10 @@ namespace puffin
         // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
         // C:/Users/100044352/Desktop/refactor/Puffin/Scene.json
 
-        m_heirarchyPanel.AttachContext(m_activeScene);
-
-        /*
-        puffin::Entity Image = m_activeScene->AddEntity("Tree Building Image");
-        Image.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
-        auto &imageT = Image.GetComponent<puffin::components::Transform>();
-        imageT.m_rect->x = 0;
-        imageT.m_rect->y = 0;
-        imageT.m_rect->w = 192;
-        imageT.m_rect->h = 108;
-
-        Entity entity = m_activeScene->AddEntity("point light");
-        entity.AddComponent<components::Light>(new PointLight(10, 10));
-
-        Entity globalLight = m_activeScene->AddEntity("global light");
-        globalLight.AddComponent<components::Light>(new GlobalLight(0.5f));
-        */
-
         puffin::SceneSerializer serialize(m_activeScene);
         serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
+
+        m_heirarchyPanel.AttachContext(m_activeScene);
     }
 
     void EditorLayer::OnDetach()
@@ -148,10 +132,42 @@ namespace puffin
 
         ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
         ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        ImGui::Begin("Workspace", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus);
+        ImGui::PopStyleVar();
 
-        ImGui::Begin("Workspace", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize);
         ImGuiID dockSpaceID = ImGui::GetID("Workspace");
         ImGui::DockSpace(dockSpaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
+                    GM_CORE_FATAL("Open Scene not implemented yet");
+
+                ImGui::Separator();
+
+                if (ImGui::MenuItem("New Scene", "Ctrl+N"))
+                    GM_CORE_FATAL("SNew Scene not implemented yet");
+
+                if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
+                    GM_CORE_FATAL("Save Scene not implemented yet");
+
+                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
+                    GM_CORE_FATAL("Save As Scene not implemented yet");
+
+                ImGui::Separator();
+
+                if (ImGui::MenuItem("Exit"))
+                    puffin::Application::Get().Exit();
+
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenuBar();
+        }
+
         ImGui::End();
 
         ImGui::ShowDemoWindow();

@@ -35,13 +35,18 @@ namespace puffin
         s_Instance = nullptr;
     }
 
+    void Application::Exit()
+    {
+        m_running = false;
+    }
+
     void Application::StartApplication()
     {
-        bool open = true;
+        m_running = true;
 
         m_layerStack->AttachLayers();
 
-        while (open == true)
+        while (m_running == true)
         {
             SDL_Event e;
             while (SDL_PollEvent(&e) > 0)
@@ -51,7 +56,7 @@ namespace puffin
                 switch (e.type)
                 {
                 case SDL_QUIT:
-                    open = false;
+                    m_running = false;
                     break;
                 }
             }

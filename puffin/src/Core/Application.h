@@ -13,7 +13,10 @@ namespace puffin
 {
     class Application
     {
-    protected:
+    private:
+        bool m_running;
+
+    public:
         std::shared_ptr<Window> m_window;
         std::shared_ptr<LayerStack> m_layerStack;
 
@@ -22,7 +25,8 @@ namespace puffin
         static Application *s_Instance;
 
     public:
-        virtual void StartApplication();
+        void StartApplication();
+        void Exit();
 
         std::shared_ptr<LayerStack> GetLayerStack() { return m_layerStack; };
         std::shared_ptr<Window> GetWindow() { return m_window; };

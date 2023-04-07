@@ -31,5 +31,6 @@ namespace puffin
     {
         ImGui::Text("Type : Global light");
         ImGui::ColorEdit3("Light Color", m_lightColor.m_color);
+        ImGui::SliderFloat("Power", &m_power, 0, 1);
     }
 } // namespace puffin

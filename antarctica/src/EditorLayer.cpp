@@ -90,16 +90,30 @@ namespace puffin
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
 
         m_activeScene = std::make_shared<Scene>();
-        puffin::SceneSerializer serialize(m_activeScene);
+
         // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
         // C:/Users/100044352/Desktop/refactor/Puffin/Scene.json
-        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
 
         m_heirarchyPanel.AttachContext(m_activeScene);
 
-        /* TESTING NEW COMPONENTS */
+        /*
+        puffin::Entity Image = m_activeScene->AddEntity("Tree Building Image");
+        Image.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
+        auto &imageT = Image.GetComponent<puffin::components::Transform>();
+        imageT.m_rect->x = 0;
+        imageT.m_rect->y = 0;
+        imageT.m_rect->w = 192;
+        imageT.m_rect->h = 108;
+
         Entity entity = m_activeScene->AddEntity("point light");
         entity.AddComponent<components::Light>(new PointLight(10, 10));
+
+        Entity globalLight = m_activeScene->AddEntity("global light");
+        globalLight.AddComponent<components::Light>(new GlobalLight(0.5f));
+        */
+
+        puffin::SceneSerializer serialize(m_activeScene);
+        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
     }
 
     void EditorLayer::OnDetach()
@@ -121,10 +135,7 @@ namespace puffin
         antarctica::Gizmos::StartGizmosRender();
 
         if (m_heirarchyPanel.GetSelectedEntity())
-        {
-            components::Transform &t = m_heirarchyPanel.GetSelectedEntity().GetComponent<components::Transform>();
-            antarctica::Gizmos::PlaceSquare(t.m_rect->x, t.m_rect->y, t.m_rect->w, t.m_rect->h);
-        }
+            m_gizmosPanel.RenderEntityGizmos(m_heirarchyPanel.GetSelectedEntity());
 
         antarctica::Gizmos::EndGizmosRender();
     }

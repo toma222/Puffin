@@ -1,7 +1,7 @@
 {
     "Tree Building Image": {
         "ID": [
-            3970022086105578371
+            8859982937385644078
         ],
         "Image": [
             "/ice/assets/Images/TreeBuilding.bmp"
@@ -14,6 +14,53 @@
             0,
             192,
             108
+        ]
+    },
+    "global light": {
+        "ID": [
+            7911479579207723999
+        ],
+        "Light": [
+            "Global",
+            0.5,
+            [
+                1.0,
+                1.0,
+                1.0
+            ]
+        ],
+        "Tag": [
+            "global light"
+        ],
+        "Transform": [
+            10,
+            0,
+            10,
+            10
+        ]
+    },
+    "point light": {
+        "ID": [
+            17404975036100400401
+        ],
+        "Light": [
+            "Point",
+            10.0,
+            10.0,
+            [
+                1.0,
+                1.0,
+                1.0
+            ]
+        ],
+        "Tag": [
+            "point light"
+        ],
+        "Transform": [
+            10,
+            0,
+            10,
+            10
         ]
     }
 }

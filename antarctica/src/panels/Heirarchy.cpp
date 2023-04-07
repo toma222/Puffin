@@ -10,7 +10,7 @@
 
 #include <memory>
 
-namespace puffin
+namespace antarctica
 {
     void Heirarchy::AttachContext(std::shared_ptr<puffin::Scene> sceneRef)
     {
@@ -18,7 +18,7 @@ namespace puffin
     }
 
     template <typename T, typename UIFunction>
-    static void DrawComponent(const std::string &name, Entity entity, UIFunction uiFunction)
+    static void DrawComponent(const std::string &name, puffin::Entity entity, UIFunction uiFunction)
     {
         const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
         if (entity.HasComponent<T>())
@@ -58,7 +58,7 @@ namespace puffin
         }
     }
 
-    Entity Heirarchy::GetSelectedEntity()
+    puffin::Entity Heirarchy::GetSelectedEntity()
     {
         return m_selectedEntity;
     }
@@ -109,22 +109,22 @@ namespace puffin
         ImGui::End();
     }
 
-    void Heirarchy::RenderSelectedEntityComponents(Entity entity)
+    void Heirarchy::RenderSelectedEntityComponents(puffin::Entity entity)
     {
         ImGui::Text("%s", entity.GetName().c_str());
         ImGui::Text("%lld", (uint64_t)entity.GetUUID());
 
-        DrawComponent<components::Transform>("Transform", entity, [](auto &component)
-                                             { 
+        DrawComponent<puffin::components::Transform>("Transform", entity, [](auto &component)
+                                                     { 
             ImGui::InputInt("Position x", &component.m_rect->x);
             ImGui::InputInt("Position y", &component.m_rect->y);
             ImGui::InputInt("Width", &component.m_rect->w);
             ImGui::InputInt("Height", &component.m_rect->h); });
 
-        DrawComponent<components::Image>("Image", entity, [](auto &component)
-                                         { ImGui::Text("%s", component.m_path.c_str()); });
+        DrawComponent<puffin::components::Image>("Image", entity, [](auto &component)
+                                                 { ImGui::Text("%s", component.m_path.c_str()); });
 
-        DrawComponent<components::Light>("Light", entity, [](auto &component)
-                                         { component.m_lightType->UpdateImGui(); });
+        DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
+                                                 { component.m_lightType->UpdateImGui(); });
     }
 } // namespace antarctica

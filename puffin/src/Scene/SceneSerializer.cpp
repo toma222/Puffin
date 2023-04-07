@@ -34,6 +34,29 @@ namespace puffin
             components::Image &image = entity.GetComponent<components::Image>();
             parser["Image"] = {image.m_path.c_str()};
         }
+
+        // Lights
+        if (entity.HasComponent<components::Light>())
+        {
+            components::Light &light = entity.GetComponent<components::Light>();
+
+            if (light.m_lightType->GetType() == ERROR)
+            {
+                PN_CORE_ASSERT(false, "Light type returned as ERROR");
+            }
+
+            if (light.m_lightType->GetType() == POINT)
+            {
+                PointLight *castedLight = (PointLight *)light.m_lightType;
+                parser["Light"] = {"Point", castedLight->m_power, castedLight->m_luminance, castedLight->m_lightColor.m_color};
+            }
+
+            if (light.m_lightType->GetType() == GLOBAL)
+            {
+                GlobalLight *castedLight = (GlobalLight *)light.m_lightType;
+                parser["Light"] = {"Global", castedLight->m_power, castedLight->m_lightColor.m_color};
+            }
+        }
     }
 
     void SceneSerializer::SerializeScene(const std::string &filepath)
@@ -83,6 +106,24 @@ namespace puffin
                 if (component == "Image")
                 {
                     e.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
+                }
+
+                if (component == "Light")
+                {
+                    if ((std::string)data[0] == "Point")
+                    {
+                        e.AddComponent<puffin::components::Light>(new PointLight(data[1], data[2],
+                                                                                 PNColor((int)(data[3][0]) * 255,
+                                                                                         (int)(data[3][1]) * 255,
+                                                                                         (int)(data[3][2]) * 255)));
+                    }
+
+                    if ((std::string)data[0] == "Global")
+                    {
+                        e.AddComponent<puffin::components::Light>(new GlobalLight(data[1], PNColor((int)(data[2][0]) * 255,
+                                                                                                   (int)(data[2][1]) * 255,
+                                                                                                   (int)(data[2][2]) * 255)));
+                    }
                 }
             }
         }

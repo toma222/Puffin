@@ -25,11 +25,12 @@ namespace puffin
 
         virtual PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) { return PNColor(0, 255, 0); };
         virtual void UpdateImGui(){};
+        virtual LIGHT_TYPE GetType() { return ERROR; };
     };
 
     class PointLight : public LightType
     {
-    private:
+    public:
         float m_power;
         float m_luminance;
 
@@ -42,11 +43,16 @@ namespace puffin
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
         void UpdateImGui() override;
+
+        LIGHT_TYPE GetType() override
+        {
+            return POINT;
+        }
     };
 
     class GlobalLight : public LightType
     {
-    private:
+    public:
         float m_power;
 
     public:
@@ -58,6 +64,11 @@ namespace puffin
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
         void UpdateImGui() override;
+
+        LIGHT_TYPE GetType() override
+        {
+            return GLOBAL;
+        }
     };
 
     class LightProfile

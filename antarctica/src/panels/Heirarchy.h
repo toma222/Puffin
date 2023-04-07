@@ -6,7 +6,7 @@
 #include "puffin.h"
 #include <memory>
 
-namespace puffin
+namespace antarctica
 {
     class Heirarchy
     {
@@ -21,7 +21,7 @@ namespace puffin
         void AttachContext(std::shared_ptr<puffin::Scene> sceneRef);
 
         void RenderImGui();
-        void RenderSelectedEntityComponents(Entity entity);
-        Entity GetSelectedEntity();
+        void RenderSelectedEntityComponents(puffin::Entity entity);
+        puffin::Entity GetSelectedEntity();
     };
 } // namespace antarctica

@@ -7,6 +7,7 @@
 #include "imgui_impl_sdlrenderer.h"
 
 #include "panels/Heirarchy.h"
+#include "panels/GizmosPanel.h"
 
 namespace puffin
 {
@@ -23,7 +24,8 @@ namespace puffin
     private:
         std::shared_ptr<Scene> m_activeScene;
 
-        puffin::Heirarchy m_heirarchyPanel;
+        antarctica::Heirarchy m_heirarchyPanel;
+        antarctica::GizmosPanel m_gizmosPanel;
     };
 
 } // namespace puffin

@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
+#include "ImGuiFileDialog/ImGuiFileDialog.h"
 
 #include "tools/Gizmos.h"
 
@@ -98,6 +99,7 @@ namespace puffin
         serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
 
         m_heirarchyPanel.AttachContext(m_activeScene);
+        m_gizmosPanel.AttachContext(m_activeScene);
     }
 
     void EditorLayer::OnDetach()
@@ -124,6 +126,17 @@ namespace puffin
         antarctica::Gizmos::EndGizmosRender();
     }
 
+    void EditorLayer::LoadNewScene(std::string path)
+    {
+        m_activeScene = std::make_shared<Scene>();
+
+        puffin::SceneSerializer serialize(m_activeScene);
+        serialize.Deserialize(path.c_str());
+
+        m_heirarchyPanel.AttachContext(m_activeScene);
+        m_gizmosPanel.AttachContext(m_activeScene);
+    }
+
     void EditorLayer::ImGuiUpdate()
     {
         ImGui_ImplSDLRenderer_NewFrame();
@@ -144,7 +157,9 @@ namespace puffin
             if (ImGui::BeginMenu("File"))
             {
                 if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
-                    GM_CORE_FATAL("Open Scene not implemented yet");
+                {
+                    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".json", ".");
+                }
 
                 ImGui::Separator();
 
@@ -166,6 +181,19 @@ namespace puffin
             }
 
             ImGui::EndMenuBar();
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey"))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+
+                LoadNewScene(filePathName);
+            }
+
+            ImGuiFileDialog::Instance()->Close();
         }
 
         ImGui::End();

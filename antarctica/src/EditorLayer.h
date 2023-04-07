@@ -14,6 +14,9 @@ namespace puffin
     class EditorLayer : public Layer
     {
     public:
+        void LoadNewScene(std::string path);
+
+    public:
         void OnAttach() override;
         void OnDetach() override;
         void Update() override;

@@ -52,7 +52,11 @@ namespace puffin
             std::string m_path;
             std::shared_ptr<render::SDLSurface> surface;
 
-            Image() = default;
+            Image() : m_path("PATH NOT SET")
+            {
+                surface = std::make_shared<render::SDLSurface>(m_path.c_str(), 100, 10);
+            }
+
             Image(const Image &image) = default;
             Image(std::string path)
                 : m_path(path)

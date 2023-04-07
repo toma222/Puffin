@@ -15,6 +15,7 @@ namespace antarctica
     void Heirarchy::AttachContext(std::shared_ptr<puffin::Scene> sceneRef)
     {
         m_sceneRef = sceneRef;
+        m_selectedEntity = sceneRef->m_entities[0];
     }
 
     template <typename T, typename UIFunction>
@@ -53,8 +54,7 @@ namespace antarctica
             }
 
             if (removeComponent)
-                GM_CORE_FATAL("function remove component not implemented yet");
-            // entity.RemoveComponent<T>();
+                entity.RemoveComponent<T>();
         }
     }
 
@@ -114,6 +114,30 @@ namespace antarctica
         ImGui::Text("%s", entity.GetName().c_str());
         ImGui::Text("%lld", (uint64_t)entity.GetUUID());
 
+        ImGui::PushItemWidth(-1);
+
+        if (ImGui::Button("Add Component"))
+            ImGui::OpenPopup("AddComponent");
+
+        if (ImGui::BeginPopup("AddComponent"))
+        {
+            DisplayComponentEntry<puffin::components::Image>("Image");
+
+            if (DisplayComponentEntry<puffin::components::Light>("Point Light"))
+            {
+                m_selectedEntity.GetComponent<puffin::components::Light>().m_lightType = new puffin::PointLight(100, 100);
+            }
+
+            if (DisplayComponentEntry<puffin::components::Light>("Global Light"))
+            {
+                m_selectedEntity.GetComponent<puffin::components::Light>().m_lightType = new puffin::GlobalLight(100);
+            }
+
+            ImGui::EndPopup();
+        }
+
+        ImGui::PopItemWidth();
+
         DrawComponent<puffin::components::Transform>("Transform", entity, [](auto &component)
                                                      { 
             ImGui::InputInt("Position x", &component.m_rect->x);
@@ -127,4 +151,21 @@ namespace antarctica
         DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
                                                  { component.m_lightType->UpdateImGui(); });
     }
+
+    template <typename T>
+    bool Heirarchy::DisplayComponentEntry(const std::string &entryName)
+    {
+        if (!m_selectedEntity.HasComponent<T>())
+        {
+            if (ImGui::MenuItem(entryName.c_str()))
+            {
+                m_selectedEntity.AddComponent<T>();
+                ImGui::CloseCurrentPopup();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 } // namespace antarctica

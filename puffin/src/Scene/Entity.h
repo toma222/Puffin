@@ -42,9 +42,9 @@ namespace puffin
         }
 
         template <typename T>
-        T RemoveComponent()
+        void RemoveComponent()
         {
-            PN_CORE_ASSERT(false, "Function not implemented yet");
+            m_sceneRef->registry.remove<T>(m_entity);
         }
 
         operator bool() const { return m_entity != entt::null; }

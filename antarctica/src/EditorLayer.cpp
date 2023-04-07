@@ -134,7 +134,7 @@ namespace puffin
         serialize.Deserialize(path.c_str());
 
         m_heirarchyPanel.AttachContext(m_activeScene);
-        m_gizmosPanel.AttachContext(m_activeScene);
+        // m_gizmosPanel.AttachContext(m_activeScene);
     }
 
     void EditorLayer::ImGuiUpdate()
@@ -164,7 +164,11 @@ namespace puffin
                 ImGui::Separator();
 
                 if (ImGui::MenuItem("New Scene", "Ctrl+N"))
-                    GM_CORE_FATAL("SNew Scene not implemented yet");
+                {
+                    m_activeScene = std::make_shared<Scene>();
+                    m_heirarchyPanel.AttachContext(m_activeScene);
+                    // m_gizmosPanel.AttachContext(m_activeScene);
+                }
 
                 if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
                     GM_CORE_FATAL("Save Scene not implemented yet");

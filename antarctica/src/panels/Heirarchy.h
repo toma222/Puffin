@@ -23,5 +23,8 @@ namespace antarctica
         void RenderImGui();
         void RenderSelectedEntityComponents(puffin::Entity entity);
         puffin::Entity GetSelectedEntity();
+
+        template <typename T>
+        bool DisplayComponentEntry(const std::string &entryName);
     };
 } // namespace antarctica

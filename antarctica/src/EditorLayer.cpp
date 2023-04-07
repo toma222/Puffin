@@ -100,6 +100,7 @@ namespace puffin
 
         m_heirarchyPanel.AttachContext(m_activeScene);
         m_gizmosPanel.AttachContext(m_activeScene);
+        m_currentScenePath = "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json";
     }
 
     void EditorLayer::OnDetach()
@@ -128,13 +129,21 @@ namespace puffin
 
     void EditorLayer::LoadNewScene(std::string path)
     {
-        m_activeScene = std::make_shared<Scene>();
+        if (path != "NONE")
+        {
+            m_activeScene = std::make_shared<Scene>();
 
-        puffin::SceneSerializer serialize(m_activeScene);
-        serialize.Deserialize(path.c_str());
+            puffin::SceneSerializer serialize(m_activeScene);
+            serialize.Deserialize(path.c_str());
 
-        m_heirarchyPanel.AttachContext(m_activeScene);
-        // m_gizmosPanel.AttachContext(m_activeScene);
+            m_heirarchyPanel.AttachContext(m_activeScene);
+        }
+        else
+        {
+            m_activeScene = std::make_shared<Scene>();
+
+            m_heirarchyPanel.AttachContext(m_activeScene);
+        }
     }
 
     void EditorLayer::ImGuiUpdate()
@@ -165,13 +174,14 @@ namespace puffin
 
                 if (ImGui::MenuItem("New Scene", "Ctrl+N"))
                 {
-                    m_activeScene = std::make_shared<Scene>();
-                    m_heirarchyPanel.AttachContext(m_activeScene);
-                    // m_gizmosPanel.AttachContext(m_activeScene);
+                    LoadNewScene("NONE");
                 }
 
                 if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
-                    GM_CORE_FATAL("Save Scene not implemented yet");
+                {
+                    puffin::SceneSerializer serialize(m_activeScene);
+                    serialize.SerializeScene(m_currentScenePath.c_str());
+                }
 
                 if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
                     GM_CORE_FATAL("Save As Scene not implemented yet");

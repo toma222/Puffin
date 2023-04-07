@@ -26,6 +26,7 @@ namespace puffin
 
     private:
         std::shared_ptr<Scene> m_activeScene;
+        std::string m_currentScenePath;
 
         antarctica::Heirarchy m_heirarchyPanel;
         antarctica::GizmosPanel m_gizmosPanel;

@@ -67,33 +67,48 @@ namespace antarctica
     {
         ImGui::Begin("Heirarchy");
 
-        for (auto entity : m_sceneRef->m_entities)
+        if (m_sceneRef)
         {
-            ImGuiTreeNodeFlags flags = ((m_selectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
-            flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+            if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+                m_selectedEntity = {};
 
-            puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
-
-            bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
-
-            if (ImGui::IsItemClicked())
+            // Right-click on blank space
+            if (ImGui::BeginPopupContextWindow(0, false))
             {
-                m_selectedEntity = entity;
-            }
-
-            if (ImGui::BeginPopupContextItem())
-            {
-                if (ImGui::MenuItem("Delete Entity"))
-                {
-                    printf("Delete entity at some point\n");
-                }
+                if (ImGui::MenuItem("Create Empty Entity"))
+                    m_sceneRef->AddEntity("Empty Entity");
 
                 ImGui::EndPopup();
             }
 
-            if (opened)
+            for (auto entity : m_sceneRef->m_entities)
             {
-                ImGui::TreePop();
+                ImGuiTreeNodeFlags flags = ((m_selectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+                flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
+                puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
+
+                bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
+
+                if (ImGui::IsItemClicked())
+                {
+                    m_selectedEntity = entity;
+                }
+
+                if (ImGui::BeginPopupContextItem())
+                {
+                    if (ImGui::MenuItem("Delete Entity"))
+                    {
+                        printf("Delete entity at some point\n");
+                    }
+
+                    ImGui::EndPopup();
+                }
+
+                if (opened)
+                {
+                    ImGui::TreePop();
+                }
             }
         }
 
@@ -163,6 +178,10 @@ namespace antarctica
                 ImGui::CloseCurrentPopup();
                 return true;
             }
+        }
+        else
+        {
+            ImGui::Text("(%s)", entryName.c_str());
         }
 
         return false;

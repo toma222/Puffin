@@ -8,7 +8,7 @@ IMGUI_DIR = include\windows\imgui
 
 IMGUI_SOURCES = $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_demo.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_tables.cpp $(IMGUI_DIR)/imgui_widgets.cpp
 IMGUI_SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl.cpp $(IMGUI_DIR)/backends/imgui_impl_sdlrenderer.cpp
-IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o obj/imgui_demo.o obj/imgui_impl_sdlrenderer.o obj/imgui_impl_sdl.o
+IMGUIOBJ = obj/imgui.o obj/imgui_widgets.o obj/imgui_tables.o obj/imgui_draw.o obj/imgui_demo.o obj/imgui_impl_sdlrenderer.o obj/imgui_impl_sdl.o obj/ImGuiFileDialog.o
 
 INCLUDE_PATH = -Iinclude/$(SYSTEM) -Iinclude/$(SYSTEM)/SDL2 -Iinclude/$(SYSTEM)/imgui -Iinclude/$(SYSTEM)/imgui/backends -Ipuffin/src -Iice/game
 LIBRARY_FLAGS = -Llib/$(TARGET) -lSDL2main -lSDL2 -lSDL2_image -llua-5.4.4
@@ -30,6 +30,7 @@ ENGINEOBJ = obj/PRenderer.o \
 			obj/Scene.o \
 			obj/SceneSerializer.o \
 			obj/Light.o \
+			obj/PlatformUtils.o
 
 EDITOR_OBJ = obj/EditorLayer.o \
 			 obj/Heirarchy.o \
@@ -43,6 +44,10 @@ obj/%.o : include/windows/imgui/%.cpp
 	$(COMPILER) -Wall -O2 -c -o $@ $< $(INCLUDE_PATH)
 
 obj/%.o : include/windows/imgui/backends/%.cpp
+	@echo ------ COMPILING IMGUI BACKENDS FILE $< -------
+	$(COMPILER) -Wall -O2 -c -o $@ $<  $(INCLUDE_PATH)
+
+obj/%.o : include/windows/ImGuiFileDialog/%.cpp
 	@echo ------ COMPILING IMGUI BACKENDS FILE $< -------
 	$(COMPILER) -Wall -O2 -c -o $@ $<  $(INCLUDE_PATH)
 
@@ -63,6 +68,10 @@ obj/%.o : puffin/src/Rendering/%.cpp puffin/src/Rendering/%.h
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 
 obj/%.o : puffin/src/Scene/%.cpp puffin/src/Scene/%.h
+	@echo ------ COMPILING  FILE $< -------
+	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
+
+obj/%.o : puffin/src/Utils/%.cpp puffin/src/Utils/%.h
 	@echo ------ COMPILING  FILE $< -------
 	$(COMPILER) -Wall -O2 -c -D$(RELEASE_MODE) -o $@ $< $(INCLUDE_PATH) $(LIBRARY_FLAGS)
 

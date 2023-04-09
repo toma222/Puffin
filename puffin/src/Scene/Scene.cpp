@@ -113,4 +113,9 @@ namespace puffin
     void Scene::OnComponentAdded<components::Light>(Entity entity, components::Light &component)
     {
     }
+
+    template <>
+    void Scene::OnComponentAdded<components::Script>(Entity entity, components::Script &component)
+    {
+    }
 } // namespace puffin

@@ -125,7 +125,10 @@
     "__tuple": "cpp",
     "locale": "cpp",
     "queue": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "expected": "cpp",
+    "spanstream": "cpp",
+    "stacktrace": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled",
   "cSpell.words": ["Kuwahara", "puffin", "Rigidbody"]

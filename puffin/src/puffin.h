@@ -21,3 +21,5 @@
 #include "Scene/ScriptableComponent.h"
 #include "Scene/Components.h"
 #include "Scene/SceneSerializer.h"
+
+#include "Scripting/LuaScripting.h"

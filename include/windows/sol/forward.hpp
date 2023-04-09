@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // This file was generated with a script.
-// Generated 2022-06-25 08:14:19.328625 UTC
-// This header was generated with sol v3.3.0 (revision eba86625)
+// Generated 2023-04-07 15:47:35.899231 UTC
+// This header was generated with sol v3.3.0 (revision eab1430c)
 // https://github.com/ThePhD/sol2
 
 #ifndef SOL_SINGLE_INCLUDE_FORWARD_HPP
@@ -766,6 +766,16 @@
 	#define SOL_GET_FUNCTION_POINTER_UNSAFE_I_ SOL_DEFAULT_OFF
 #endif
 
+#if defined(SOL_CONTAINER_CHECK_IS_EXHAUSTIVE)
+	#if (SOL_CONTAINER_CHECK_IS_EXHAUSTIVE != 0)
+		#define SOL_CONTAINER_CHECK_IS_EXHAUSTIVE_I_ SOL_ON
+	#else
+		#define SOL_CONTAINER_CHECK_IS_EXHAUSTIVE_I_ SOL_OFF
+	#endif
+#else
+	#define SOL_CONTAINER_CHECK_IS_EXHAUSTIVE_I_ SOL_DEFAULT_OFF
+#endif
+
 #if defined(SOL_FUNCTION_CALL_VALUE_SEMANTICS)
 	#if (SOL_FUNCTION_CALL_VALUE_SEMANTICS != 0)
 		#define SOL_FUNCTION_CALL_VALUE_SEMANTICS_I_ SOL_ON
@@ -826,16 +836,16 @@
 	#define SOL2_CI_I_ SOL_DEFAULT_OFF
 #endif
 
-#if defined(SOL_C_ASSERT)
-	#define SOL_USER_C_ASSERT_I_ SOL_ON
+#if defined(SOL_ASSERT)
+	#define SOL_USER_ASSERT_I_ SOL_ON
 #else
-	#define SOL_USER_C_ASSERT_I_ SOL_DEFAULT_OFF
+	#define SOL_USER_ASSERT_I_ SOL_DEFAULT_OFF
 #endif
 
-#if defined(SOL_M_ASSERT)
-	#define SOL_USER_M_ASSERT_I_ SOL_ON
+#if defined(SOL_ASSERT_MSG)
+	#define SOL_USER_ASSERT_MSG_I_ SOL_ON
 #else
-	#define SOL_USER_M_ASSERT_I_ SOL_DEFAULT_OFF
+	#define SOL_USER_ASSERT_MSG_I_ SOL_DEFAULT_OFF
 #endif
 
 // beginning of sol/prologue.hpp

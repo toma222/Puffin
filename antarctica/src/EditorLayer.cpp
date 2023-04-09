@@ -94,14 +94,15 @@ namespace puffin
 
         // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
         // C:/Users/100044352/Desktop/refactor/Puffin/Scene.json
+        // C:/Users.Aidan/Desktop/github/Puffin/Scene.json
 
         puffin::SceneSerializer serialize(m_activeScene);
-        serialize.Deserialize("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json");
+        serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene.json");
 
         m_heirarchyPanel.AttachContext(m_activeScene);
         m_gizmosPanel.AttachContext(m_activeScene);
         m_gizmosPanel.m_transformGizmoLength = 10;
-        m_currentScenePath = "C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json";
+        m_currentScenePath = "C:/Users/Aidan/Desktop/github/Puffin/Scene.json";
     }
 
     void EditorLayer::OnDetach()

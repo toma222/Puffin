@@ -11,6 +11,9 @@
 #include "Math/PNVector.h"
 #include "Core/ID.h"
 
+#include "Scripting/LuaGlue.h"
+#include "Scripting/LuaScripting.h"
+
 namespace puffin
 {
     class NativeScript;
@@ -84,5 +87,15 @@ namespace puffin
             Light(puffin::LightType *lightType)
                 : m_lightType(lightType){};
         };
+
+        struct Script
+        {
+            LuaScript m_scriptInstance;
+
+            Script(std::string path) : m_scriptInstance(path){
+
+                                       };
+        };
+
     }
 }

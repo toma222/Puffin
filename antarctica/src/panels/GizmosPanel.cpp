@@ -28,13 +28,13 @@ namespace antarctica
         puffin::components::Transform &t = entity.GetComponent<puffin::components::Transform>();
 
         Gizmos::ChangeEditorColor({0, 255, 0});
-        antarctica::Gizmos::PlaceSquare(t.m_rect->x, t.m_rect->y, t.m_rect->w, t.m_rect->h);
+        antarctica::Gizmos::PlaceSquare(t.m_rect.x, t.m_rect.y, t.m_rect.w, t.m_rect.h);
 
         if (m_showTransformGizmos)
         {
             Gizmos::ChangeEditorColor({255, 0, 0});
-            int xMid = t.m_rect->x + (t.m_rect->w / 2);
-            int yMid = t.m_rect->y + (t.m_rect->h / 2);
+            int xMid = t.m_rect.x + (t.m_rect.w / 2);
+            int yMid = t.m_rect.y + (t.m_rect.h / 2);
             Gizmos::PlaceLine(xMid, yMid, xMid + m_transformGizmoLength, yMid);
 
             Gizmos::ChangeEditorColor({0, 0, 255});

@@ -58,7 +58,7 @@ namespace puffin
             auto &transform = entity.GetComponent<components::Transform>();
             auto &image = entity.GetComponent<components::Image>();
 
-            Graphics::Get().PlaceImage(image.surface.get(), transform.m_rect.get());
+            Graphics::Get().PlaceImage(image.surface.get(), &transform.m_rect);
         }
 
         // Lights
@@ -70,7 +70,7 @@ namespace puffin
             auto &transform = entity.GetComponent<components::Transform>();
             auto &light = entity.GetComponent<components::Light>();
 
-            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
+            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect.x, transform.m_rect.y);
         }
 
         auto scriptView = registry.view<components::Script>();
@@ -121,7 +121,7 @@ namespace puffin
     template <>
     void Scene::OnComponentAdded<components::Image>(Entity entity, components::Image &component)
     {
-        Graphics::Get().PlaceImage(component.surface.get(), entity.GetComponent<components::Transform>().m_rect.get());
+        // Graphics::Get().PlaceImage(component.surface.get(), entity.GetComponent<components::Transform>().m_rect.get());
     }
 
     template <>
@@ -133,8 +133,8 @@ namespace puffin
     void Scene::OnComponentAdded<components::Script>(Entity entity, components::Script &component)
     {
         // IDK why but this line of code makes me laugh
-        sol::reference ref = sol::make_reference_userdata<Vector2>(LuaScripting::s_globalState.lua_state(), 0, 0);
+        // sol::reference ref = sol::make_reference_userdata<Vector2>(LuaScripting::s_globalState.lua_state(), 0, 0);
 
-        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["testNum"] = 2;
+        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["testNum"] = entity;
     }
 } // namespace puffinz

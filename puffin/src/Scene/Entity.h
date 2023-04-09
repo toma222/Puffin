@@ -64,7 +64,7 @@ namespace puffin
             return !(*this == other);
         }
 
-    private:
+    public:
         Scene *m_sceneRef = nullptr;
         entt::entity m_entity{entt::null};
     };

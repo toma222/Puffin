@@ -26,7 +26,7 @@ namespace puffin
 
         // Transform
         components::Transform &t = entity.GetComponent<components::Transform>();
-        parser["Transform"] = {t.m_rect->x, t.m_rect->y, t.m_rect->w, t.m_rect->h};
+        parser["Transform"] = {t.m_rect.x, t.m_rect.y, t.m_rect.w, t.m_rect.h};
 
         // Image
         if (entity.HasComponent<components::Image>())
@@ -97,10 +97,10 @@ namespace puffin
                 if (component == "Transform")
                 {
                     components::Transform &t = e.GetComponent<components::Transform>();
-                    t.m_rect->x = data[0];
-                    t.m_rect->y = data[1];
-                    t.m_rect->w = data[2];
-                    t.m_rect->h = data[3];
+                    t.m_rect.x = data[0];
+                    t.m_rect.y = data[1];
+                    t.m_rect.w = data[2];
+                    t.m_rect.h = data[3];
                 }
 
                 if (component == "Image")

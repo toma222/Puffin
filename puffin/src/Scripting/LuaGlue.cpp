@@ -7,6 +7,8 @@
 #include "Math/PNVector.h"
 
 #include "Scene/Components.h"
+#include "Scene/Scene.h"
+#include "Scene/Entity.h"
 
 #include "SDL2/SDL.h"
 
@@ -38,10 +40,8 @@ namespace puffin
                                    "h",
                                    &SDL_Rect::h);
 
-        sol::usertype<components::Transform> transform =
-            lua.new_usertype<components::Transform>("Transform", sol::constructors<components::Transform(int, int, int, int)>());
-
-        // transform["x"] = components::Transform::m_rect;
+        sol::usertype entity = lua.new_usertype<Entity>("Entity");
+        entity["GetName"] = &Entity::GetName;
     }
 
     sol::table LoadLibTable(sol::this_state s)

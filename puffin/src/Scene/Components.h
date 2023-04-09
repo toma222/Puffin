@@ -33,10 +33,10 @@ namespace puffin
                 : m_rect(rect){};
             Transform(int x, int y, int w, int h)
             {
-                m_rect->x = x;
-                m_rect->y = y;
-                m_rect->w = w;
-                m_rect->h = h;
+                m_rect.x = x;
+                m_rect.y = y;
+                m_rect.w = w;
+                m_rect.h = h;
             }
         };
 

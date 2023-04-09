@@ -155,10 +155,10 @@ namespace antarctica
 
         DrawComponent<puffin::components::Transform>("Transform", entity, [](auto &component)
                                                      { 
-            ImGui::InputInt("Position x", &component.m_rect->x);
-            ImGui::InputInt("Position y", &component.m_rect->y);
-            ImGui::InputInt("Width", &component.m_rect->w);
-            ImGui::InputInt("Height", &component.m_rect->h); });
+            ImGui::InputInt("Position x", &component.m_rect.x);
+            ImGui::InputInt("Position y", &component.m_rect.y);
+            ImGui::InputInt("Width", &component.m_rect.w);
+            ImGui::InputInt("Height", &component.m_rect.h); });
 
         DrawComponent<puffin::components::Image>("Image", entity, [](auto &component)
                                                  { ImGui::Text("%s", component.m_path.c_str()); });

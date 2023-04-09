@@ -6,6 +6,10 @@
 
 #include "Math/PNVector.h"
 
+#include "Scene/Components.h"
+
+#include "SDL2/SDL.h"
+
 namespace puffin
 {
 #define ADD_INTERNAL_LUA_CALL(name) lib.set_function(#name, &name)
@@ -15,6 +19,31 @@ namespace puffin
         PN_CORE_INFO("Hello from debug.print");
     }
 
+    void LoadClasses(sol::state_view lua)
+    {
+        lua.new_usertype<Vector2>("Vector2",
+                                  sol::constructors<Vector2(), Vector2(double, double)>(),
+                                  "x",
+                                  sol::property(&Vector2::x, &Vector2::x),
+                                  "y",
+                                  sol::property(&Vector2::y, &Vector2::y));
+
+        lua.new_usertype<SDL_Rect>("Rectangle",
+                                   "x",
+                                   &SDL_Rect::x,
+                                   "y",
+                                   &SDL_Rect::y,
+                                   "w",
+                                   &SDL_Rect::w,
+                                   "h",
+                                   &SDL_Rect::h);
+
+        sol::usertype<components::Transform> transform =
+            lua.new_usertype<components::Transform>("Transform", sol::constructors<components::Transform(int, int, int, int)>());
+
+        // transform["x"] = components::Transform::m_rect;
+    }
+
     sol::table LoadLibTable(sol::this_state s)
     {
         sol::state_view lua(s);
@@ -22,13 +51,7 @@ namespace puffin
 
         ADD_INTERNAL_LUA_CALL(DebugPrint);
 
-        // INTERNAL STRUCTS AND CLASSES
-        lua.new_usertype<Vector2>("Vector2",
-                                  sol::constructors<Vector2(), Vector2(double, double)>(),
-                                  "x",
-                                  sol::property(&Vector2::x, &Vector2::x),
-                                  "y",
-                                  sol::property(&Vector2::y, &Vector2::y));
+        LoadClasses(lua);
 
         return lib;
     }

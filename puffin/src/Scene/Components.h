@@ -24,15 +24,15 @@ namespace puffin
         // Contains the transform rect for the renderer
         struct Transform
         {
-            std::shared_ptr<SDL_Rect> m_rect;
+            // std::shared_ptr<SDL_Rect> m_rect;
+            SDL_Rect m_rect;
 
             Transform() = default;
             Transform(const Transform &transform) = default;
-            Transform(const std::shared_ptr<SDL_Rect> &rect)
+            Transform(const SDL_Rect &rect)
                 : m_rect(rect){};
             Transform(int x, int y, int w, int h)
             {
-                m_rect = std::make_shared<SDL_Rect>();
                 m_rect->x = x;
                 m_rect->y = y;
                 m_rect->w = w;

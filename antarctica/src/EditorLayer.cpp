@@ -96,6 +96,7 @@ namespace puffin
         // C:/Users/100044352/Desktop/refactor/Puffin/Scene.json
         // C:/Users.Aidan/Desktop/github/Puffin/Scene.json
 
+        puffin::LuaScripting::InitLuaScripting();
         puffin::SceneSerializer serialize(m_activeScene);
         serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene.json");
 
@@ -103,14 +104,6 @@ namespace puffin
         m_gizmosPanel.AttachContext(m_activeScene);
         m_gizmosPanel.m_transformGizmoLength = 10;
         m_currentScenePath = "C:/Users/Aidan/Desktop/github/Puffin/Scene.json";
-
-        puffin::LuaScripting::InitLuaScripting();
-
-        Entity entity = m_activeScene->AddEntity("Script Tester");
-        entity.AddComponent<components::Script>("C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua", "Scroll");
-
-        Entity script1 = m_activeScene->AddEntity("Another Script Tester");
-        script1.AddComponent<components::Script>("C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua", "Scroll");
     }
 
     void EditorLayer::OnDetach()

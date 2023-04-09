@@ -24,19 +24,18 @@ namespace puffin
         // Contains the transform rect for the renderer
         struct Transform
         {
-            // std::shared_ptr<SDL_Rect> m_rect;
-            SDL_Rect m_rect;
+            std::shared_ptr<SDL_Rect> m_rect;
 
             Transform() = default;
             Transform(const Transform &transform) = default;
-            Transform(const SDL_Rect &rect)
-                : m_rect(rect){};
             Transform(int x, int y, int w, int h)
             {
-                m_rect.x = x;
-                m_rect.y = y;
-                m_rect.w = w;
-                m_rect.h = h;
+                m_rect = std::make_shared<SDL_Rect>();
+
+                m_rect->x = x;
+                m_rect->y = y;
+                m_rect->w = w;
+                m_rect->h = h;
             }
         };
 
@@ -91,10 +90,11 @@ namespace puffin
         struct Script
         {
             LuaScript m_scriptInstance;
+            std::string m_path;
             bool m_initilized;
 
             Script(std::string path, std::string moduleName)
-                : m_scriptInstance(path, moduleName)
+                : m_scriptInstance(path, moduleName), m_path(path)
             {
                 LuaGlue::LoadInternal(m_scriptInstance.m_luaState);
                 m_initilized = false;

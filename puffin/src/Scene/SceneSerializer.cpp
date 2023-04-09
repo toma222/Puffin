@@ -26,13 +26,20 @@ namespace puffin
 
         // Transform
         components::Transform &t = entity.GetComponent<components::Transform>();
-        parser["Transform"] = {t.m_rect.x, t.m_rect.y, t.m_rect.w, t.m_rect.h};
+        parser["Transform"] = {t.m_rect->x, t.m_rect->y, t.m_rect->w, t.m_rect->h};
 
         // Image
         if (entity.HasComponent<components::Image>())
         {
             components::Image &image = entity.GetComponent<components::Image>();
             parser["Image"] = {image.m_path.c_str()};
+        }
+
+        // Scripts
+        if (entity.HasComponent<components::Script>())
+        {
+            components::Script &script = entity.GetComponent<components::Script>();
+            parser["LocalScript"] = {script.m_path.c_str(), script.m_scriptInstance.m_moduleName.c_str()};
         }
 
         // Lights
@@ -97,15 +104,21 @@ namespace puffin
                 if (component == "Transform")
                 {
                     components::Transform &t = e.GetComponent<components::Transform>();
-                    t.m_rect.x = data[0];
-                    t.m_rect.y = data[1];
-                    t.m_rect.w = data[2];
-                    t.m_rect.h = data[3];
+                    t.m_rect->x = data[0];
+                    t.m_rect->y = data[1];
+                    t.m_rect->w = data[2];
+                    t.m_rect->h = data[3];
                 }
 
                 if (component == "Image")
                 {
                     e.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
+                }
+
+                if (component == "LocalScript")
+                {
+                    e.AddComponent<puffin::components::Script>(
+                        data[0], data[1]);
                 }
 
                 if (component == "Light")

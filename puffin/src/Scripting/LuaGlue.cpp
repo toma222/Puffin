@@ -12,6 +12,12 @@
 
 #include "SDL2/SDL.h"
 
+enum KEY
+{
+    CODE,
+    OTHER
+};
+
 namespace puffin
 {
 #define ADD_INTERNAL_LUA_CALL(name) lib.set_function(#name, &name)
@@ -21,7 +27,18 @@ namespace puffin
         PN_CORE_INFO("Hello from debug.print");
     }
 
-    void LoadClasses(sol::state_view lua)
+    static const bool IsKeyPressed(int keycode)
+    {
+        const Uint8 *state = SDL_GetKeyboardState(nullptr);
+
+        if (state[keycode] || state[keycode])
+            return true;
+
+        return false;
+    }
+
+    void
+    LoadClasses(sol::state_view lua)
     {
         lua.new_usertype<Vector2>("Vector2",
                                   sol::constructors<Vector2(), Vector2(double, double)>(),
@@ -43,6 +60,24 @@ namespace puffin
         sol::usertype entity = lua.new_usertype<Entity>("Entity");
         entity["GetName"] = &Entity::GetName;
         entity["GetUUID"] = &Entity::GetUUIDInt;
+
+        auto getTransform = &Entity::GetComponent<components::Transform>;
+        entity["GetComponent"] = sol::overload(getTransform);
+
+        auto newImage = &Entity::AddComponent<components::Image, std::string>;
+        entity["AddComponent"] = sol::overload(newImage);
+
+        sol::usertype transform = lua.new_usertype<components::Transform>("Transform");
+        transform["Translate"] = [](components::Transform &t, int x, int y)
+        {
+            t.m_rect->x += x;
+            t.m_rect->y += y;
+        };
+
+        transform["GetRect"] = [](components::Transform &t)
+        {
+            return t.m_rect;
+        };
     }
 
     sol::table LoadLibTable(sol::this_state s)
@@ -51,6 +86,12 @@ namespace puffin
         sol::table lib = lua.create_table();
 
         ADD_INTERNAL_LUA_CALL(DebugPrint);
+        ADD_INTERNAL_LUA_CALL(IsKeyPressed);
+
+        lua["KEYCODES"] = lua.create_table_with(
+            "UP", 0,
+            "DOWN", 1,
+            "LEFT", 2);
 
         LoadClasses(lua);
 
@@ -60,6 +101,6 @@ namespace puffin
     void LuaGlue::LoadInternal(sol::state &lua)
     {
         PN_CORE_INFO("Loading internal calls for a lua script");
-        lua.require("PuffinInternal", sol::c_call<decltype(&LoadLibTable), &LoadLibTable>);
+        lua.require("puffin", sol::c_call<decltype(&LoadLibTable), &LoadLibTable>);
     }
 } // namespace puffin

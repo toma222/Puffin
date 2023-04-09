@@ -58,7 +58,7 @@ namespace puffin
             auto &transform = entity.GetComponent<components::Transform>();
             auto &image = entity.GetComponent<components::Image>();
 
-            Graphics::Get().PlaceImage(image.surface.get(), &transform.m_rect);
+            Graphics::Get().PlaceImage(image.surface.get(), transform.m_rect.get());
         }
 
         // Lights
@@ -70,7 +70,7 @@ namespace puffin
             auto &transform = entity.GetComponent<components::Transform>();
             auto &light = entity.GetComponent<components::Light>();
 
-            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect.x, transform.m_rect.y);
+            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
         }
 
         auto scriptView = registry.view<components::Script>();
@@ -136,5 +136,6 @@ namespace puffin
         // sol::reference ref = sol::make_reference_userdata<Vector2>(LuaScripting::s_globalState.lua_state(), 0, 0);
 
         component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["entity"] = entity;
+        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["transform"] = entity.GetComponent<components::Transform>();
     }
 } // namespace puffinz

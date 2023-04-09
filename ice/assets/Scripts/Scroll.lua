@@ -1,20 +1,28 @@
 
+require(Scancodes)
 
--- If the module name is changed then make sure to edit the scene file
--- so that it regonises that you changed.
-Scroll = 
-{
-    IscrollSpeed = 1,
-
-    Start = function ()
-        rect = Rectangle.new()
-        rect.x = 2;
-        
-        print(Scroll.entity:GetName());
-        print(tostring(Scroll.entity:GetUUID()))
-    end,
-
-    Update = function ()
-        --Scroll.testNum.x = Scroll.testNum.x + 1
-    end
+-- Variables defined and initilized here
+Scroll = {
+    transformRect = nil,
+    scrollSpeed = 1
 }
+
+-- Function called on the first scene render
+function Scroll.Start()
+    Scroll.transformRect = Scroll.transform:GetRect();
+
+    -- You can also get the transform data from the attached entity like this
+    -- Scroll.transformRect = Scroll.entity:GetComponent():GetRect();
+end
+
+-- Function called every scene render
+function Scroll.Update()
+    Scroll.transformRect.x = Scroll.transformRect.x + Scroll.scrollSpeed;
+
+    -- if puffin.IsKeyPressed(0) then
+    --     print('up')
+    -- end
+end
+
+return Scroll
+

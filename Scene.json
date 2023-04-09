@@ -1,66 +1,38 @@
 {
-    "Tree Building Image": {
-        "ID": [
-            13909760936787045661
-        ],
-        "Image": [
-            "/ice/assets/Images/TreeBuilding.bmp"
-        ],
-        "Tag": [
-            "Tree Building Image"
-        ],
-        "Transform": [
-            0,
-            0,
-            165,
-            94
-        ]
-    },
-    "global light": {
-        "ID": [
-            9638377092953983102
-        ],
-        "Light": [
-            "Global",
-            0.5,
-            [
-                1.0,
-                1.0,
-                1.0
-            ]
-        ],
-        "Tag": [
-            "global light"
-        ],
-        "Transform": [
-            10,
-            0,
-            10,
-            10
-        ]
-    },
-    "point light": {
-        "ID": [
-            5732439801020841484
-        ],
-        "Light": [
-            "Point",
-            10.0,
-            10.0,
-            [
-                1.0,
-                1.0,
-                1.0
-            ]
-        ],
-        "Tag": [
-            "point light"
-        ],
-        "Transform": [
-            10,
-            0,
-            10,
-            10
-        ]
-    }
+  "Another Script Tester": {
+    "ID": [13710885849393459769],
+    "LocalScript": [
+      "C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua",
+      "Scroll"
+    ],
+    "Tag": ["Another Script Tester"],
+    "Transform": [10, 0, 10, 10]
+  },
+  "Script Tester": {
+    "ID": [9308149339698252186],
+    "LocalScript": [
+      "C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua",
+      "Scroll"
+    ],
+    "Tag": ["Script Tester"],
+    "Transform": [10, 0, 10, 10]
+  },
+  "Tree Building Image": {
+    "ID": [11605614994629902305],
+    "Image": ["/ice/assets/Images/TreeBuilding.bmp"],
+    "Tag": ["Tree Building Image"],
+    "Transform": [0, 0, 165, 94]
+  },
+  "global light": {
+    "ID": [1564338168333488294],
+    "Light": ["Global", 0.5, [1.0, 1.0, 1.0]],
+    "Tag": ["global light"],
+    "Transform": [10, 0, 10, 10]
+  },
+  "point light": {
+    "ID": [7738378638793675207],
+    "Light": ["Point", 10.0, 10.0, [1.0, 1.0, 1.0]],
+    "Tag": ["point light"],
+    "Transform": [10, 0, 10, 10]
+  }
 }

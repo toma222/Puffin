@@ -52,6 +52,7 @@ namespace puffin
         operator uint32_t() const { return (uint32_t)m_entity; }
 
         UUID GetUUID() { return GetComponent<components::IDComponent>().m_ID; }
+        uint64_t GetUUIDInt() { return GetUUID(); };
         const std::string &GetName() { return GetComponent<components::Tag>().m_Tag; }
 
         bool operator==(const Entity &other) const

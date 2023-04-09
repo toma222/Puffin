@@ -42,6 +42,7 @@ namespace puffin
 
         sol::usertype entity = lua.new_usertype<Entity>("Entity");
         entity["GetName"] = &Entity::GetName;
+        entity["GetUUID"] = &Entity::GetUUIDInt;
     }
 
     sol::table LoadLibTable(sol::this_state s)

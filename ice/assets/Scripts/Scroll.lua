@@ -10,7 +10,8 @@ Scroll =
         rect = Rectangle.new()
         rect.x = 2;
         
-        print(Scroll.testNum:GetName());
+        print(Scroll.entity:GetName());
+        print(tostring(Scroll.entity:GetUUID()))
     end,
 
     Update = function ()

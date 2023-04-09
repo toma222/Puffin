@@ -135,6 +135,6 @@ namespace puffin
         // IDK why but this line of code makes me laugh
         // sol::reference ref = sol::make_reference_userdata<Vector2>(LuaScripting::s_globalState.lua_state(), 0, 0);
 
-        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["testNum"] = entity;
+        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["entity"] = entity;
     }
 } // namespace puffinz

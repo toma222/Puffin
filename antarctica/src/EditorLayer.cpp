@@ -103,6 +103,12 @@ namespace puffin
         m_gizmosPanel.AttachContext(m_activeScene);
         m_gizmosPanel.m_transformGizmoLength = 10;
         m_currentScenePath = "C:/Users/Aidan/Desktop/github/Puffin/Scene.json";
+
+        puffin::LuaScripting::InitLuaScripting();
+        puffin::LuaGlue::LoadInternal(puffin::LuaScripting::s_globalState);
+
+        Entity entity = m_activeScene->AddEntity("Script Tester");
+        entity.AddComponent<components::Script>("C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua", "Scroll");
     }
 
     void EditorLayer::OnDetach()

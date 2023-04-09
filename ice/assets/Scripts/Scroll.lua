@@ -2,14 +2,19 @@
 
 -- If the module name is changed then make sure to edit the scene file
 -- so that it regonises that you changed.
-Scroll = {}
+Scroll = 
+{
+    IscrollSpeed = 1,
 
-function Scroll.Start()
-    print('start from the Scroll library')
-end
+    Start = function ()
+        print('Update from start')
+        v = Vector2.new()
+        v.x = v.x + 1
 
-function Scroll.Update()
-    print('Update from the scroll')
-end
+        print(tostring(v.x));
+    end,
 
-return Scroll
+    Update = function ()
+        --Scroll.testNum.x = Scroll.testNum.x + 1
+    end
+}

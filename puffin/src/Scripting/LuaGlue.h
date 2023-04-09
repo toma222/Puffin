@@ -7,9 +7,7 @@ namespace puffin
 {
     class LuaGlue
     {
-
     public:
-        static void LoadFunctions();
-        static void LoadObjects();
+        static void LoadInternal(sol::state &lua);
     };
 } // namespace puffin

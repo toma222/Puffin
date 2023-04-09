@@ -4,22 +4,35 @@
 
 namespace puffin
 {
+    LuaScript::LuaScript(std::string path, std::string moduleName)
+    {
+        m_moduleName = moduleName;
+        m_path = path;
+
+        m_luaState.open_libraries(sol::lib::base, sol::lib::package);
+
+        m_luaState.script_file(path.c_str());
+    }
+
     sol::state LuaScripting::s_globalState = sol::state();
 
-    void LuaScripting::RunLuaScriptFunction(LuaScript script)
+    void LuaScripting::InitLuaScripting()
     {
+        s_globalState.open_libraries(sol::lib::base, sol::lib::package);
     }
 
-    void LuaScripting::RegisterScriptToGlobal(LuaScript script, std::string name)
+    void LuaScripting::RegisterModule(LuaScript &script)
     {
-        s_globalState.load_file(script.GetPath().c_str());
+        s_globalState.require_file(script.m_moduleName.c_str(), script.m_path.c_str());
     }
 
-    void LuaScripting::CallFunction(std::string functionName)
+    void LuaScripting::CallGlobalFunction(const char *functionName)
     {
         s_globalState[functionName]();
     }
-    void LuaScripting::CallModuleFunction(std::string moduleName, std::string functionName)
+
+    void LuaScripting::CallLoadedModuleFunction(const char *module, const char *function)
     {
+        s_globalState[module][function]();
     }
 }

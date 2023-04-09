@@ -72,6 +72,21 @@ namespace puffin
 
             Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
         }
+
+        auto scriptView = registry.view<components::Script>();
+        for (auto e : scriptView)
+        {
+            Entity entity = {this, e};
+            auto &script = entity.GetComponent<components::Script>();
+
+            if (!script.m_initilized)
+            {
+                script.m_initilized = true;
+                script.m_scriptInstance.RunFunction("Start");
+            }
+
+            script.m_scriptInstance.RunFunction("Update");
+        }
     }
 
     void Scene::TickPhysicsSimulation(float deltaTime)
@@ -117,5 +132,9 @@ namespace puffin
     template <>
     void Scene::OnComponentAdded<components::Script>(Entity entity, components::Script &component)
     {
+        // IDK why but this line of code makes me laugh
+        sol::reference ref = sol::make_reference_userdata<Vector2>(LuaScripting::s_globalState.lua_state(), 0, 0);
+
+        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["testNum"] = 2;
     }
-} // namespace puffin
+} // namespace puffinz

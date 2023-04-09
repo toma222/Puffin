@@ -91,10 +91,14 @@ namespace puffin
         struct Script
         {
             LuaScript m_scriptInstance;
+            bool m_initilized;
 
-            Script(std::string path) : m_scriptInstance(path){
-
-                                       };
+            Script(std::string path, std::string moduleName)
+                : m_scriptInstance(path, moduleName)
+            {
+                LuaGlue::LoadInternal(m_scriptInstance.m_luaState);
+                m_initilized = false;
+            };
         };
 
     }

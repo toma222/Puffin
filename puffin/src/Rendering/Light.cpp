@@ -8,8 +8,8 @@ namespace puffin
 {
     PNColor PointLight::GetPixelColor(int pixelX, int pixelY, int lightX, int lightY)
     {
-        float distance = std::sqrt(((pixelX - lightX) * (pixelX - lightX)) + ((pixelY - lightY) * (pixelY - lightY)));
-        float lum = 1 - std::min(distance / m_power, 1.0f);
+        float distance = ((pixelX - lightX) * (pixelX - lightX)) + ((pixelY - lightY) * (pixelY - lightY));
+        float lum = std::min(m_power / (distance / m_luminance), 1.0f);
 
         return PNColor(lum * m_lightColor.m_color[0], lum * m_lightColor.m_color[1], lum * m_lightColor.m_color[2]);
     }

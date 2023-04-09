@@ -1,4 +1,7 @@
 
-function printHello()
-    print('hello')
-end
+SomeOther = 
+{
+    PrintHello = function ()
+        print('hello')
+    end
+}

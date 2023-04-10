@@ -6,7 +6,7 @@
 #include "PRenderer.h"
 
 #include "Core/Logging.h"
-// #include "Core/FileSystem.h"
+#include "Core/FileSystem.h"
 
 #include <iostream>
 #include <string>
@@ -20,17 +20,6 @@
 #include <unistd.h>
 #define GetCurrentDir getcwd
 #endif
-
-namespace puffin
-{
-    std::string GetRootPath()
-    {
-        char buff[FILENAME_MAX]; // create string buffer to hold path
-        GetCurrentDir(buff, FILENAME_MAX);
-        std::string current_working_dir(buff);
-        return current_working_dir;
-    }
-} // namespace puffin
 
 namespace puffin
 {

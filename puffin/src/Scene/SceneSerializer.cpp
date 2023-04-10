@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "Components.h"
 
+#include "Core/FileSystem.h"
+
 #include "json/json.hpp"
 
 #include <fstream>
@@ -115,7 +117,7 @@ namespace puffin
                 if (component == "LocalScript")
                 {
                     e.AddComponent<puffin::components::Script>(
-                        data[0], data[1]);
+                        GetPathFromLocal(data[0]), data[1]);
                 }
 
                 if (component == "Light")

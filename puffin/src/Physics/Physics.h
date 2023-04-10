@@ -1,40 +1,54 @@
 
-/*
+
 #pragma once
 
-#include "Scene/Components.h"
 #include "Collision.h"
-#include "Scene/Entity.h"
 #include "Core/Timestep.h"
+
+#include "Math/PNVector.h"
 
 #include <functional>
 #include <cstdint>
+#include <vector>
 
 // Holds the code for the physics model
 
 namespace puffin
 {
-    class Model
+    class PhysicsModel
     {
     public:
-        std::function<void(Entity)> m_CalculateLoadsFunction;
+        float m_mass;
+        float m_inertia;
 
-        // ! implement this with the std::function loading and stuff
-        void AttachLoadFunction()
+        Vector2 m_velocity;
+        Vector2 m_velocityBody;
+        Vector2 m_angularVelocity;
+
+        float m_speed;
+
+        Vector2 m_forces;
+        Vector2 m_moment;
+
+        float m_projectedArea;
+
+        bool m_gravity;
+        float m_gravityScale;
+
+        PhysicsModel(float mass) : m_mass(mass)
         {
+            m_gravity = false;
+            m_projectedArea = 100;
         }
+
+        PhysicsModel() = default;
     };
 
     class Physics2D
     {
     public:
-        static void UpdateBodyEuler(Entity e, Timestep deltaTime);
-        static void CalculateLoads(components::Rigidbody2D &body, Timestep time);
-
-    public:
-        static float s_gravity;
-        static float s_e; // the elastic for collision IDK // TODO find out what e means in the j calc
+        static PNRect UpdateBodyEuler(PhysicsModel *model, Timestep deltaTime);
+        static void CalculateLoads(PhysicsModel *model, Timestep time);
     };
 
 } // namespace puffin
-*/

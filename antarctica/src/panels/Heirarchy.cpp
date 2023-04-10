@@ -169,6 +169,36 @@ namespace antarctica
         DrawComponent<puffin::components::Script>("Script", entity, [](auto &component)
                                                   { ImGui::Text("%s", component.m_path.c_str());
                                                     ImGui::Text("%s", component.m_scriptInstance.m_moduleName.c_str()); });
+
+        DrawComponent<puffin::components::RigidBody2D>("RigidBody2D", entity, [](auto &component)
+                                                       { 
+        const char* items[] = { "Static", "Dynamic" };
+        static const char* current_item = NULL;
+
+        if (ImGui::BeginCombo("##combo", current_item)) // The second parameter is the label previewed before opening the combo.
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+            {
+                bool is_selected = (current_item == items[n]); // You can store your selection however you want, outside or inside your objects
+                if (ImGui::Selectable(items[n], is_selected))
+                {         
+                    current_item = items[n];
+
+                    if(n == 0)
+                        component.m_type = puffin::components::RigidBody2D::STATIC;                
+
+                    if(n == 1)
+                        component.m_type = puffin::components::RigidBody2D::DYNAMIC;
+                    
+                }   
+
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+            }
+            ImGui::EndCombo();
+        } 
+        ImGui::Checkbox("Physics", &component.m_model.m_gravity);
+        ImGui::InputFloat("Gravity Scale", &component.m_model.m_gravityScale); });
     }
 
     template <typename T>

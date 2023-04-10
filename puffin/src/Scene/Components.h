@@ -11,6 +11,8 @@
 #include "Math/PNVector.h"
 #include "Core/ID.h"
 
+#include "Physics/Physics.h"
+
 #include "Scripting/LuaGlue.h"
 #include "Scripting/LuaScripting.h"
 
@@ -101,5 +103,24 @@ namespace puffin
             };
         };
 
+        struct RigidBody2D
+        {
+            enum BodyType
+            {
+                STATIC = 0,
+                DYNAMIC,
+                KINEMATIC
+            };
+
+            BodyType m_type = BodyType::STATIC;
+            // bool fixedRotation;
+            PhysicsModel m_model;
+
+            RigidBody2D() = default;
+            RigidBody2D(float mass)
+            {
+                m_model.m_mass = mass;
+            };
+        };
     }
 }

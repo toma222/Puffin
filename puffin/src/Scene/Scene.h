@@ -2,9 +2,9 @@
 #pragma once
 
 #include "Core/ID.h"
+#include "Core/Timestep.h"
 
 #include <entt/entt.hpp>
-
 #include <unordered_map>
 
 namespace puffin
@@ -23,7 +23,7 @@ namespace puffin
         void OnComponentAdded(Entity entity, T &component);
 
         void TickRuntime(float deltaTime);
-        void TickPhysicsSimulation(float deltaTime);
+        void TickPhysicsSimulation(Timestep deltaTime);
         void DrawGizmos();
 
     public:

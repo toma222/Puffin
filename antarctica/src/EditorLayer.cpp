@@ -97,8 +97,15 @@ namespace puffin
         // C:/Users.Aidan/Desktop/github/Puffin/Scene.json
 
         puffin::LuaScripting::InitLuaScripting();
-        puffin::SceneSerializer serialize(m_activeScene);
-        serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene.json");
+        // puffin::SceneSerializer serialize(m_activeScene);
+        // serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene.json");
+
+        Entity e = m_activeScene->AddEntity("Physics");
+        e.AddComponent<components::Image>("/ice/assets/Images/square.bmp");
+        e.AddComponent<components::RigidBody2D>(5);
+
+        Entity light = m_activeScene->AddEntity("Scene Light");
+        light.AddComponent<components::Light>(new puffin::GlobalLight(1));
 
         m_heirarchyPanel.AttachContext(m_activeScene);
         m_gizmosPanel.AttachContext(m_activeScene);
@@ -117,6 +124,7 @@ namespace puffin
 
     void EditorLayer::Update()
     {
+        m_activeScene->TickPhysicsSimulation(puffin::Timestep(0.001));
         m_activeScene->TickRuntime(0);
     }
 

@@ -47,9 +47,6 @@ namespace puffin
 
     void Scene::TickRuntime(float deltaTime)
     {
-
-        TickPhysicsSimulation(deltaTime);
-
         auto view = registry.view<components::Image>();
 
         for (auto e : view)
@@ -89,8 +86,23 @@ namespace puffin
         }
     }
 
-    void Scene::TickPhysicsSimulation(float deltaTime)
+    void Scene::TickPhysicsSimulation(Timestep deltaTime)
     {
+        auto rigidBodyView = registry.view<components::RigidBody2D>();
+
+        for (auto e : rigidBodyView)
+        {
+            Entity entity = {this, e};
+            components::RigidBody2D &r = entity.GetComponent<components::RigidBody2D>();
+            components::Transform &t = entity.GetComponent<components::Transform>();
+
+            if (r.m_type == components::RigidBody2D::DYNAMIC)
+            {
+                PNRect newTransform = Physics2D::UpdateBodyEuler(&r.m_model, deltaTime);
+                t.m_rect->x += newTransform.m_x;
+                t.m_rect->y += newTransform.m_y;
+            }
+        }
     }
 
     void Scene::DrawGizmos()
@@ -121,12 +133,18 @@ namespace puffin
     template <>
     void Scene::OnComponentAdded<components::Image>(Entity entity, components::Image &component)
     {
-        // Graphics::Get().PlaceImage(component.surface.get(), entity.GetComponent<components::Transform>().m_rect.get());
     }
 
     template <>
     void Scene::OnComponentAdded<components::Light>(Entity entity, components::Light &component)
     {
+    }
+
+    template <>
+    void Scene::OnComponentAdded<components::RigidBody2D>(Entity entity, components::RigidBody2D &component)
+    {
+        components::Transform &t = entity.GetComponent<components::Transform>();
+        component.m_model.m_projectedArea = t.m_rect->w * t.m_rect->h;
     }
 
     template <>

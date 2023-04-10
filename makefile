@@ -32,7 +32,8 @@ ENGINEOBJ = obj/PRenderer.o \
 			obj/Light.o \
 			obj/PlatformUtils.o \
 			obj/LuaScripting.o \
-			obj/LuaGlue.o
+			obj/LuaGlue.o \
+			obj/FileSystem.o
 
 EDITOR_OBJ = obj/EditorLayer.o \
 			 obj/Heirarchy.o \

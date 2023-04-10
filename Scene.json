@@ -2,7 +2,7 @@
   "Another Script Tester": {
     "ID": [13710885849393459769],
     "LocalScript": [
-      "C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua",
+      "/ice/assets/Scripts/Scroll.lua",
       "Scroll"
     ],
     "Tag": ["Another Script Tester"],
@@ -11,7 +11,7 @@
   "Script Tester": {
     "ID": [9308149339698252186],
     "LocalScript": [
-      "C:/Users/aidan/Desktop/github/Puffin/ice/assets/Scripts/Scroll.lua",
+      "/ice/assets/Scripts/Scroll.lua",
       "Scroll"
     ],
     "Tag": ["Script Tester"],

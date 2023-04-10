@@ -12,12 +12,6 @@
 
 #include "SDL2/SDL.h"
 
-enum KEY
-{
-    CODE,
-    OTHER
-};
-
 namespace puffin
 {
 #define ADD_INTERNAL_LUA_CALL(name) lib.set_function(#name, &name)
@@ -87,11 +81,6 @@ namespace puffin
 
         ADD_INTERNAL_LUA_CALL(DebugPrint);
         ADD_INTERNAL_LUA_CALL(IsKeyPressed);
-
-        lua["KEYCODES"] = lua.create_table_with(
-            "UP", 0,
-            "DOWN", 1,
-            "LEFT", 2);
 
         LoadClasses(lua);
 

@@ -1,4 +1,3 @@
-
 require(Scancodes)
 
 -- Variables defined and initilized here
@@ -25,4 +24,3 @@ function Scroll.Update()
 end
 
 return Scroll
-

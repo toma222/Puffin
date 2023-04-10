@@ -6,12 +6,13 @@ namespace puffin
 {
     LuaScript::LuaScript(std::string path, std::string moduleName)
     {
+        PN_CORE_INFO("Starting lua script");
         m_moduleName = moduleName;
         m_path = path;
 
         m_luaState.open_libraries(sol::lib::base, sol::lib::package);
 
-        m_luaState.script_file(path.c_str());
+        // m_luaState.script_file("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/assets/Scripts/Scroll.lua");
     }
 
     sol::state LuaScripting::s_globalState = sol::state();

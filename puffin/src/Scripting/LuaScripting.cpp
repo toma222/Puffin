@@ -10,9 +10,17 @@ namespace puffin
         m_moduleName = moduleName;
         m_path = path;
 
-        m_luaState.open_libraries(sol::lib::base, sol::lib::package);
+        m_luaState.open_libraries(sol::lib::base, sol::lib::package, sol::lib::math);
 
-        // m_luaState.script_file("C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/ice/assets/Scripts/Scroll.lua");
+        auto script_from_file_result = m_luaState.safe_script_file(
+            path.c_str(), sol::script_pass_on_error);
+        if (!script_from_file_result.valid())
+        {
+            sol::error err = script_from_file_result;
+            PN_CORE_FATAL("Script Error!");
+            printf("%s\n", err.what());
+            PN_CORE_ASSERT(false, "sol2 can not validate the script");
+        }
     }
 
     sol::state LuaScripting::s_globalState = sol::state();

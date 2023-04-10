@@ -1,6 +1,4 @@
-require(Scancodes)
-
--- Variables defined and initilized here
+--Variables defined and initilized here
 Scroll = {
     transformRect = nil,
     scrollSpeed = 1
@@ -8,10 +6,10 @@ Scroll = {
 
 -- Function called on the first scene render
 function Scroll.Start()
-    Scroll.transformRect = Scroll.transform:GetRect();
+    -- Scroll.transformRect = Scroll.transform:GetRect();
 
     -- You can also get the transform data from the attached entity like this
-    -- Scroll.transformRect = Scroll.entity:GetComponent():GetRect();
+    Scroll.transformRect = Scroll.entity:GetComponent("Transform"):GetRect();
 end
 
 -- Function called every scene render

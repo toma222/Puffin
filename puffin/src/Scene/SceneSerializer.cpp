@@ -32,7 +32,7 @@ namespace puffin
         if (entity.HasComponent<components::Image>())
         {
             components::Image &image = entity.GetComponent<components::Image>();
-            parser["Image"] = {image.m_path.c_str()};
+            parser["Image"] = {image.m_path.c_str(), 0, 0, 0};
         }
 
         // Scripts
@@ -94,9 +94,6 @@ namespace puffin
 
         for (auto &[key, value] : o.items())
         {
-            // Find the name
-
-            // Entity Found
             Entity e = m_Scene->AddEntity(key.c_str());
 
             for (auto &[component, data] : value.items())
@@ -112,7 +109,7 @@ namespace puffin
 
                 if (component == "Image")
                 {
-                    e.AddComponent<puffin::components::Image>("/ice/assets/Images/TreeBuilding.bmp");
+                    e.AddComponent<puffin::components::Image>(data[0]);
                 }
 
                 if (component == "LocalScript")

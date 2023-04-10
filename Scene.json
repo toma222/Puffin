@@ -19,7 +19,7 @@
   },
   "Tree Building Image": {
     "ID": [11605614994629902305],
-    "Image": ["/ice/assets/Images/TreeBuilding.bmp"],
+    "Image": ["/ice/assets/Images/BuildingWall.bmp"],
     "Tag": ["Tree Building Image"],
     "Transform": [0, 0, 165, 94]
   },

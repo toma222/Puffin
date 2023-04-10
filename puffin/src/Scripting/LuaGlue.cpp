@@ -31,8 +31,13 @@ namespace puffin
         return false;
     }
 
-    void
-    LoadClasses(sol::state_view lua)
+    static const components::Transform GetComponentTransform(Entity &e, std::string component)
+    {
+        if (component == "Transform")
+            return e.GetComponent<components::Transform>();
+    }
+
+    void LoadClasses(sol::state_view lua)
     {
         lua.new_usertype<Vector2>("Vector2",
                                   sol::constructors<Vector2(), Vector2(double, double)>(),
@@ -55,8 +60,7 @@ namespace puffin
         entity["GetName"] = &Entity::GetName;
         entity["GetUUID"] = &Entity::GetUUIDInt;
 
-        auto getTransform = &Entity::GetComponent<components::Transform>;
-        entity["GetComponent"] = sol::overload(getTransform);
+        entity["GetComponent"] = sol::overload(&GetComponentTransform);
 
         auto newImage = &Entity::AddComponent<components::Image, std::string>;
         entity["AddComponent"] = sol::overload(newImage);

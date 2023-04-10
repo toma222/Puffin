@@ -1,4 +1,1 @@
-
-function Start()
-    print('start function called')
-end
+print('hi from path')

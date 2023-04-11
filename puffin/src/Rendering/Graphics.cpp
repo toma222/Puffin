@@ -131,7 +131,7 @@ namespace puffin
         SDL_BlitScaled(image->get(), NULL, m_renderSurface.get()->get(), bounds);
     }
 
-    void Graphics::PlaceLight(LightType *light, int x, int y)
+    void Graphics::PlaceLight(std::shared_ptr<LightType> light, int x, int y)
     {
         PlaceLightFromProfile(LightProfile(light, x, y));
     }

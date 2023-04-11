@@ -75,12 +75,12 @@ namespace puffin
     {
     public:
         // ! this is just a memory leak, here : cant delete because it causes undefined behavior
-        LightType *m_lightType;
+        std::shared_ptr<LightType> m_lightType;
 
         int m_x;
         int m_y;
 
-        LightProfile(LightType *type, int x, int y)
+        LightProfile(std::shared_ptr<LightType> type, int x, int y)
             : m_lightType(type), m_x(x), m_y(y){};
 
         ~LightProfile() = default;

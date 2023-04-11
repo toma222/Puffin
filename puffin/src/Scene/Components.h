@@ -22,14 +22,21 @@ namespace puffin
 
     namespace components
     {
-
-        // Contains the transform rect for the renderer
         struct Transform
         {
             std::shared_ptr<SDL_Rect> m_rect;
 
             Transform() = default;
-            Transform(const Transform &transform) = default;
+            Transform(const Transform &transform)
+            {
+                m_rect = std::make_shared<SDL_Rect>();
+
+                m_rect->x = transform.m_rect->x;
+                m_rect->y = transform.m_rect->y;
+                m_rect->w = transform.m_rect->w;
+                m_rect->h = transform.m_rect->h;
+            }
+
             Transform(int x, int y, int w, int h)
             {
                 m_rect = std::make_shared<SDL_Rect>();
@@ -61,7 +68,11 @@ namespace puffin
                 surface = std::make_shared<render::SDLSurface>(m_path.c_str(), 100, 10);
             }
 
-            Image(const Image &image) = default;
+            Image(const Image &image)
+            {
+                surface = std::make_shared<render::SDLSurface>(image.m_path, 100, 10);
+            }
+
             Image(std::string path)
                 : m_path(path)
             {
@@ -83,12 +94,16 @@ namespace puffin
         {
             // ! this is a memory leak (that I will deal with latter)
             // ! also the copy scene code wont play nice with this pointer
-            puffin::LightType *m_lightType = nullptr;
+            std::shared_ptr<LightType> m_lightType;
 
             Light() = default;
             Light(const Light &light) = default;
-            Light(puffin::LightType *lightType)
-                : m_lightType(lightType){};
+
+            template <typename T, typename... Args>
+            void AttachType(Args &&...args)
+            {
+                m_lightType = std::make_shared<T>(std::forward<Args>(args)...);
+            }
         };
 
         struct Script
@@ -106,6 +121,7 @@ namespace puffin
 
             Script(const Script &script)
             {
+                m_scriptInstance = std::make_shared<LuaScript>(script.m_path, script.m_scriptInstance->m_moduleName);
                 LuaGlue::LoadInternal(m_scriptInstance->m_luaState);
                 m_initilized = false;
             };
@@ -121,7 +137,6 @@ namespace puffin
             };
 
             BodyType m_type = BodyType::STATIC;
-            // bool fixedRotation;
             PhysicsModel m_model;
 
             RigidBody2D() = default;

@@ -128,7 +128,9 @@
     "stack": "cpp",
     "expected": "cpp",
     "spanstream": "cpp",
-    "stacktrace": "cpp"
+    "stacktrace": "cpp",
+    "__std_stream": "cpp",
+    "format": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled",
   "cSpell.words": ["Kuwahara", "puffin", "Rigidbody", "Timestep"]

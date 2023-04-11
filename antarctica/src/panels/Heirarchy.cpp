@@ -148,12 +148,12 @@ namespace antarctica
 
             if (DisplayComponentEntry<puffin::components::Light>("Point Light"))
             {
-                m_selectedEntity.GetComponent<puffin::components::Light>().m_lightType = new puffin::PointLight(100, 100);
+                // m_selectedEntity.GetComponent<puffin::components::Light>().m_lightType = new puffin::PointLight(100, 100);
             }
 
             if (DisplayComponentEntry<puffin::components::Light>("Global Light"))
             {
-                m_selectedEntity.GetComponent<puffin::components::Light>().m_lightType = new puffin::GlobalLight(100);
+                // m_selectedEntity.GetComponent<puffin::components::Light>().m_lightType = new puffin::GlobalLight(100);
             }
 
             ImGui::EndPopup();
@@ -171,8 +171,8 @@ namespace antarctica
         DrawComponent<puffin::components::Image>("Image", entity, [](auto &component)
                                                  { ImGui::Text("%s", component.m_path.c_str()); });
 
-        DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
-                                                 { component.m_lightType->UpdateImGui(); });
+        // DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
+        //                                          { component.m_lightType->UpdateImGui(); });
 
         DrawComponent<puffin::components::Script>("Script", entity, [](auto &component)
                                                   { ImGui::Text("%s", component.m_path.c_str());

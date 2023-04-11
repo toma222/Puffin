@@ -104,23 +104,6 @@ namespace puffin
         // C:/Users.Aidan/Desktop/github/Puffin/Scene.json
 
         puffin::LuaScripting::InitLuaScripting();
-        // puffin::SceneSerializer serialize(m_activeScene);
-        // serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene.json");
-
-        /*
-        Entity e = m_editorScene->AddEntity("Physics");
-        e.AddComponent<components::Image>("/ice/assets/Images/square.bmp");
-        e.AddComponent<components::RigidBody2D>(5);
-
-        Entity light = m_editorScene->AddEntity("Scene Light");
-        light.AddComponent<components::Light>(new puffin::GlobalLight(1));
-
-        m_gizmosPanel.m_transformGizmoLength = 10;
-        m_currentScenePath = "C:/Users/Aidan/Desktop/github/Puffin/Scene.json";
-
-        GM_CORE_INFO("Swapping scenes");
-        m_activeScene = puffin::Scene::Copy(m_editorScene);
-        */
 
         std::shared_ptr<puffin::Scene> newScene = std::make_shared<puffin::Scene>();
         puffin::SceneSerializer serialize(newScene);
@@ -135,9 +118,6 @@ namespace puffin
 
             m_activeScene = m_editorScene;
         }
-
-        // m_heirarchyPanel.AttachContext(m_activeScene);
-        // m_gizmosPanel.AttachContext(m_activeScene);
     }
 
     void EditorLayer::OnDetach()
@@ -159,6 +139,7 @@ namespace puffin
 
         case SCENE_STATE::PLAYING:
             m_activeScene->TickRuntime(0);
+            m_activeScene->TickPhysicsSimulation(0.001);
             break;
 
         default:
@@ -320,12 +301,14 @@ namespace puffin
         {
         case EditorLayer::PLAYING:
             printf("playing scene\n");
-            m_activeScene = puffin::Scene::Copy(m_editorScene);
+            m_activeScene = Scene::Copy(m_editorScene);
+            m_heirarchyPanel.AttachContext(m_activeScene);
             break;
 
         case EditorLayer::EDITING:
             printf("going back to editing\n");
-            m_activeScene = puffin::Scene::Copy(m_editorScene);
+            m_activeScene = m_editorScene;
+            m_heirarchyPanel.AttachContext(m_activeScene);
             break;
 
         default:

@@ -24,6 +24,7 @@ namespace puffin
 
         void TickRuntime(float deltaTime);
         void TickPhysicsSimulation(Timestep deltaTime);
+        void TickRuntime(Timestep deltaTime);
         void TickEditor(Timestep deltaTime);
         void DrawGizmos();
 

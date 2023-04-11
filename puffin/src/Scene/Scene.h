@@ -35,5 +35,6 @@ namespace puffin
 
         std::unordered_map<UUID, entt::entity> m_entities;
         int m_testValue;
+        std::string m_name;
     };
 } // namespace puffin

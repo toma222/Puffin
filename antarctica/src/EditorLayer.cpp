@@ -97,6 +97,8 @@ namespace puffin
         m_playSceneIcon = std::make_shared<puffin::render::SDLTexture>(puffin::Graphics::Get().GetRenderer().get(), "/antarctica/resources/icons/PlaySceneButton.bmp", 8, 8);
 
         m_editorScene = std::make_shared<Scene>();
+        m_editorScene->m_name = "Editing";
+
         m_activeScene = m_editorScene;
 
         // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
@@ -302,6 +304,7 @@ namespace puffin
         case EditorLayer::PLAYING:
             printf("playing scene\n");
             m_activeScene = Scene::Copy(m_editorScene);
+            m_activeScene->m_name = "Running";
             m_heirarchyPanel.AttachContext(m_activeScene);
             break;
 

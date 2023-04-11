@@ -96,6 +96,7 @@ namespace antarctica
     void Heirarchy::RenderImGui()
     {
         ImGui::Begin("Heirarchy");
+        ImGui::Text("%s", m_sceneRef->m_name.c_str());
 
         if (m_sceneRef)
         {

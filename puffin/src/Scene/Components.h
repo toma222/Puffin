@@ -81,7 +81,9 @@ namespace puffin
 
         struct Light
         {
-            puffin::LightType *m_lightType;
+            // ! this is a memory leak (that I will deal with latter)
+            // ! also the copy scene code wont play nice with this pointer
+            puffin::LightType *m_lightType = nullptr;
 
             Light() = default;
             Light(const Light &light) = default;
@@ -91,14 +93,20 @@ namespace puffin
 
         struct Script
         {
-            LuaScript m_scriptInstance;
+            std::shared_ptr<LuaScript> m_scriptInstance;
             std::string m_path;
             bool m_initilized;
 
             Script(std::string path, std::string moduleName)
-                : m_scriptInstance(path, moduleName), m_path(path)
             {
-                LuaGlue::LoadInternal(m_scriptInstance.m_luaState);
+                m_scriptInstance = std::make_shared<LuaScript>(path, moduleName);
+                LuaGlue::LoadInternal(m_scriptInstance->m_luaState);
+                m_initilized = false;
+            };
+
+            Script(const Script &script)
+            {
+                LuaGlue::LoadInternal(m_scriptInstance->m_luaState);
                 m_initilized = false;
             };
         };
@@ -121,6 +129,15 @@ namespace puffin
             {
                 m_model.m_mass = mass;
             };
+
+            RigidBody2D(const RigidBody2D &rb) = default;
         };
+
+        template <typename... Component>
+        struct ComponentGroup
+        {
+        };
+
+        using AllComponents = ComponentGroup<RigidBody2D, Transform, Image, Light, Script>;
     }
 }

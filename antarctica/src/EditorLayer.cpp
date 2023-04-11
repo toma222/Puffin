@@ -16,6 +16,8 @@ namespace puffin
 {
     void EditorLayer::OnAttach()
     {
+        m_sceneState = EDITING;
+
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -90,7 +92,12 @@ namespace puffin
         ImGui_ImplSDL2_InitForSDLRenderer(puffin::Application::Get().GetWindow()->GetWindow()->GetWindow(), puffin::Graphics::Get().GetRenderer()->get());
         ImGui_ImplSDLRenderer_Init(puffin::Graphics::Get().GetRenderer()->get());
 
-        m_activeScene = std::make_shared<Scene>();
+        m_gameObjectIcon = std::make_shared<puffin::render::SDLTexture>(puffin::Graphics::Get().GetRenderer().get(), "/antarctica/resources/icons/GameObject.bmp", 16, 16);
+        m_pauseSceneIcon = std::make_shared<puffin::render::SDLTexture>(puffin::Graphics::Get().GetRenderer().get(), "/antarctica/resources/icons/PauseSceneButton.bmp", 16, 16);
+        m_playSceneIcon = std::make_shared<puffin::render::SDLTexture>(puffin::Graphics::Get().GetRenderer().get(), "/antarctica/resources/icons/PlaySceneButton.bmp", 8, 8);
+
+        m_editorScene = std::make_shared<Scene>();
+        m_activeScene = m_editorScene;
 
         // C:/Users/Aidan/Documents/OtherUsslessProjects'/Puffin/Scene.json
         // C:/Users/100044352/Desktop/refactor/Puffin/Scene.json
@@ -100,17 +107,37 @@ namespace puffin
         // puffin::SceneSerializer serialize(m_activeScene);
         // serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene.json");
 
-        Entity e = m_activeScene->AddEntity("Physics");
+        /*
+        Entity e = m_editorScene->AddEntity("Physics");
         e.AddComponent<components::Image>("/ice/assets/Images/square.bmp");
         e.AddComponent<components::RigidBody2D>(5);
 
-        Entity light = m_activeScene->AddEntity("Scene Light");
+        Entity light = m_editorScene->AddEntity("Scene Light");
         light.AddComponent<components::Light>(new puffin::GlobalLight(1));
 
-        m_heirarchyPanel.AttachContext(m_activeScene);
-        m_gizmosPanel.AttachContext(m_activeScene);
         m_gizmosPanel.m_transformGizmoLength = 10;
         m_currentScenePath = "C:/Users/Aidan/Desktop/github/Puffin/Scene.json";
+
+        GM_CORE_INFO("Swapping scenes");
+        m_activeScene = puffin::Scene::Copy(m_editorScene);
+        */
+
+        std::shared_ptr<puffin::Scene> newScene = std::make_shared<puffin::Scene>();
+        puffin::SceneSerializer serialize(newScene);
+        if (serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene copy.json"))
+        {
+            Entity e = newScene->AddEntity("Physics");
+            e.AddComponent<components::Image>("/ice/assets/Images/square.bmp");
+            e.AddComponent<components::RigidBody2D>(5);
+
+            m_editorScene = newScene;
+            m_heirarchyPanel.AttachContext(m_editorScene);
+
+            m_activeScene = m_editorScene;
+        }
+
+        // m_heirarchyPanel.AttachContext(m_activeScene);
+        // m_gizmosPanel.AttachContext(m_activeScene);
     }
 
     void EditorLayer::OnDetach()
@@ -124,8 +151,19 @@ namespace puffin
 
     void EditorLayer::Update()
     {
-        m_activeScene->TickPhysicsSimulation(puffin::Timestep(0.001));
-        m_activeScene->TickRuntime(0);
+        switch (m_sceneState)
+        {
+        case SCENE_STATE::EDITING:
+            m_activeScene->TickEditor(0);
+            break;
+
+        case SCENE_STATE::PLAYING:
+            m_activeScene->TickRuntime(0);
+            break;
+
+        default:
+            break;
+        }
     }
 
     void EditorLayer::GizmosRender()
@@ -232,7 +270,66 @@ namespace puffin
         m_heirarchyPanel.RenderImGui();
         m_gizmosPanel.RenderGizmosPanel();
 
+        RenderSceneToolbar();
+
         ImGui::Render();
         ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+    }
+
+    void EditorLayer::RenderSceneToolbar()
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 12));
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        auto &colors = ImGui::GetStyle().Colors;
+        const auto &buttonHovered = colors[ImGuiCol_ButtonHovered];
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+        const auto &buttonActive = colors[ImGuiCol_ButtonActive];
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+        ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+        float size = ImGui::GetWindowHeight() - 4.0f;
+        ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+
+        if (m_sceneState == PLAYING)
+        {
+            if (ImGui::ImageButton(m_pauseSceneIcon->get(), ImVec2(size - 25, size - 25)))
+            {
+                m_sceneState = EDITING;
+                SetSceneState(EDITING);
+            }
+        }
+        else if (m_sceneState == EDITING)
+        {
+            if (ImGui::ImageButton(m_playSceneIcon->get(), ImVec2(size - 25, size - 25)))
+            {
+                m_sceneState = PLAYING;
+                SetSceneState(PLAYING);
+            }
+        }
+
+        ImGui::PopStyleVar(2);
+        ImGui::PopStyleColor(3);
+        ImGui::End();
+    }
+
+    void EditorLayer::SetSceneState(SCENE_STATE state)
+    {
+        switch (state)
+        {
+        case EditorLayer::PLAYING:
+            printf("playing scene\n");
+            m_activeScene = puffin::Scene::Copy(m_editorScene);
+            break;
+
+        case EditorLayer::EDITING:
+            printf("going back to editing\n");
+            m_activeScene = puffin::Scene::Copy(m_editorScene);
+            break;
+
+        default:
+            break;
+        }
     }
 }

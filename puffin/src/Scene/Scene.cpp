@@ -26,21 +26,66 @@ namespace puffin
         PN_CORE_INFO("Scene constructor called");
     }
 
+    template <typename... Component>
+    static void CopyComponent(components::ComponentGroup<Component...>, entt::registry &dst, entt::registry &src, const std::unordered_map<UUID, entt::entity> &enttMap)
+    {
+        CopyComponent<Component...>(dst, src, enttMap);
+    }
+
+    template <typename... component>
+    static void CopyComponent(entt::registry &dst, entt::registry &src, const std::unordered_map<UUID, entt::entity> &enttMap)
+    {
+        ([&]()
+         {
+             auto view = src.view<component>();
+
+             for (auto srcEntity : view)
+             {
+                 entt::entity dstEntity = enttMap.at(src.get<components::IDComponent>(srcEntity).m_ID);
+
+                 auto srcComponent = src.get<component>(srcEntity);
+                 dst.emplace_or_replace<component>(dstEntity, srcComponent);
+             } }(),
+         ...);
+    }
+
+    std::shared_ptr<Scene> Scene::Copy(std::shared_ptr<Scene> other)
+    {
+        std::shared_ptr<Scene> newScene = std::make_shared<Scene>();
+
+        auto &srcRegistry = other->registry;
+        auto &dstRegistry = newScene->registry;
+        std::unordered_map<UUID, entt::entity> enttMap;
+
+        auto eView = srcRegistry.view<components::IDComponent>();
+        for (auto e : eView)
+        {
+            UUID uuid = srcRegistry.get<components::IDComponent>(e).m_ID;
+            const auto &name = srcRegistry.get<components::Tag>(e).m_Tag;
+            Entity entity = newScene->MakeEntityWithUUID(uuid, name);
+            enttMap[uuid] = (entt::entity)entity;
+        }
+
+        CopyComponent(components::AllComponents{}, dstRegistry, srcRegistry, enttMap);
+
+        return newScene;
+    }
+
     Entity Scene::AddEntity(const std::string &name)
     {
-        PN_CORE_INFO("Adding entity");
         return MakeEntityWithUUID(UUID(), name);
     }
 
     Entity Scene::MakeEntityWithUUID(UUID uuid, const std::string &name)
     {
+        PN_CORE_INFO("Adding entity");
         Entity entity = {this, registry.create()};
 
         entity.AddComponent<components::IDComponent>().m_ID = uuid;
         entity.AddComponent<components::Transform>(10, 0, 10, 10);
         entity.AddComponent<components::Tag>(name.empty() ? "Entity" : name);
 
-        m_entities.push_back(entity);
+        m_entities[uuid] = entity.m_entity;
 
         return entity;
     }
@@ -79,10 +124,10 @@ namespace puffin
             if (!script.m_initilized)
             {
                 script.m_initilized = true;
-                script.m_scriptInstance.RunFunction("Start");
+                script.m_scriptInstance->RunFunction("Start");
             }
 
-            script.m_scriptInstance.RunFunction("Update");
+            script.m_scriptInstance->RunFunction("Update");
         }
     }
 
@@ -102,6 +147,31 @@ namespace puffin
                 t.m_rect->x += newTransform.m_x;
                 t.m_rect->y += newTransform.m_y;
             }
+        }
+    }
+
+    void Scene::TickEditor(Timestep deltaTime)
+    {
+        auto view = registry.view<components::Image>();
+
+        for (auto e : view)
+        {
+            Entity entity = {this, e};
+            auto &transform = entity.GetComponent<components::Transform>();
+            auto &image = entity.GetComponent<components::Image>();
+
+            Graphics::Get().PlaceImage(image.surface.get(), transform.m_rect.get());
+        }
+
+        auto lightView = registry.view<components::Light>();
+
+        for (auto e : lightView)
+        {
+            Entity entity = {this, e};
+            auto &transform = entity.GetComponent<components::Transform>();
+            auto &light = entity.GetComponent<components::Light>();
+
+            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
         }
     }
 
@@ -153,7 +223,7 @@ namespace puffin
         // IDK why but this line of code makes me laugh
         // sol::reference ref = sol::make_reference_userdata<Vector2>(LuaScripting::s_globalState.lua_state(), 0, 0);
 
-        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["entity"] = entity;
-        component.m_scriptInstance.m_luaState[component.m_scriptInstance.m_moduleName.c_str()]["transform"] = entity.GetComponent<components::Transform>();
+        component.m_scriptInstance->m_luaState[component.m_scriptInstance->m_moduleName.c_str()]["entity"] = entity;
+        component.m_scriptInstance->m_luaState[component.m_scriptInstance->m_moduleName.c_str()]["transform"] = entity.GetComponent<components::Transform>();
     }
 } // namespace puffinz

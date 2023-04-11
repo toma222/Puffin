@@ -35,6 +35,14 @@ namespace puffin
             return m_sceneRef->registry.get<T>(m_entity);
         }
 
+        template <typename T, typename... Args>
+        T &AddOrReplaceComponent(Args &&...args)
+        {
+            T &component = m_sceneRef->registry.emplace_or_replace<T>(m_entity, std::forward<Args>(args)...);
+            m_sceneRef->OnComponentAdded<T>(*this, component);
+            return component;
+        }
+
         template <typename T>
         bool HasComponent()
         {

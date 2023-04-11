@@ -41,7 +41,7 @@ namespace puffin
         if (entity.HasComponent<components::Script>())
         {
             components::Script &script = entity.GetComponent<components::Script>();
-            parser["LocalScript"] = {script.m_path.c_str(), script.m_scriptInstance.m_moduleName.c_str()};
+            parser["LocalScript"] = {script.m_path.c_str(), script.m_scriptInstance->m_moduleName.c_str()};
         }
 
         // Lights
@@ -73,9 +73,10 @@ namespace puffin
         PN_CORE_INFO("Serializing Scene");
         nlohmann::json parser;
 
-        for (auto entity : m_Scene->m_entities)
+        for (auto [key, e] : m_Scene->m_entities)
         {
             nlohmann::json entityParser;
+            Entity entity(m_Scene.get(), e);
             SerializeEntity(entityParser, entity);
 
             parser[entity.GetName()] = entityParser;

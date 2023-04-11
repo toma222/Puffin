@@ -15,7 +15,7 @@ namespace antarctica
     void Heirarchy::AttachContext(std::shared_ptr<puffin::Scene> sceneRef)
     {
         m_sceneRef = sceneRef;
-        m_selectedEntity = sceneRef->m_entities[0];
+        // m_selectedEntity = sceneRef->m_entities[0];
     }
 
     template <typename T, typename UIFunction>
@@ -63,6 +63,36 @@ namespace antarctica
         return m_selectedEntity;
     }
 
+    void Heirarchy::DrawEntityNode(puffin::Entity entity)
+    {
+        ImGuiTreeNodeFlags flags = ((m_selectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+        flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
+        puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
+
+        bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
+
+        if (ImGui::IsItemClicked())
+        {
+            m_selectedEntity = entity;
+        }
+
+        if (ImGui::BeginPopupContextItem())
+        {
+            if (ImGui::MenuItem("Delete Entity"))
+            {
+                printf("Delete entity at some point\n");
+            }
+
+            ImGui::EndPopup();
+        }
+
+        if (opened)
+        {
+            ImGui::TreePop();
+        }
+    }
+
     void Heirarchy::RenderImGui()
     {
         ImGui::Begin("Heirarchy");
@@ -73,42 +103,19 @@ namespace antarctica
                 m_selectedEntity = {};
 
             // Right-click on blank space
-            if (ImGui::BeginPopupContextWindow(0, false))
+            /*
+            if (ImGui::BeginPopupContextWindow(0, 1, false))
             {
                 if (ImGui::MenuItem("Create Empty Entity"))
                     m_sceneRef->AddEntity("Empty Entity");
 
                 ImGui::EndPopup();
             }
+            */
 
-            for (auto entity : m_sceneRef->m_entities)
+            for (auto [key, entity] : m_sceneRef->m_entities)
             {
-                ImGuiTreeNodeFlags flags = ((m_selectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
-                flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-
-                puffin::components::Tag &tag = entity.GetComponent<puffin::components::Tag>();
-
-                bool opened = ImGui::TreeNodeEx((void *)(uint64_t)(uint32_t)entity, flags, tag.m_Tag.c_str());
-
-                if (ImGui::IsItemClicked())
-                {
-                    m_selectedEntity = entity;
-                }
-
-                if (ImGui::BeginPopupContextItem())
-                {
-                    if (ImGui::MenuItem("Delete Entity"))
-                    {
-                        printf("Delete entity at some point\n");
-                    }
-
-                    ImGui::EndPopup();
-                }
-
-                if (opened)
-                {
-                    ImGui::TreePop();
-                }
+                DrawEntityNode({m_sceneRef.get(), entity});
             }
         }
 
@@ -168,7 +175,7 @@ namespace antarctica
 
         DrawComponent<puffin::components::Script>("Script", entity, [](auto &component)
                                                   { ImGui::Text("%s", component.m_path.c_str());
-                                                    ImGui::Text("%s", component.m_scriptInstance.m_moduleName.c_str()); });
+                                                    ImGui::Text("%s", component.m_scriptInstance->m_moduleName.c_str()); });
 
         DrawComponent<puffin::components::RigidBody2D>("RigidBody2D", entity, [](auto &component)
                                                        { 

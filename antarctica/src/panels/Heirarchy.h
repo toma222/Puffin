@@ -19,6 +19,7 @@ namespace antarctica
         ~Heirarchy() = default;
 
         void AttachContext(std::shared_ptr<puffin::Scene> sceneRef);
+        void DrawEntityNode(puffin::Entity e);
 
         void RenderImGui();
         void RenderSelectedEntityComponents(puffin::Entity entity);

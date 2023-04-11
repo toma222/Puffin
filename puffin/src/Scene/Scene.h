@@ -24,13 +24,15 @@ namespace puffin
 
         void TickRuntime(float deltaTime);
         void TickPhysicsSimulation(Timestep deltaTime);
+        void TickEditor(Timestep deltaTime);
         void DrawGizmos();
+
+        static std::shared_ptr<Scene> Copy(std::shared_ptr<Scene> ref);
 
     public:
         entt::registry registry;
 
-        // std::unordered_map<UUID, entt::entity> m_entityMap;
-        std::vector<Entity> m_entities;
+        std::unordered_map<UUID, entt::entity> m_entities;
         int m_testValue;
     };
 } // namespace puffin

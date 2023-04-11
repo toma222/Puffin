@@ -97,7 +97,6 @@ namespace puffin
         m_playSceneIcon = std::make_shared<puffin::render::SDLTexture>(puffin::Graphics::Get().GetRenderer().get(), "/antarctica/resources/icons/PlaySceneButton.bmp", 8, 8);
 
         m_editorScene = std::make_shared<Scene>();
-        m_editorScene->m_name = "Editing";
 
         m_activeScene = m_editorScene;
 
@@ -107,18 +106,18 @@ namespace puffin
 
         puffin::LuaScripting::InitLuaScripting();
 
-        std::shared_ptr<puffin::Scene> newScene = std::make_shared<puffin::Scene>();
-        puffin::SceneSerializer serialize(newScene);
+        // std::shared_ptr<puffin::Scene> newScene = std::make_shared<puffin::Scene>();
+        puffin::SceneSerializer serialize(m_editorScene);
         if (serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene copy.json"))
         {
-            Entity e = newScene->AddEntity("Physics");
+            Entity e = m_editorScene->AddEntity("Physics");
             e.AddComponent<components::Image>("/ice/assets/Images/square.bmp");
             e.AddComponent<components::RigidBody2D>(5);
-
-            m_editorScene = newScene;
-            m_heirarchyPanel.AttachContext(m_editorScene);
+            m_editorScene->m_name = "editor";
 
             m_activeScene = m_editorScene;
+
+            m_heirarchyPanel.AttachContext(m_activeScene);
         }
     }
 
@@ -311,7 +310,7 @@ namespace puffin
         case EditorLayer::EDITING:
             printf("going back to editing\n");
             m_activeScene = m_editorScene;
-            m_heirarchyPanel.AttachContext(m_activeScene);
+            // m_heirarchyPanel.AttachContext(m_activeScene);
             break;
 
         default:

@@ -70,7 +70,7 @@ namespace puffin
 
             Image(const Image &image)
             {
-                surface = std::make_shared<render::SDLSurface>(image.m_path, 100, 10);
+                surface = std::make_shared<render::SDLSurface>(image.m_path.c_str(), 100, 10);
             }
 
             Image(std::string path)
@@ -95,15 +95,33 @@ namespace puffin
             // ! this is a memory leak (that I will deal with latter)
             // ! also the copy scene code wont play nice with this pointer
             std::shared_ptr<LightType> m_lightType;
+            LIGHT_TYPE m_enumType;
 
             Light() = default;
+            /*Light(const Light &light)
+            {
+                if (light.m_enumType == LIGHT_TYPE::POINT)
+                {
+
+                    std::shared_ptr<PointLight> pointLightRef = std::static_pointer_cast<PointLight>(light.m_lightType);
+                    m_lightType = std::make_shared<PointLight>(pointLightRef->m_power, pointLightRef->m_luminance, light.m_lightType->m_lightColor);
+                }
+
+                if (light.m_enumType == LIGHT_TYPE::GLOBAL)
+                {
+
+                    std::shared_ptr<GlobalLight> globalLightRef = std::static_pointer_cast<GlobalLight>(light.m_lightType);
+                    m_lightType = std::make_shared<GlobalLight>(globalLightRef->m_power, light.m_lightType->m_lightColor);
+                }
+            }*/
             Light(const Light &light) = default;
 
             template <typename T, typename... Args>
             void AttachType(Args &&...args)
             {
                 m_lightType = std::make_shared<T>(std::forward<Args>(args)...);
-            }
+                m_enumType = m_lightType->GetType();
+            };
         };
 
         struct Script

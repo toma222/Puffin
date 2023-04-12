@@ -171,8 +171,8 @@ namespace antarctica
         DrawComponent<puffin::components::Image>("Image", entity, [](auto &component)
                                                  { ImGui::Text("%s", component.m_path.c_str()); });
 
-        // DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
-        //                                          { component.m_lightType->UpdateImGui(); });
+        DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
+                                                 { component.m_lightType->UpdateImGui(); });
 
         DrawComponent<puffin::components::Script>("Script", entity, [](auto &component)
                                                   { ImGui::Text("%s", component.m_path.c_str());

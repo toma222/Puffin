@@ -310,7 +310,7 @@ namespace puffin
         case EditorLayer::EDITING:
             printf("going back to editing\n");
             m_activeScene = m_editorScene;
-            // m_heirarchyPanel.AttachContext(m_activeScene);
+            m_heirarchyPanel.AttachContext(m_activeScene);
             break;
 
         default:

@@ -5,12 +5,6 @@
     "Tag": ["Tree Building Image"],
     "Transform": [0, 0, 165, 94]
   },
-  "global light": {
-    "ID": [1564338168333488294],
-    "Light": ["Global", 0.5, [1.0, 1.0, 1.0]],
-    "Tag": ["global light"],
-    "Transform": [10, 0, 10, 10]
-  },
   "point light": {
     "ID": [7738378638793675207],
     "Light": ["Point", 10.0, 10.0, [1.0, 1.0, 1.0]],

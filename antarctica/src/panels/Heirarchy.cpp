@@ -15,7 +15,7 @@ namespace antarctica
     void Heirarchy::AttachContext(std::shared_ptr<puffin::Scene> sceneRef)
     {
         m_sceneRef = sceneRef;
-        // m_selectedEntity = sceneRef->m_entities[0];
+        m_selectedEntity = {};
     }
 
     template <typename T, typename UIFunction>
@@ -171,8 +171,8 @@ namespace antarctica
         DrawComponent<puffin::components::Image>("Image", entity, [](auto &component)
                                                  { ImGui::Text("%s", component.m_path.c_str()); });
 
-        // DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
-        //                                          { component.m_lightType->UpdateImGui(); });
+        DrawComponent<puffin::components::Light>("Light", entity, [](auto &component)
+                                                 { component.m_lightType->UpdateImGui(); });
 
         DrawComponent<puffin::components::Script>("Script", entity, [](auto &component)
                                                   { ImGui::Text("%s", component.m_path.c_str());

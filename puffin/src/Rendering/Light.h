@@ -48,6 +48,8 @@ namespace puffin
         {
             return POINT;
         }
+
+        const static LIGHT_TYPE s_TYPE = POINT;
     };
 
     class GlobalLight : public LightType
@@ -69,6 +71,8 @@ namespace puffin
         {
             return GLOBAL;
         }
+
+        const static LIGHT_TYPE s_TYPE = GLOBAL;
     };
 
     class LightProfile

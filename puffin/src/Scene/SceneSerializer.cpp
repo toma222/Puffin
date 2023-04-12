@@ -63,8 +63,8 @@ namespace puffin
 
             if (light.m_lightType->GetType() == GLOBAL)
             {
-                // GlobalLight *castedLight = (GlobalLight *)light.m_lightType;
-                // parser["Light"] = {"Global", castedLight->m_power, castedLight->m_lightColor.m_color};
+                std::shared_ptr<puffin::PointLight> castedLight = std::static_pointer_cast<puffin::PointLight>(light.m_lightType);
+                parser["Light"] = {"Global", castedLight->m_power, castedLight->m_lightColor.m_color};
             }
         }
     }

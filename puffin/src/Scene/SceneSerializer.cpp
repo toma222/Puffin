@@ -127,16 +127,16 @@ namespace puffin
                     if ((std::string)data[0] == "Point")
                     {
                         e.AddComponent<puffin::components::Light>().AttachType<puffin::PointLight>(data[1], data[2],
-                                                                                 PNColor((int)(data[3][0]) * 255,
-                                                                                         (int)(data[3][1]) * 255,
-                                                                                         (int)(data[3][2]) * 255));
+                                                                                                   PNColor((int)(data[3][0]) * 255,
+                                                                                                           (int)(data[3][1]) * 255,
+                                                                                                           (int)(data[3][2]) * 255));
                     }
 
                     if ((std::string)data[0] == "Global")
                     {
-                        // e.AddComponent<puffin::components::Light>(new GlobalLight(data[1], PNColor((int)(data[2][0]) * 255,
-                        //                                                                            (int)(data[2][1]) * 255,
-                        //                                                                            (int)(data[2][2]) * 255)));
+                        e.AddComponent<puffin::components::Light>().AttachType<puffin::GlobalLight>(data[1], PNColor((int)(data[2][0]) * 255,
+                                                                                                                     (int)(data[2][1]) * 255,
+                                                                                                                     (int)(data[2][2]) * 255));
                     }
                 }
             }

@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <memory>
 
+#include "Core/Logging.h"
+
 #include "Math/PNVector.h"
 
 #include "imgui.h"
@@ -44,6 +46,14 @@ namespace puffin
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
         void UpdateImGui() override;
 
+        PointLight(const PointLight &point)
+        {
+            PN_CORE_INFO("Copy constructor for point light");
+            m_power = point.m_power;
+            m_luminance = point.m_luminance;
+            m_lightColor = point.m_lightColor;
+        }
+
         LIGHT_TYPE GetType() override
         {
             return POINT;
@@ -65,6 +75,13 @@ namespace puffin
         };
 
         PNColor GetPixelColor(int pixelX, int pixelY, int lightX, int lightY) override;
+
+        GlobalLight(const GlobalLight &global)
+        {
+            m_lightColor = global.m_lightColor;
+            m_power = global.m_power;
+        }
+
         void UpdateImGui() override;
 
         LIGHT_TYPE GetType() override

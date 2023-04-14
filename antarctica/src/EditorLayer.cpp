@@ -108,7 +108,7 @@ namespace puffin
 
         // std::shared_ptr<puffin::Scene> newScene = std::make_shared<puffin::Scene>();
         puffin::SceneSerializer serialize(m_editorScene);
-        if (serialize.Deserialize("C:/Users/100044352/Desktop/refactor/Puffin/Scene Copy.json"))
+        if (serialize.Deserialize("C:/Users/Aidan/Desktop/github/Puffin/Scene copy.json"))
         {
             Entity e = m_editorScene->AddEntity("Physics");
             e.AddComponent<components::Image>("/ice/assets/Images/square.bmp");

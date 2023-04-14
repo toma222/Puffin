@@ -55,7 +55,7 @@ namespace puffin
 
             if (m_surface == NULL)
             {
-                printf("%s", current_working_dir.append(path.c_str()).c_str());
+                printf("%s\n", current_working_dir.append(path.c_str()).c_str());
                 PN_CORE_FATAL("Could not load image, path above");
             }
 

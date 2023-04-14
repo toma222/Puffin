@@ -68,7 +68,10 @@ namespace puffin
                 surface = std::make_shared<render::SDLSurface>(m_path.c_str(), 100, 10);
             }
 
-            Image(const Image &image) { Image(image.m_path); };
+            Image(const Image &image)
+            {
+                surface = std::make_shared<render::SDLSurface>(image.m_path.c_str(), 100, 10);
+            }
 
             Image(std::string path)
                 : m_path(path)
@@ -91,37 +94,14 @@ namespace puffin
         {
             // ! this is a memory leak (that I will deal with latter)
             std::shared_ptr<LightType> m_lightType;
-            puffin::LIGHT_TYPE m_type;
 
             Light() = default;
-            Light(const Light &light)
-            {
-                if(light.m_type == POINT)
-                {
-                    PN_CORE_INFO("Making point light as a copy");
-                    std::shared_ptr<PointLight> m_casted = std::static_pointer_cast<PointLight>(light.m_lightType);
-                    this->AttachType<PointLight>(m_casted->m_power, m_casted->m_luminance, m_casted->m_lightColor);
-                    return;
-                }
-
-                if(light.m_type == GLOBAL)
-                {
-                    PN_CORE_INFO("Making global light as a copy");
-                    std::shared_ptr<GlobalLight> m_casted = std::static_pointer_cast<GlobalLight>(light.m_lightType);
-                    this->AttachType<GlobalLight>(m_casted->m_power, m_casted->m_lightColor);
-                    return;
-                }
-
-                this->AttachType<GlobalLight>(0, PNColor(255,255,255));
-            }
+            Light(const Light &light) = default;
 
             template <typename T, typename... Args>
             void AttachType(Args &&...args)
             {
                 m_lightType = std::make_shared<T>(std::forward<Args>(args)...);
-                
-                printf("%i attaching light type\n", T::s_TYPE);
-                m_type = T::s_TYPE;
             }
         };
 

@@ -7,7 +7,6 @@
 #include "Rendering/PRenderer.h"
 #include "Rendering/PWindow.h"
 #include "Shader.h"
-#include "Light.h"
 
 #include "Core/Logging.h"
 
@@ -58,9 +57,6 @@ namespace puffin
 
         void PlaceImage(render::SDLSurface *image, SDL_Rect *bounds);
 
-        void PlaceLight(std::shared_ptr<LightType> light, int x, int y);
-        void PlaceLightFromProfile(LightProfile profile);
-
         Ref<render::SDLRenderer> GetRenderer() { return m_renderer; };
         Ref<render::SDLTexture> GetRenderTexture() { return m_renderTexture; };
 
@@ -84,7 +80,5 @@ namespace puffin
     private:
         static Graphics *s_graphics;
         bool m_rendering = false;
-
-        std::vector<LightProfile> m_lightBuffer;
     };
 } // namespace puffin

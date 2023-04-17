@@ -103,18 +103,6 @@ namespace puffin
             Graphics::Get().PlaceImage(image.surface.get(), transform.m_rect.get());
         }
 
-        // Lights
-        auto lightView = registry.view<components::Light>();
-
-        for (auto e : lightView)
-        {
-            Entity entity = {this, e};
-            auto &transform = entity.GetComponent<components::Transform>();
-            auto &light = entity.GetComponent<components::Light>();
-
-            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
-        }
-
         auto scriptView = registry.view<components::Script>();
         for (auto e : scriptView)
         {
@@ -162,17 +150,6 @@ namespace puffin
 
             Graphics::Get().PlaceImage(image.surface.get(), transform.m_rect.get());
         }
-
-        auto lightView = registry.view<components::Light>();
-
-        for (auto e : lightView)
-        {
-            Entity entity = {this, e};
-            auto &transform = entity.GetComponent<components::Transform>();
-            auto &light = entity.GetComponent<components::Light>();
-
-            Graphics::Get().PlaceLight(light.m_lightType, transform.m_rect->x, transform.m_rect->y);
-        }
     }
 
     void Scene::DrawGizmos()
@@ -202,11 +179,6 @@ namespace puffin
 
     template <>
     void Scene::OnComponentAdded<components::Image>(Entity entity, components::Image &component)
-    {
-    }
-
-    template <>
-    void Scene::OnComponentAdded<components::Light>(Entity entity, components::Light &component)
     {
     }
 

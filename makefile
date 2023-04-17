@@ -29,7 +29,6 @@ ENGINEOBJ = obj/PRenderer.o \
 			obj/Entity.o \
 			obj/Scene.o \
 			obj/SceneSerializer.o \
-			obj/Light.o \
 			obj/PlatformUtils.o \
 			obj/LuaScripting.o \
 			obj/LuaGlue.o \

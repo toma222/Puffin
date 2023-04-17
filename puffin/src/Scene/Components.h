@@ -7,7 +7,6 @@
 
 #include "Rendering/PSurface.h"
 #include "Rendering/Graphics.h"
-#include "Rendering/Light.h"
 #include "Math/PNVector.h"
 #include "Core/ID.h"
 
@@ -74,9 +73,9 @@ namespace puffin
             }
 
             Image(std::string path)
-                : m_path(path)
             {
-                surface = std::make_shared<render::SDLSurface>(path.c_str(), 100, 10);
+                m_path = path;
+                surface = std::make_shared<render::SDLSurface>(m_path.c_str(), 100, 10);
             };
         };
 
@@ -93,6 +92,7 @@ namespace puffin
         struct Light
         {
             // ! this is a memory leak (that I will deal with latter)
+            /*
             std::shared_ptr<LightType> m_lightType;
 
             Light() = default;
@@ -103,6 +103,8 @@ namespace puffin
             {
                 m_lightType = std::make_shared<T>(std::forward<Args>(args)...);
             }
+
+            */
         };
 
         struct Script
@@ -152,6 +154,6 @@ namespace puffin
         {
         };
 
-        using AllComponents = ComponentGroup<RigidBody2D, Transform, Image, Light, Script>;
+        using AllComponents = ComponentGroup<RigidBody2D, Transform, Image, Script>;
     }
 }

@@ -9,7 +9,6 @@
 #include "Logging.h"
 #include "Gui.h"
 
-#include "Rendering/Light.h"
 #include "Rendering/Graphics.h"
 
 #include "Application.h"

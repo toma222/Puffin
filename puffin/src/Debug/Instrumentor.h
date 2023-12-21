@@ -4,6 +4,7 @@
 // #include "Core/Logging.h"
 
 #include <string>
+#include <chrono>
 
 namespace puffin
 {
@@ -25,6 +26,29 @@ namespace puffin
     };
 
     static Debug *s_puffinDebug = new Debug();
+
+    class Timer
+    {
+    public:
+        // Starts the timer
+        void start()
+        {
+            m_startTime = std::chrono::high_resolution_clock::now();
+        }
+
+        // Stops the timer and returns the elapsed time in microseconds
+        long long stop()
+        {
+            auto endTime = std::chrono::high_resolution_clock::now();
+            m_savedTime = std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_startTime).count();
+            return m_savedTime;
+        }
+
+        double m_savedTime;
+
+    private:
+        std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
+    };
 
 } // namespace puffin
 

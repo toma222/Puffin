@@ -1,0 +1,14 @@
+{
+  "Tree Building Image": {
+    "ID": [11605614994629902305],
+    "Image": ["/ice/assets/Images/BuildingWall.bmp"],
+    "Tag": ["Tree Building Image"],
+    "Transform": [0, 0, 165, 94]
+  },
+  "point light": {
+    "ID": [7738378638793675207],
+    "Light": ["Point", 10.0, 10.0, [1.0, 1.0, 1.0]],
+    "Tag": ["point light"],
+    "Transform": [10, 0, 10, 10]
+  }
+}

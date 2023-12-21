@@ -5,9 +5,6 @@
 
 namespace puffin
 {
-    // Please ignore my forward deceleration
-    class Application;
-
     class Layer
     {
     public:
@@ -15,7 +12,9 @@ namespace puffin
         virtual void OnDetach() { return; };
         virtual void Update() { return; };
         virtual void Start() { return; };
+        virtual void ImGuiUpdate() { return; };
+        virtual void GizmosRender() { return; };
 
-        virtual ~Layer() { return; };
+        virtual ~Layer() = default;
     };
 } // namespace pn

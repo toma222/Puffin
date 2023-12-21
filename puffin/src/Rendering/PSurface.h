@@ -4,6 +4,7 @@
 #include "SDL2/SDL.h"
 
 #include "Core/Core.h"
+#include "Math/PNVector.h"
 
 #include <string>
 #include <memory>
@@ -17,7 +18,7 @@ namespace puffin
         {
         private:
             // Ref<SDL_Surface> m_surface;
-            Ref<SDL_Surface> *m_surface;
+            SDL_Surface *m_surface;
             SDL_Rect *m_surfaceRect;
 
         public:
@@ -25,16 +26,18 @@ namespace puffin
             // Surface(std::string path);
             SDLSurface(int width, int height);
             SDLSurface(std::string path, int width, int height);
-            SDLSurface(SDL_Surface *surface) { m_surface = new Ref<SDL_Surface>(surface); };
+            SDLSurface(SDL_Surface *surface) { m_surface = surface; };
 
             ~SDLSurface();
 
-            Ref<SDL_Surface> *get() { return m_surface; };
+            SDL_Surface *get() { return m_surface; };
             SDL_Rect *GetDimensions() { return m_surfaceRect; };
 
         public:
             void PutPixel(int x, int y, int r, int g, int b);
             void PutPixel(int x, int y, Uint32 color);
+
+            PNColor GetPixel(int x, int y);
 
             // Does a scaled blit so that you can change the size and such
             void BlitSurface(SDLSurface *from);

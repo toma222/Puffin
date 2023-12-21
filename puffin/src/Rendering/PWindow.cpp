@@ -12,6 +12,7 @@ namespace puffin
     {
         SDLWindow::SDLWindow(std::string title, int x, int y, int width, int height, Uint32 flags)
         {
+            PN_CORE_INFO("SDLWindow constructor called");
             m_window = SDL_CreateWindow(title.c_str(), x, y, width, height, flags);
             m_RendererCreated = false;
         }
